@@ -1,37 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { getVillainById, putVillain } from "../villain-service";
+import React, { useState, useEffect, useContext } from "react";
 import useReactRouter from "use-react-router";
+import { villainContext } from "../villain-context";
+import { useObserver } from "mobx-react-lite";
 
 export default function EditVillain() {
-  const [villain, setVillain] = useState({
-    id: "",
-    firstName: "",
-    lastName: "",
-    house: "",
-    knownAs: ""
-  });
+  const villainStore = useContext(villainContext);
   const [isSuccess, setIsSuccess] = useState(false);
   const { match, history } = useReactRouter();
 
   useEffect(() => {
-    onLoadData();
+    villainStore.getVillainById(match.params.id);
   }, []);
 
-  const onLoadData = async () => {
-    const { data } = await getVillainById(match.params.id);
-    setVillain(data);
-  };
-
-  const handleInputChange = ({ currentTarget: input }) => {
-    const updatedVillain = { ...villain };
+  const handleInputChange = async ({ currentTarget: input }) => {
+    const updatedVillain = { ...villainStore.villain };
     const { name, value } = input;
     updatedVillain[name] = value;
-    setVillain(updatedVillain);
+    await villainStore.setVillain(updatedVillain);
   };
 
   const handleSubmit = async event => {
     event.preventDefault();
-    await putVillain(villain);
+    await villainStore.putVillain(villainStore.villain);
     setIsSuccess(!isSuccess);
   };
 
@@ -39,7 +29,7 @@ export default function EditVillain() {
     history.goBack();
   };
 
-  return (
+  return useObserver(() => (
     <>
       <h2>Edit Villain</h2>
       <div className="card my-3" style={{ width: "auto" }}>
@@ -49,7 +39,7 @@ export default function EditVillain() {
               <label htmlFor="firstName">First Name</label>
               <input
                 name="firstName"
-                value={villain.firstName}
+                value={villainStore.villain.firstName}
                 onChange={handleInputChange}
                 type="text"
                 id="firstName"
@@ -60,7 +50,7 @@ export default function EditVillain() {
               <label>Last Name</label>
               <input
                 name="lastName"
-                value={villain.lastName}
+                value={villainStore.villain.lastName}
                 onChange={handleInputChange}
                 type="text"
                 id="lastName"
@@ -71,7 +61,7 @@ export default function EditVillain() {
           <label className="mt-3">House</label>
           <input
             name="house"
-            value={villain.house}
+            value={villainStore.villain.house}
             onChange={handleInputChange}
             type="text"
             id="house"
@@ -80,7 +70,7 @@ export default function EditVillain() {
           <label className="mt-3">Known as</label>
           <input
             name="knownAs"
-            value={villain.knownAs}
+            value={villainStore.villain.knownAs}
             onChange={handleInputChange}
             type="text"
             id="knownAs"
@@ -108,5 +98,5 @@ export default function EditVillain() {
         </div>
       )}
     </>
-  );
+  ));
 }

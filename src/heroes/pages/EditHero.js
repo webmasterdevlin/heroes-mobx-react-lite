@@ -12,11 +12,11 @@ export default function EditHero() {
     heroStore.getHeroById(match.params.id);
   }, []);
 
-  const handleInputChange = ({ currentTarget: input }) => {
+  const handleInputChange = async ({ currentTarget: input }) => {
     const updatedHero = { ...heroStore.hero };
     const { name, value } = input;
     updatedHero[name] = value;
-    heroStore.setHero(updatedHero);
+    await heroStore.setHero(updatedHero);
   };
 
   const handleSubmit = async event => {

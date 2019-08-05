@@ -1,67 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import NewItemForm from "../../shared/components/NewItemForm";
-import { postVillain, getVillains, deleteVillain } from "../villain-service";
+
 import { Link } from "react-router-dom";
+import { villainContext } from "../villain-context";
+import { useObserver } from "mobx-react-lite";
 
 export default function Villains() {
-  const [villain, setVillain] = useState({
-    villain: {
-      id: "",
-      firstName: "",
-      lastName: "",
-      house: "",
-      knownAs: ""
-    }
-  });
-  const [villains, setVillains] = useState([villain]);
+  /* Don't destructure. MobX observable are objects (and derivates) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.
+example:
+const {heroes, hero, getVillains} = useContext(villainContext);
+*/
+  const villainStore = useContext(villainContext);
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
   useEffect(() => {
-    onLoadData();
-  }, []);
-
-  const onLoadData = async () => {
-    const { data } = await getVillains();
-    setVillains(data);
-  };
+    villainStore.getVillains();
+  }, []); // empty array needed here
 
   const showNewItemForm = () => {
     setIsShowNewItemForm(!isShowNewItemForm);
   };
   const onChange = ({ currentTarget: input }) => {
-    const newVillain = { ...villain };
+    const newVillain = { ...villainStore.villain };
     const { name, value } = input;
     newVillain[name] = value;
-    setVillain(newVillain);
+    villainStore.setVillain(newVillain);
   };
 
   const onSubmit = async event => {
     event.preventDefault();
-    try {
-      const { data: addedVillain } = await postVillain(villain);
-      const newSetOfVillains = [...villains, addedVillain];
-      setVillains(newSetOfVillains);
-      setIsShowNewItemForm(!isShowNewItemForm);
-    } catch (e) {
-      alert(e.message);
-      throw e;
-    }
+
+    await villainStore.postVillain(villainStore.villain);
+    setIsShowNewItemForm(!isShowNewItemForm);
   };
 
   const removeItem = async (id, name) => {
     const isConfirmed = window.confirm(`Delete ${name}?`);
     if (!isConfirmed) return;
 
-    try {
-      await deleteVillain(id);
-      const newSetOfVillains = villains.filter(villain => villain.id !== id);
-      setVillains(newSetOfVillains);
-    } catch (e) {
-      alert(e.message);
-      throw e;
-    }
+    await villainStore.deleteVillain(id);
   };
-  return (
+  return useObserver(() => (
     <>
       <NewItemForm
         isShowNewItemForm={isShowNewItemForm}
@@ -69,35 +48,57 @@ export default function Villains() {
         handleOnSubmit={onSubmit}
         handleShowNewItemForm={showNewItemForm}
       />
-      {villains.map(item => (
-        <div key={item.id} className="card mt-3" style={{ width: "auto" }}>
-          <div className="card-header">
-            <h3 className="card-title">
-              {item.firstName} {item.lastName}
-            </h3>
-            <h5 className="card-subtitle mb-2 text-muted">{item.house}</h5>
-            <p className="card-text">{item.knownAs}</p>
+      {villainStore.isLoading ? (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "center"
+          }}
+        >
+          <div
+            className="spinner-border"
+            style={{
+              width: "9rem",
+              height: "9rem",
+              color: "purple"
+            }}
+            role="status"
+          >
+            <span className="sr-only">Loading...</span>
           </div>
-          <section className="card-body">
-            <div className="row">
-              <button
-                onClick={() => removeItem(item.id, item.firstName)}
-                className="btn btn-outline-danger card-link col text-center"
-              >
-                <span className="fas fa-eraser  mr-2" />
-                Delete
-              </button>
-              <Link
-                to={`/edit-villain/${item.id}`}
-                className="btn btn-outline-primary card-link col text-center"
-              >
-                <span className="fas fa-edit  mr-2" />
-                Edit
-              </Link>
-            </div>
-          </section>
         </div>
-      ))}
+      ) : (
+        villainStore.villains.map(item => (
+          <div key={item.id} className="card mt-3" style={{ width: "auto" }}>
+            <div className="card-header">
+              <h3 className="card-title">
+                {item.firstName} {item.lastName}
+              </h3>
+              <h5 className="card-subtitle mb-2 text-muted">{item.house}</h5>
+              <p className="card-text">{item.knownAs}</p>
+            </div>
+            <section className="card-body">
+              <div className="row">
+                <button
+                  onClick={() => removeItem(item.id, item.firstName)}
+                  className="btn btn-outline-danger card-link col text-center"
+                >
+                  <span className="fas fa-eraser  mr-2" />
+                  Delete
+                </button>
+                <Link
+                  to={`/edit-villain/${item.id}`}
+                  className="btn btn-outline-primary card-link col text-center"
+                >
+                  <span className="fas fa-edit  mr-2" />
+                  Edit
+                </Link>
+              </div>
+            </section>
+          </div>
+        ))
+      )}
     </>
-  );
+  ));
 }

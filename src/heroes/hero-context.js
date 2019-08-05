@@ -52,6 +52,7 @@ export const HeroProvider = ({ children }) => {
       }
       store.isLoading = false;
     },
+    // optimistic UI update
     async deleteHero(id) {
       store.isLoading = true;
       try {
