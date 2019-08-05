@@ -11,6 +11,6 @@ $ npm install
 $ npm run start
 ```
 
-The Angular app and the fake web service will run concurrently.
+The React app and the fake web service will run concurrently.
 
 ![screenshot](./screenshot.png)
