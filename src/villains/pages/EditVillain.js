@@ -86,7 +86,7 @@ export default function EditVillain() {
           <button
             onClick={handleBackButton}
             type="button"
-            className="btn btn-default mt-3"
+            className="btn btn-outline-info mt-3 ml-3"
           >
             Back
           </button>

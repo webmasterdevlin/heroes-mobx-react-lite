@@ -81,7 +81,7 @@ export const HeroProvider = ({ children }) => {
       store.error = message;
       alert(message);
     },
-    /*computed values*/
+    /*computed values i.e. derived state*/
     get totalHeroes() {
       return store.heroes.length;
     }

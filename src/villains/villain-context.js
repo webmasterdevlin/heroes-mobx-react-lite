@@ -80,7 +80,7 @@ export const VillainProvider = ({ children }) => {
       store.error = message;
       alert(message);
     },
-    /*computed values*/
+    /*computed values i.e. derived state*/
     get totalVillains() {
       return store.villains.length;
     }

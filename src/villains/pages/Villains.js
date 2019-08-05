@@ -80,6 +80,13 @@ const {heroes, hero, getVillains} = useContext(villainContext);
             </div>
             <section className="card-body">
               <div className="row">
+                <Link
+                  to={`/edit-villain/${item.id}`}
+                  className="btn btn-primary card-link col text-center"
+                >
+                  <span className="fas fa-edit  mr-2" />
+                  Edit
+                </Link>
                 <button
                   onClick={() => removeItem(item.id, item.firstName)}
                   className="btn btn-outline-danger card-link col text-center"
@@ -87,13 +94,6 @@ const {heroes, hero, getVillains} = useContext(villainContext);
                   <span className="fas fa-eraser  mr-2" />
                   Delete
                 </button>
-                <Link
-                  to={`/edit-villain/${item.id}`}
-                  className="btn btn-outline-primary card-link col text-center"
-                >
-                  <span className="fas fa-edit  mr-2" />
-                  Edit
-                </Link>
               </div>
             </section>
           </div>
