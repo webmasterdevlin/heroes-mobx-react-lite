@@ -36,7 +36,8 @@ export const HeroProvider = ({ children }) => {
     async getHeroById(id) {
       store.isLoading = true;
       try {
-        store.hero = (await getHeroById(id)).data;
+        const { data } = await getHeroById(id);
+        store.hero = data;
       } catch (e) {
         store.setError(e);
       }
