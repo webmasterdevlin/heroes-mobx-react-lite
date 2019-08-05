@@ -6,7 +6,7 @@ Create or go to your demo directory then run the following in the terminal or cm
 
 ```sh
 $ git clone https://github.com/webmasterdevlin/heroes-mobx-react-lite.git
-$ cd heroes-hooks
+$ cd heroes-mobx-react-lite
 $ npm install
 $ npm run start
 ```
