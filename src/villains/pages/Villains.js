@@ -11,6 +11,7 @@ example:
 const {heroes, hero, getVillains} = useContext(villainContext);
 */
   const villainStore = useContext(villainContext);
+
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
   useEffect(() => {
@@ -40,6 +41,8 @@ const {heroes, hero, getVillains} = useContext(villainContext);
 
     await villainStore.deleteVillain(id);
   };
+
+  /*useObserver converts component into reactive component*/
   return useObserver(() => (
     <>
       <NewItemForm

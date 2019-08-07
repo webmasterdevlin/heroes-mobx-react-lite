@@ -4,10 +4,12 @@ import { villainContext } from "../villain-context";
 import { useObserver } from "mobx-react-lite";
 
 export default function EditVillain() {
-  const villainStore = useContext(villainContext);
-  const [isSuccess, setIsSuccess] = useState(false);
+  /*can be manually created using useContext and Router Context*/
   const { match, history } = useReactRouter();
 
+  const villainStore = useContext(villainContext);
+
+  const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
     villainStore.getVillainById(match.params.id);
   }, []);
@@ -29,6 +31,7 @@ export default function EditVillain() {
     history.goBack();
   };
 
+  /*useObserver converts component into reactive component*/
   return useObserver(() => (
     <>
       <h2>Edit Villain</h2>

@@ -8,8 +8,6 @@ import {
   putVillain
 } from "./villain-service";
 
-export const villainContext = createContext();
-
 export const VillainProvider = ({ children }) => {
   const store = useLocalStore(() => ({
     villains: [],
@@ -90,3 +88,4 @@ export const VillainProvider = ({ children }) => {
     <villainContext.Provider value={store}>{children}</villainContext.Provider>
   );
 };
+export const villainContext = createContext();

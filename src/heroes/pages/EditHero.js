@@ -4,10 +4,12 @@ import { heroContext } from "../hero-context";
 import { useObserver } from "mobx-react-lite";
 
 export default function EditHero() {
-  const heroStore = useContext(heroContext);
-  const [isSuccess, setIsSuccess] = useState(false);
+  /*can be manually created using useContext and Router Context*/
   const { match, history } = useReactRouter();
 
+  const heroStore = useContext(heroContext);
+
+  const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
     heroStore.getHeroById(match.params.id);
   }, []);
@@ -29,6 +31,7 @@ export default function EditHero() {
     history.goBack();
   };
 
+  /*useObserver converts component into reactive component*/
   return useObserver(() => (
     <>
       <h2>Edit Hero</h2>

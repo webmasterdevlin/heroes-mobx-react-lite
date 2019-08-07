@@ -8,8 +8,6 @@ import {
   putHero
 } from "./hero-service";
 
-export const heroContext = createContext();
-
 export const HeroProvider = ({ children }) => {
   const store = useLocalStore(() => ({
     /*observables*/
@@ -88,3 +86,4 @@ export const HeroProvider = ({ children }) => {
   }));
   return <heroContext.Provider value={store}>{children}</heroContext.Provider>;
 };
+export const heroContext = createContext();
