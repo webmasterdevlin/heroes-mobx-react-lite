@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import useReactRouter from "use-react-router";
 import { villainContext } from "../villain-context";
 import { useObserver } from "mobx-react-lite";
 
-export default function EditVillain() {
-  /*can be manually created using useContext and Router Context*/
-  const { match, history } = useReactRouter();
-
+export default function EditVillain(params) {
   const villainStore = useContext(villainContext);
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    villainStore.getVillainById(match.params.id);
+    villainStore.getVillainById(params.id);
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
@@ -28,7 +24,7 @@ export default function EditVillain() {
   };
 
   const handleBackButton = () => {
-    history.goBack();
+    window.history.back();
   };
 
   /*useObserver converts component into reactive component*/

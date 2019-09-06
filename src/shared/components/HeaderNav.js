@@ -1,5 +1,5 @@
 import React, { useState, useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "@reach/router";
 import { heroContext } from "../../heroes/hero-context";
 import { useObserver } from "mobx-react-lite";
 import { villainContext } from "../../villains/villain-context";
@@ -40,9 +40,9 @@ export default function HeaderNav() {
       >
         <ul className="navbar-nav mr-auto">
           <li className="nav-item">
-            <NavLink className="nav-link" to="/">
+            <Link className="nav-link" to="/">
               Heroes
-            </NavLink>
+            </Link>
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/villains">

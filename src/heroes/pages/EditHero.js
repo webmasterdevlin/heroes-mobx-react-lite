@@ -1,17 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
-import useReactRouter from "use-react-router";
 import { heroContext } from "../hero-context";
 import { useObserver } from "mobx-react-lite";
 
-export default function EditHero() {
-  /*can be manually created using useContext and Router Context*/
-  const { match, history } = useReactRouter();
-
+export default function EditHero(params) {
   const heroStore = useContext(heroContext);
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    heroStore.getHeroById(match.params.id);
+    heroStore.getHeroById(params.id);
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
@@ -28,7 +24,7 @@ export default function EditHero() {
   };
 
   const handleBackButton = () => {
-    history.goBack();
+    window.history.back();
   };
 
   /*useObserver converts component into reactive component*/
