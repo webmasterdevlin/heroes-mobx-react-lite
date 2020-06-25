@@ -26,7 +26,7 @@ export default function Heroes() {
     heroStore.setHero(newHero);
   };
 
-  const onSubmit = async event => {
+  const onSubmit = async (event) => {
     event.preventDefault();
 
     heroStore.postHero(heroStore.hero);
@@ -54,7 +54,7 @@ export default function Heroes() {
           style={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <div
@@ -62,7 +62,7 @@ export default function Heroes() {
             style={{
               width: "9rem",
               height: "9rem",
-              color: "purple"
+              color: "purple",
             }}
             role="status"
           >
@@ -70,7 +70,7 @@ export default function Heroes() {
           </div>
         </div>
       ) : (
-        heroStore.heroes.map(item => (
+        heroStore.heroes.map((item) => (
           <div key={item.id} className="card mt-3" style={{ width: "auto" }}>
             <div className="card-header">
               <h3 className="card-title">

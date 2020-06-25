@@ -1,13 +1,6 @@
 {
   "heroes": [
     {
-      "id": "2DCD45A5-C0E6-C93C-4CEC-D3788EE5E0BA",
-      "firstName": "Ali",
-      "lastName": "Chase",
-      "house": "Bahrain",
-      "knownAs": "Nonummy Associates"
-    },
-    {
       "id": "D6B10776-C048-4F70-8836-369E96334C12",
       "firstName": "Amity",
       "lastName": "Moreno",
