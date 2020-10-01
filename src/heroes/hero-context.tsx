@@ -5,22 +5,27 @@ import {
   getHeroById,
   getHeroes,
   postHero,
-  putHero
+  putHero,
 } from "./hero-service";
+import { HeroStateType, HeroStoreSchema } from "./hero-types";
+
+const initialValues: HeroStateType = {
+  heroes: [],
+  hero: {
+    id: "",
+    firstName: "",
+    lastName: "",
+    house: "",
+    knownAs: "",
+  },
+  isLoading: false,
+  error: "",
+};
 
 export const HeroProvider = ({ children }) => {
   const store = useLocalStore(() => ({
     /*observables*/
-    heroes: [],
-    hero: {
-      id: "",
-      firstName: "",
-      lastName: "",
-      house: "",
-      knownAs: ""
-    },
-    isLoading: false,
-    error: "",
+    ...initialValues,
     /*actions*/
     async getHeroes() {
       store.isLoading = true;
@@ -55,7 +60,7 @@ export const HeroProvider = ({ children }) => {
       store.isLoading = true;
       try {
         await deleteHero(id);
-        store.heroes = store.heroes.filter(h => h.id !== id);
+        store.heroes = store.heroes.filter((h) => h.id !== id);
       } catch (e) {
         store.setError(e);
       }
@@ -65,7 +70,7 @@ export const HeroProvider = ({ children }) => {
       store.isLoading = true;
       try {
         await putHero(updatedHero);
-        const index = store.heroes.findIndex(h => h.id === updatedHero.id);
+        const index = store.heroes.findIndex((h) => h.id === updatedHero.id);
         store.heroes[index] = updatedHero;
       } catch (e) {
         store.setError(e);
@@ -82,8 +87,8 @@ export const HeroProvider = ({ children }) => {
     /*computed values i.e. derived state*/
     get totalHeroes() {
       return store.heroes.length;
-    }
+    },
   }));
   return <heroContext.Provider value={store}>{children}</heroContext.Provider>;
 };
-export const heroContext = createContext();
+export const heroContext = createContext<HeroStoreSchema>(null);

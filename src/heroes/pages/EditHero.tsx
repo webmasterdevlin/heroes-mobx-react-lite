@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from "react";
 import { heroContext } from "../hero-context";
 import { useObserver } from "mobx-react-lite";
+import { useHistory, useParams } from "react-router";
 
 export default function EditHero(params) {
   const heroStore = useContext(heroContext);
+  const history = useHistory();
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
@@ -17,14 +19,14 @@ export default function EditHero(params) {
     await heroStore.setHero(updatedHero);
   };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     await heroStore.putHero(heroStore.hero);
     setIsSuccess(!isSuccess);
   };
 
   const handleBackButton = () => {
-    window.history.back();
+    history.goBack();
   };
 
   /*useObserver converts component into reactive component*/
@@ -36,7 +38,7 @@ export default function EditHero(params) {
           style={{
             display: "flex",
             flexDirection: "row",
-            justifyContent: "center"
+            justifyContent: "center",
           }}
         >
           <div
@@ -44,7 +46,7 @@ export default function EditHero(params) {
             style={{
               width: "9rem",
               height: "9rem",
-              color: "purple"
+              color: "purple",
             }}
             role="status"
           >
