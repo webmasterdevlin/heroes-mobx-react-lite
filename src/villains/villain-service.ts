@@ -1,22 +1,22 @@
-import http from "../shared/http-service";
-import { BaseUrl } from "../api-config";
+import { api, Endpoints } from "../utils/axios-config";
+import { Villain } from "./villain-types";
 
 export async function getVillains() {
-  return await http.get(BaseUrl.villains);
+  return await api.get(Endpoints.villains);
 }
 
-export async function getVillainById(id) {
-  return await http.get(`${BaseUrl.villains}${id}`);
+export async function getVillainById(id: string) {
+  return await api.get(`${Endpoints.villains}${id}`);
 }
 
-export async function postVillain(villain) {
-  return await http.post(BaseUrl.villains, villain);
+export async function postVillain(villain: Villain) {
+  return await api.post(Endpoints.villains, villain);
 }
 
-export async function putVillain(villain) {
-  return await http.put(`${BaseUrl.villains}${villain.id}`, villain);
+export async function putVillain(villain: Villain) {
+  return await api.put(`${Endpoints.villains}${villain.id}`, villain);
 }
 
-export async function deleteVillain(id) {
-  return await http.delete(`${BaseUrl.villains}${id}`);
+export async function deleteVillain(id: string) {
+  return await api.delete(`${Endpoints.villains}${id}`);
 }

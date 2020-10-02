@@ -7,7 +7,7 @@ export default function EditVillain(params) {
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    villainStore.getVillainById(params.id);
+    villainStore.getVillainById(params.id).then();
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
@@ -17,7 +17,7 @@ export default function EditVillain(params) {
     await villainStore.setVillain(updatedVillain);
   };
 
-  const handleSubmit = async event => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     await villainStore.putVillain(villainStore.villain);
     setIsSuccess(!isSuccess);

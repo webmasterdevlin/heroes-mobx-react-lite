@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { Context, createContext } from "react";
 import { useLocalStore } from "mobx-react-lite";
 import {
   deleteHero,
@@ -7,7 +7,7 @@ import {
   postHero,
   putHero,
 } from "./hero-service";
-import { HeroStateType, HeroStoreSchema } from "./hero-types";
+import { Hero, HeroStateType, HeroStoreSchema } from "./hero-types";
 
 const initialValues: HeroStateType = {
   heroes: [],
@@ -36,7 +36,7 @@ export const HeroProvider = ({ children }) => {
       }
       store.isLoading = false;
     },
-    async getHeroById(id) {
+    async getHeroById(id: string) {
       store.isLoading = true;
       try {
         const { data } = await getHeroById(id);
@@ -46,7 +46,7 @@ export const HeroProvider = ({ children }) => {
       }
       store.isLoading = false;
     },
-    async postHero(newHero) {
+    async postHero(newHero: Hero) {
       store.isLoading = true;
       try {
         store.heroes.unshift((await postHero(newHero)).data);
@@ -56,7 +56,7 @@ export const HeroProvider = ({ children }) => {
       store.isLoading = false;
     },
     // pessimistic UI update
-    async deleteHero(id) {
+    async deleteHero(id: string) {
       store.isLoading = true;
       try {
         await deleteHero(id);
@@ -66,7 +66,7 @@ export const HeroProvider = ({ children }) => {
       }
       store.isLoading = false;
     },
-    async putHero(updatedHero) {
+    async putHero(updatedHero: Hero) {
       store.isLoading = true;
       try {
         await putHero(updatedHero);
@@ -77,10 +77,10 @@ export const HeroProvider = ({ children }) => {
       }
       store.isLoading = false;
     },
-    setHero(hero) {
+    setHero(hero: Hero) {
       store.hero = hero;
     },
-    setError({ message }) {
+    setError({ message }: any) {
       store.error = message;
       alert(message);
     },

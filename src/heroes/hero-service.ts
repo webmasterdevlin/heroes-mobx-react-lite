@@ -1,23 +1,24 @@
 import http from "../shared/http-service";
-import { BaseUrl } from "../api-config";
+
 import { Hero } from "./hero-types";
+import { api, Endpoints } from "../utils/axios-config";
 
 export async function getHeroes() {
-  return await http.get<Hero[]>(BaseUrl.heroes);
+  return await api.get<Hero[]>(Endpoints.heroes);
 }
 
-export async function getHeroById(id) {
-  return await http.get<Hero>(`${BaseUrl.heroes}${id}`);
+export async function getHeroById(id: string) {
+  return await api.get<Hero>(`${Endpoints.heroes}${id}`);
 }
 
-export async function postHero(hero) {
-  return await http.post<Hero>(BaseUrl.heroes, hero);
+export async function postHero(hero: Hero) {
+  return await api.post<Hero>(Endpoints.heroes, hero);
 }
 
-export async function putHero(hero) {
-  return await http.put<void>(`${BaseUrl.heroes}${hero.id}`, hero);
+export async function putHero(hero: Hero) {
+  return await api.put<void>(`${Endpoints.heroes}${hero.id}`, hero);
 }
 
-export async function deleteHero(id) {
-  return await http.delete<void>(`${BaseUrl.heroes}${id}`);
+export async function deleteHero(id: string) {
+  return await api.delete<void>(`${Endpoints.heroes}${id}`);
 }

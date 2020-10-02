@@ -5,11 +5,11 @@ import { heroContext } from "../hero-context";
 import { useObserver } from "mobx-react-lite";
 import { HeroStoreSchema } from "heroes/hero-types";
 
-export default function Heroes() {
+const Heroes = () => {
   /* Don't destructure. MobX observable are objects (and derivates) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.
    example:
    const { heroes,hero, getHeroes,  postHero, setHero,deleteHero,isLoading } = useContext(heroContext);*/
-  const heroStore = useContext<HeroStoreSchema>(heroContext);
+  const heroStore = useContext(heroContext);
 
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
@@ -30,7 +30,7 @@ export default function Heroes() {
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    heroStore.postHero(heroStore.hero);
+    heroStore.postHero(heroStore.hero).then();
     setIsShowNewItemForm(!isShowNewItemForm);
   };
 
@@ -103,4 +103,5 @@ export default function Heroes() {
       )}
     </>
   ));
-}
+};
+export default Heroes;
