@@ -28,7 +28,7 @@ export default function EditHero(params) {
   const handleBackButton = () => {
     history.goBack();
   };
-  //hi
+
   /*useObserver converts component into reactive component*/
   return useObserver(() => (
     <>

@@ -10,7 +10,8 @@
     "checkTs": "tsc --noEmit",
     "backend": "json-server --watch db.json --port 5000 --delay=500",
     "start:fullstack": "concurrently \"npm run backend\" \"npm run start\"",
-    "lint": "eslint . --ext .ts"
+    "lint": "eslint . --ext .ts",
+    "postinstall": "husky install"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.0",
