@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "npm run checkTs && react-scripts start",
+    "build": "npm run checkTs && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "checkTs": "tsc --noEmit",

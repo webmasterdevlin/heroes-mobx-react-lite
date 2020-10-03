@@ -22,9 +22,9 @@ const initialValues: HeroStateType = {
   error: "",
 };
 
-export const heroContextV2 = createContext<HeroStoreSchema>(null);
+export const heroContext = createContext<HeroStoreSchema>(null);
 
-export const HeroContextV2 = () => {
+export const HeroContext = () => {
   const store = useLocalStore(() => ({
     /*observables*/
     ...initialValues,

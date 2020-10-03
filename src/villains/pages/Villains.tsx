@@ -14,23 +14,23 @@ const {heroes, hero, getVillains} = useContext(villainContext);
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
   useEffect(() => {
-    store.villainsV2.getVillains().then();
+    store.villains.getVillains().then();
   }, []); // empty array needed here
 
   const showNewItemForm = () => {
     setIsShowNewItemForm(!isShowNewItemForm);
   };
   const onChange = ({ currentTarget: input }) => {
-    const newVillain = { ...store.villainsV2.villain };
+    const newVillain = { ...store.villains.villain };
     const { name, value } = input;
     newVillain[name] = value;
-    store.villainsV2.setVillain(newVillain);
+    store.villains.setVillain(newVillain);
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    await store.villainsV2.postVillain(store.villainsV2.villain);
+    await store.villains.postVillain(store.villains.villain);
     setIsShowNewItemForm(!isShowNewItemForm);
   };
 
@@ -38,7 +38,7 @@ const {heroes, hero, getVillains} = useContext(villainContext);
     const isConfirmed = window.confirm(`Delete ${name}?`);
     if (!isConfirmed) return;
 
-    await store.villainsV2.deleteVillain(id);
+    await store.villains.deleteVillain(id);
   };
 
   /*useObserver converts component into reactive component*/
@@ -50,7 +50,7 @@ const {heroes, hero, getVillains} = useContext(villainContext);
         handleOnSubmit={onSubmit}
         handleShowNewItemForm={showNewItemForm}
       />
-      {store.villainsV2.isLoading ? (
+      {store.villains.isLoading ? (
         <div
           style={{
             display: "flex",
@@ -71,7 +71,7 @@ const {heroes, hero, getVillains} = useContext(villainContext);
           </div>
         </div>
       ) : (
-        store.villainsV2.villains.map((item) => (
+        store.villains.villains.map((item) => (
           <div key={item.id} className="card mt-3" style={{ width: "auto" }}>
             <div className="card-header">
               <h3 className="card-title">

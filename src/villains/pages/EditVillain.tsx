@@ -7,19 +7,19 @@ export default function EditVillain(params) {
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    store.villainsV2.getVillainById(params.id).then();
+    store.villains.getVillainById(params.id).then();
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
-    const updatedVillain = { ...store.villainsV2.villain };
+    const updatedVillain = { ...store.villains.villain };
     const { name, value } = input;
     updatedVillain[name] = value;
-    await store.villainsV2.setVillain(updatedVillain);
+    await store.villains.setVillain(updatedVillain);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await store.villainsV2.putVillain(store.villainsV2.villain);
+    await store.villains.putVillain(store.villains.villain);
     setIsSuccess(!isSuccess);
   };
 
@@ -31,7 +31,7 @@ export default function EditVillain(params) {
   return useObserver(() => (
     <>
       <h2>Edit Villain</h2>
-      {store.villainsV2.isLoading ? (
+      {store.villains.isLoading ? (
         <div
           style={{
             display: "flex",
@@ -59,7 +59,7 @@ export default function EditVillain(params) {
                 <label htmlFor="firstName">First Name</label>
                 <input
                   name="firstName"
-                  value={store.villainsV2.villain.firstName}
+                  value={store.villains.villain.firstName}
                   onChange={handleInputChange}
                   type="text"
                   id="firstName"
@@ -70,7 +70,7 @@ export default function EditVillain(params) {
                 <label>Last Name</label>
                 <input
                   name="lastName"
-                  value={store.villainsV2.villain.lastName}
+                  value={store.villains.villain.lastName}
                   onChange={handleInputChange}
                   type="text"
                   id="lastName"
@@ -81,7 +81,7 @@ export default function EditVillain(params) {
             <label className="mt-3">House</label>
             <input
               name="house"
-              value={store.villainsV2.villain.house}
+              value={store.villains.villain.house}
               onChange={handleInputChange}
               type="text"
               id="house"
@@ -90,7 +90,7 @@ export default function EditVillain(params) {
             <label className="mt-3">Known as</label>
             <input
               name="knownAs"
-              value={store.villainsV2.villain.knownAs}
+              value={store.villains.villain.knownAs}
               onChange={handleInputChange}
               type="text"
               id="knownAs"

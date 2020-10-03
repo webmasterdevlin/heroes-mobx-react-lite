@@ -22,9 +22,9 @@ const initialValues: VillainStateType = {
   error: "",
 };
 
-export const villainContextV2 = createContext<VillainStoreSchema>(null);
+export const villainContext = createContext<VillainStoreSchema>(null);
 
-export const VillainContextV2 = () => {
+export const VillainContext = () => {
   const store = useLocalStore(() => ({
     /*observables*/
     ...initialValues,

@@ -13,23 +13,23 @@ const Heroes = () => {
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
   useEffect(() => {
-    store.heroesV2.getHeroes().then();
+    store.heroes.getHeroes().then();
   }, []); // empty array needed here
 
   const showNewItemForm = () => {
     setIsShowNewItemForm(!isShowNewItemForm);
   };
   const onChange = ({ currentTarget: input }) => {
-    const newHero = { ...store.heroesV2.hero };
+    const newHero = { ...store.heroes.hero };
     const { name, value } = input;
     newHero[name] = value;
-    store.heroesV2.setHero(newHero);
+    store.heroes.setHero(newHero);
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    store.heroesV2.postHero(store.heroesV2.hero).then();
+    store.heroes.postHero(store.heroes.hero).then();
     setIsShowNewItemForm(!isShowNewItemForm);
   };
 
@@ -37,7 +37,7 @@ const Heroes = () => {
     const isConfirmed = window.confirm(`Delete ${name}?`);
     if (!isConfirmed) return;
 
-    await store.heroesV2.deleteHero(id);
+    await store.heroes.deleteHero(id);
   };
 
   /*useObserver converts component into reactive component*/
@@ -49,7 +49,7 @@ const Heroes = () => {
         handleOnSubmit={onSubmit}
         handleShowNewItemForm={showNewItemForm}
       />
-      {store.heroesV2.isLoading ? (
+      {store.heroes.isLoading ? (
         <div
           style={{
             display: "flex",
@@ -70,7 +70,7 @@ const Heroes = () => {
           </div>
         </div>
       ) : (
-        store.heroesV2.heroes.map((item) => (
+        store.heroes.heroes.map((item) => (
           <div key={item.id} className="card mt-3" style={{ width: "auto" }}>
             <div className="card-header">
               <h3 className="card-title">

@@ -50,11 +50,11 @@ export default function HeaderNav() {
         </ul>
 
         <span className="mr-5" style={{ color: "purple", fontSize: "24px" }}>
-          Total heroes: {store.heroesV2.totalHeroes}
+          Total heroes: {store.heroes.totalHeroes}
         </span>
 
         <span className="mr-5" style={{ color: "purple", fontSize: "24px" }}>
-          Total villains: {store.villainsV2.totalVillains}
+          Total villains: {store.villains.totalVillains}
         </span>
 
         <ul className="navbar-nav my-2 my-lg-0">
