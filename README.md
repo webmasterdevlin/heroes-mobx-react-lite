@@ -1,8 +1,8 @@
-# My version of Tour of Heroes app using ReactJS Hooks and Mobx-React-Lite.
+# My version of Tour of Heroes app using ReactJS Hooks and Mobx-React-Lite 3.0 which has Mobx v6.0.
 
 ### Features
 
-Hooks, Mobx-React-Lite, HTTP request (using axios), navigation params, 2 stores, computed values
+Hooks, Mobx-React-Lite, HTTP request (using axios), navigation params, 2 stores in 1 root store, computed values
 
 ### To run the project after cloning
 
