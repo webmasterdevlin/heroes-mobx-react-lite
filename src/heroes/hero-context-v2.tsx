@@ -69,7 +69,7 @@ export const HeroContextV2 = () => {
       store.setError("");
       store.isLoading = true;
       try {
-        await deleteHero(id);
+        await deleteHero();
         store.heroes = store.heroes.filter((h) => h.id !== id);
       } catch (e) {
         store.setError(e);
