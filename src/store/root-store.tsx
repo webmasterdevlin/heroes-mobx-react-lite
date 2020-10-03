@@ -1,6 +1,6 @@
 import React, { createContext } from "react";
-import { HeroContext } from "../heroes/hero-context";
-import { VillainContext } from "../villains/villain-context";
+import useHeroContext from "../heroes/hero-context";
+import useVillainContext from "../villains/villain-context";
 import { HeroStoreSchema } from "../heroes/hero-types";
 import { VillainStoreSchema } from "../villains/villain-types";
 
@@ -12,8 +12,8 @@ type RootStoreSchema = {
 export const RootStoreContext = createContext<RootStoreSchema>(null);
 
 const RootStore = ({ children }) => {
-  const heroes = HeroContext();
-  const villains = VillainContext();
+  const heroes = useHeroContext();
+  const villains = useVillainContext();
 
   return (
     <RootStoreContext.Provider value={{ heroes, villains }}>

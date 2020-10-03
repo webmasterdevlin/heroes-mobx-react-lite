@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import NewItemForm from "../../shared/components/NewItemForm";
 import { Link } from "@reach/router";
 import { useObserver } from "mobx-react-lite";
-import { RootStoreContext } from "../../store/rootStore";
+import { RootStoreContext } from "../../store/root-store";
 
 const Heroes = () => {
   /* Don't destructure. MobX observable are objects (and derivatives) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.

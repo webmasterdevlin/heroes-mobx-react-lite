@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useObserver } from "mobx-react-lite";
 import { useHistory, useParams } from "react-router";
-import { RootStoreContext } from "../../store/rootStore";
+import { RootStoreContext } from "../../store/root-store";
 
 export default function EditHero(params) {
   const store = useContext(RootStoreContext);

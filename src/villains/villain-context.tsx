@@ -24,7 +24,7 @@ const initialValues: VillainStateType = {
 
 export const villainContext = createContext<VillainStoreSchema>(null);
 
-export const VillainContext = () => {
+const VillainContext = () => {
   const store = useLocalStore(() => ({
     /*observables*/
     ...initialValues,
@@ -109,3 +109,5 @@ export const VillainContext = () => {
 
   return store;
 };
+
+export default VillainContext;

@@ -24,7 +24,7 @@ const initialValues: HeroStateType = {
 
 export const heroContext = createContext<HeroStoreSchema>(null);
 
-export const HeroContext = () => {
+const HeroContext = () => {
   const store = useLocalStore(() => ({
     /*observables*/
     ...initialValues,
@@ -107,3 +107,5 @@ export const HeroContext = () => {
   }));
   return store;
 };
+
+export default HeroContext;

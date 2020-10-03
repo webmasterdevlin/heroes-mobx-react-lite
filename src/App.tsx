@@ -3,7 +3,7 @@ import "./App.css";
 import { BrowserRouter } from "react-router-dom";
 import RootRouter from "./root-router";
 import HeaderNav from "./shared/components/HeaderNav";
-import RootStore from "./store/rootStore";
+import RootStore from "./store/root-store";
 
 function App() {
   return (

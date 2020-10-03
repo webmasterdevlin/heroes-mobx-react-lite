@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useObserver } from "mobx-react-lite";
-import { RootStoreContext } from "../../store/rootStore";
+import { RootStoreContext } from "../../store/root-store";
 
 export default function EditVillain(params) {
   const store = useContext(RootStoreContext);

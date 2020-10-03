@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "@reach/router";
 import { useObserver } from "mobx-react-lite";
-import { RootStoreContext } from "../../store/rootStore";
+import { RootStoreContext } from "../../store/root-store";
 
 export default function HeaderNav() {
   const store = useContext(RootStoreContext);
