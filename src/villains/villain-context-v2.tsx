@@ -22,6 +22,8 @@ const initialValues: VillainStateType = {
   error: "",
 };
 
+export const villainContextV2 = createContext<VillainStoreSchema>(null);
+
 export const VillainContextV2 = () => {
   const store = useLocalStore(() => ({
     /*observables*/

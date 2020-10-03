@@ -1,8 +1,6 @@
 import React, { useState, useContext } from "react";
 import { Link } from "@reach/router";
-import { heroContext } from "../../heroes/hero-context";
 import { useObserver } from "mobx-react-lite";
-import { villainContext } from "../../villains/villain-context";
 import { RootStoreContext } from "../../store/rootStore";
 
 export default function HeaderNav() {

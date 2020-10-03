@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-import { heroContext } from "../hero-context";
 import { useObserver } from "mobx-react-lite";
 import { useHistory, useParams } from "react-router";
 import { RootStoreContext } from "../../store/rootStore";

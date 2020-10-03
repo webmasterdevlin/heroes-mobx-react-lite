@@ -1,7 +1,4 @@
 import React, { createContext } from "react";
-
-import { villainContext } from "../villains/villain-context";
-import { heroContext } from "../heroes/hero-context";
 import { HeroContextV2 } from "../heroes/hero-context-v2";
 import { VillainContextV2 } from "../villains/villain-context-v2";
 import { HeroStoreSchema } from "../heroes/hero-types";

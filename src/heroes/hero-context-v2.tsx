@@ -22,6 +22,8 @@ const initialValues: HeroStateType = {
   error: "",
 };
 
+export const heroContextV2 = createContext<HeroStoreSchema>(null);
+
 export const HeroContextV2 = () => {
   const store = useLocalStore(() => ({
     /*observables*/

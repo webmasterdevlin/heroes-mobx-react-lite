@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext } from "react";
 import NewItemForm from "../../shared/components/NewItemForm";
-
 import { Link } from "@reach/router";
-import { villainContext } from "../villain-context";
 import { useObserver } from "mobx-react-lite";
 import { RootStoreContext } from "../../store/rootStore";
 

@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import NewItemForm from "../../shared/components/NewItemForm";
 import { Link } from "@reach/router";
-import { heroContext } from "../hero-context";
 import { useObserver } from "mobx-react-lite";
-import { HeroStoreSchema } from "heroes/hero-types";
 import { RootStoreContext } from "../../store/rootStore";
 
 const Heroes = () => {
