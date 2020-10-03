@@ -9,7 +9,8 @@
     "eject": "react-scripts eject",
     "checkTs": "tsc --noEmit",
     "backend": "json-server --watch db.json --port 5000 --delay=500",
-    "start:fullstack": "concurrently \"npm run backend\" \"npm run start\""
+    "start:fullstack": "concurrently \"npm run backend\" \"npm run start\"",
+    "lint": "eslint . --ext .ts"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.0",
@@ -52,6 +53,6 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run checkTs"    }
+      "pre-commit": "npm run lint"    }
   }
 }
