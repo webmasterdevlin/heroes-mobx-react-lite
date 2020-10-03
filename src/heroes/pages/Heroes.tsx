@@ -4,33 +4,34 @@ import { Link } from "@reach/router";
 import { heroContext } from "../hero-context";
 import { useObserver } from "mobx-react-lite";
 import { HeroStoreSchema } from "heroes/hero-types";
+import { RootStoreContext } from "../../store/rootStore";
 
 const Heroes = () => {
-  /* Don't destructure. MobX observable are objects (and derivates) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.
+  /* Don't destructure. MobX observable are objects (and derivatives) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.
    example:
    const { heroes,hero, getHeroes,  postHero, setHero,deleteHero,isLoading } = useContext(heroContext);*/
-  const heroStore = useContext(heroContext);
+  const store = useContext(RootStoreContext);
 
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
   useEffect(() => {
-    heroStore.getHeroes().then();
+    store.heroesV2.getHeroes().then();
   }, []); // empty array needed here
 
   const showNewItemForm = () => {
     setIsShowNewItemForm(!isShowNewItemForm);
   };
   const onChange = ({ currentTarget: input }) => {
-    const newHero = { ...heroStore.hero };
+    const newHero = { ...store.heroesV2.hero };
     const { name, value } = input;
     newHero[name] = value;
-    heroStore.setHero(newHero);
+    store.heroesV2.setHero(newHero);
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    heroStore.postHero(heroStore.hero).then();
+    store.heroesV2.postHero(store.heroesV2.hero).then();
     setIsShowNewItemForm(!isShowNewItemForm);
   };
 
@@ -38,7 +39,7 @@ const Heroes = () => {
     const isConfirmed = window.confirm(`Delete ${name}?`);
     if (!isConfirmed) return;
 
-    await heroStore.deleteHero(id);
+    await store.heroesV2.deleteHero(id);
   };
 
   /*useObserver converts component into reactive component*/
@@ -50,7 +51,7 @@ const Heroes = () => {
         handleOnSubmit={onSubmit}
         handleShowNewItemForm={showNewItemForm}
       />
-      {heroStore.isLoading ? (
+      {store.heroesV2.isLoading ? (
         <div
           style={{
             display: "flex",
@@ -71,7 +72,7 @@ const Heroes = () => {
           </div>
         </div>
       ) : (
-        heroStore.heroes.map((item) => (
+        store.heroesV2.heroes.map((item) => (
           <div key={item.id} className="card mt-3" style={{ width: "auto" }}>
             <div className="card-header">
               <h3 className="card-title">

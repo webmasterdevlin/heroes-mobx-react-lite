@@ -5,21 +5,20 @@ import RootRouter from "./root-router";
 import HeaderNav from "./shared/components/HeaderNav";
 import { HeroProvider } from "./heroes/hero-context";
 import { VillainProvider } from "./villains/villain-context";
+import RootStore from "./store/rootStore";
 
 function App() {
   return (
-    <VillainProvider>
-      <HeroProvider>
-        <BrowserRouter>
-          <>
-            <HeaderNav />
-            <div className="container">
-              <RootRouter />
-            </div>
-          </>
-        </BrowserRouter>
-      </HeroProvider>
-    </VillainProvider>
+    <RootStore>
+      <BrowserRouter>
+        <>
+          <HeaderNav />
+          <div className="container">
+            <RootRouter />
+          </div>
+        </>
+      </BrowserRouter>
+    </RootStore>
   );
 }
 

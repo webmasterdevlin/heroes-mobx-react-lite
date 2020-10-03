@@ -4,34 +4,35 @@ import NewItemForm from "../../shared/components/NewItemForm";
 import { Link } from "@reach/router";
 import { villainContext } from "../villain-context";
 import { useObserver } from "mobx-react-lite";
+import { RootStoreContext } from "../../store/rootStore";
 
 const Villains = () => {
   /* Don't destructure. MobX observable are objects (and derivates) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.
 example:
 const {heroes, hero, getVillains} = useContext(villainContext);
 */
-  const villainStore = useContext(villainContext);
+  const store = useContext(RootStoreContext);
 
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
   useEffect(() => {
-    villainStore.getVillains().then();
+    store.villainsV2.getVillains().then();
   }, []); // empty array needed here
 
   const showNewItemForm = () => {
     setIsShowNewItemForm(!isShowNewItemForm);
   };
   const onChange = ({ currentTarget: input }) => {
-    const newVillain = { ...villainStore.villain };
+    const newVillain = { ...store.villainsV2.villain };
     const { name, value } = input;
     newVillain[name] = value;
-    villainStore.setVillain(newVillain);
+    store.villainsV2.setVillain(newVillain);
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    await villainStore.postVillain(villainStore.villain);
+    await store.villainsV2.postVillain(store.villainsV2.villain);
     setIsShowNewItemForm(!isShowNewItemForm);
   };
 
@@ -39,7 +40,7 @@ const {heroes, hero, getVillains} = useContext(villainContext);
     const isConfirmed = window.confirm(`Delete ${name}?`);
     if (!isConfirmed) return;
 
-    await villainStore.deleteVillain(id);
+    await store.villainsV2.deleteVillain(id);
   };
 
   /*useObserver converts component into reactive component*/
@@ -51,7 +52,7 @@ const {heroes, hero, getVillains} = useContext(villainContext);
         handleOnSubmit={onSubmit}
         handleShowNewItemForm={showNewItemForm}
       />
-      {villainStore.isLoading ? (
+      {store.villainsV2.isLoading ? (
         <div
           style={{
             display: "flex",
@@ -72,7 +73,7 @@ const {heroes, hero, getVillains} = useContext(villainContext);
           </div>
         </div>
       ) : (
-        villainStore.villains.map((item) => (
+        store.villainsV2.villains.map((item) => (
           <div key={item.id} className="card mt-3" style={{ width: "auto" }}>
             <div className="card-header">
               <h3 className="card-title">

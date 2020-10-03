@@ -3,10 +3,10 @@ import { Link } from "@reach/router";
 import { heroContext } from "../../heroes/hero-context";
 import { useObserver } from "mobx-react-lite";
 import { villainContext } from "../../villains/villain-context";
+import { RootStoreContext } from "../../store/rootStore";
 
 export default function HeaderNav() {
-  const heroStore = useContext(heroContext);
-  const villainStore = useContext(villainContext);
+  const store = useContext(RootStoreContext);
   const [navIsCollapse, setNavIsCollapse] = useState(true);
 
   const toggleNavBar = () => {
@@ -52,11 +52,11 @@ export default function HeaderNav() {
         </ul>
 
         <span className="mr-5" style={{ color: "purple", fontSize: "24px" }}>
-          Total heroes: {heroStore.totalHeroes}
+          Total heroes: {store.heroesV2.totalHeroes}
         </span>
 
         <span className="mr-5" style={{ color: "purple", fontSize: "24px" }}>
-          Total villains: {villainStore.totalVillains}
+          Total villains: {store.villainsV2.totalVillains}
         </span>
 
         <ul className="navbar-nav my-2 my-lg-0">

@@ -4,7 +4,7 @@ export default function NewItemForm({
   isShowNewItemForm,
   handleOnChange,
   handleOnSubmit,
-  handleShowNewItemForm
+  handleShowNewItemForm,
 }) {
   return (
     <>
@@ -35,7 +35,7 @@ export default function NewItemForm({
                 <input
                   name="firstName"
                   id="firstName"
-                  required="required"
+                  required
                   type="text"
                   onChange={handleOnChange}
                   className="form-control"

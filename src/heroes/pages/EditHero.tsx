@@ -2,26 +2,27 @@ import React, { useState, useEffect, useContext } from "react";
 import { heroContext } from "../hero-context";
 import { useObserver } from "mobx-react-lite";
 import { useHistory, useParams } from "react-router";
+import { RootStoreContext } from "../../store/rootStore";
 
 export default function EditHero(params) {
-  const heroStore = useContext(heroContext);
+  const store = useContext(RootStoreContext);
   const history = useHistory();
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    heroStore.getHeroById(params.id);
+    store.heroesV2.getHeroById(params.id);
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
-    const updatedHero = { ...heroStore.hero };
+    const updatedHero = { ...store.heroesV2.hero };
     const { name, value } = input;
     updatedHero[name] = value;
-    await heroStore.setHero(updatedHero);
+    await store.heroesV2.setHero(updatedHero);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await heroStore.putHero(heroStore.hero);
+    await store.heroesV2.putHero(store.heroesV2.hero);
     setIsSuccess(!isSuccess);
   };
 
@@ -33,7 +34,7 @@ export default function EditHero(params) {
   return useObserver(() => (
     <>
       <h2>Edit Hero</h2>
-      {heroStore.isLoading ? (
+      {store.heroesV2.isLoading ? (
         <div
           style={{
             display: "flex",
@@ -61,7 +62,7 @@ export default function EditHero(params) {
                 <label htmlFor="firstName">First Name</label>
                 <input
                   name="firstName"
-                  value={heroStore.hero.firstName}
+                  value={store.heroesV2.hero.firstName}
                   onChange={handleInputChange}
                   type="text"
                   id="firstName"
@@ -72,7 +73,7 @@ export default function EditHero(params) {
                 <label>Last Name</label>
                 <input
                   name="lastName"
-                  value={heroStore.hero.lastName}
+                  value={store.heroesV2.hero.lastName}
                   onChange={handleInputChange}
                   type="text"
                   id="lastName"
@@ -83,7 +84,7 @@ export default function EditHero(params) {
             <label className="mt-3">House</label>
             <input
               name="house"
-              value={heroStore.hero.house}
+              value={store.heroesV2.hero.house}
               onChange={handleInputChange}
               type="text"
               id="house"
@@ -92,7 +93,7 @@ export default function EditHero(params) {
             <label className="mt-3">Known as</label>
             <input
               name="knownAs"
-              value={heroStore.hero.knownAs}
+              value={store.heroesV2.hero.knownAs}
               onChange={handleInputChange}
               type="text"
               id="knownAs"
