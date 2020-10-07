@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useObserver } from "mobx-react-lite";
+import React, { FC, useState, useEffect, useContext } from "react";
+import { observer } from "mobx-react-lite";
 import { RootStoreContext } from "../../store/root-store";
 
-export default function EditVillain(params) {
+type Props = {
+  id: string
+}
+  /* observer converts component into reactive component*/
+const EditVillain: FC<Props> = observer(({id}) => {
   const store = useContext(RootStoreContext);
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    store.villains.getVillainById(params.id).then();
+    store.villains.getVillainById(id).then();
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
@@ -27,8 +31,7 @@ export default function EditVillain(params) {
     window.history.back();
   };
 
-  /*useObserver converts component into reactive component*/
-  return useObserver(() => (
+  return  (
     <>
       <h2>Edit Villain</h2>
       {store.villains.isLoading ? (
@@ -119,5 +122,6 @@ export default function EditVillain(params) {
         </div>
       )}
     </>
-  ));
-}
+  )
+});
+export default EditVillain;

@@ -1,15 +1,20 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useObserver } from "mobx-react-lite";
+import React, { useState, useEffect, useContext, FC } from "react";
+import { observer } from "mobx-react-lite";
 import { useHistory, useParams } from "react-router";
 import { RootStoreContext } from "../../store/root-store";
 
-export default function EditHero(params) {
+
+type Props = {
+  id: string
+}
+  /* observer converts component into reactive component*/
+const EditHero:FC<Props> = observer(({id}) => {
   const store = useContext(RootStoreContext);
   const history = useHistory();
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    store.heroes.getHeroById(params.id);
+    store.heroes.getHeroById(id);
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
@@ -29,8 +34,8 @@ export default function EditHero(params) {
     history.goBack();
   };
 
-  /*useObserver converts component into reactive component*/
-  return useObserver(() => (
+
+  return (
     <>
       <h2>Edit Hero</h2>
       {store.heroes.isLoading ? (
@@ -121,5 +126,6 @@ export default function EditHero(params) {
         </div>
       )}
     </>
-  ));
-}
+  )
+});
+export default EditHero;
