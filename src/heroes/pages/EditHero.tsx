@@ -13,19 +13,19 @@ const EditHero: FC<Props> = observer(({ id }) => {
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    store.heroStore.getHeroById(id);
+    store.heroStore.getHeroByIdAction(id);
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
     const updatedHero = { ...store.heroStore.hero };
     const { name, value } = input;
     updatedHero[name] = value;
-    await store.heroStore.setHero(updatedHero);
+    await store.heroStore.setHeroAction(updatedHero);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await store.heroStore.putHero(store.heroStore.hero);
+    await store.heroStore.putHeroAction(store.heroStore.hero);
     setIsSuccess(!isSuccess);
   };
 

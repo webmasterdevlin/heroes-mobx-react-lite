@@ -1,11 +1,11 @@
 import React from "react";
 import { useLocalObservable } from "mobx-react-lite";
 import {
-  deleteHero,
-  getHeroById,
-  getHeroes,
-  postHero,
-  putHero,
+  deleteHeroAxios,
+  getHeroByIdAxios,
+  getHeroesAxios,
+  postHeroAxios,
+  putHeroAxios,
 } from "./hero-service";
 import { Hero, HeroStateType } from "./hero-types";
 
@@ -28,76 +28,76 @@ const HeroContext = () => {
     ...initialValues,
 
     /*non-asynchronous actions*/
-    setHero(hero: Hero) {
+    setHeroAction(hero: Hero) {
       store.hero = hero;
     },
-    setError({ message }: any) {
+    setErrorAction({ message }: any) {
       store.error = message;
       console.log(message);
     },
 
     /*computed values i.e. derived state*/
-    get totalHeroes() {
+    get totalHeroesAction() {
       return store.heroes.length;
     },
 
     /*asynchronous actions*/
-    async getHeroes() {
-      store.setError("");
+    async getHeroesAction() {
+      store.setErrorAction("");
       store.isLoading = true;
       try {
-        store.heroes = (await getHeroes()).data;
+        store.heroes = (await getHeroesAxios()).data;
       } catch (e) {
-        store.setError(e);
+        store.setErrorAction(e);
       } finally {
         store.isLoading = false;
       }
     },
-    async getHeroById(id: string) {
-      store.setError("");
+    async getHeroByIdAction(id: string) {
+      store.setErrorAction("");
       store.isLoading = true;
       try {
-        const { data } = await getHeroById(id);
+        const { data } = await getHeroByIdAxios(id);
         store.hero = data;
       } catch (e) {
-        store.setError(e);
+        store.setErrorAction(e);
       } finally {
         store.isLoading = false;
       }
     },
     async postHero(newHero: Hero) {
-      store.setError("");
+      store.setErrorAction("");
       store.isLoading = true;
       try {
-        store.heroes.unshift((await postHero(newHero)).data);
+        store.heroes.unshift((await postHeroAxios(newHero)).data);
       } catch (e) {
-        store.setError(e);
+        store.setErrorAction(e);
       } finally {
         store.isLoading = false;
       }
     },
     // asynchronous actions (pessimistic UI update)
     async deleteHero(id: string) {
-      store.setError("");
+      store.setErrorAction("");
       store.isLoading = true;
       try {
-        await deleteHero(id);
+        await deleteHeroAxios(id);
         store.heroes = store.heroes.filter((h) => h.id !== id);
       } catch (e) {
-        store.setError(e);
+        store.setErrorAction(e);
       } finally {
         store.isLoading = false;
       }
     },
     async putHero(updatedHero: Hero) {
-      store.setError("");
+      store.setErrorAction("");
       store.isLoading = true;
       try {
-        await putHero(updatedHero);
+        await putHeroAxios(updatedHero);
         const index = store.heroes.findIndex((h) => h.id === updatedHero.id);
         store.heroes[index] = updatedHero;
       } catch (e) {
-        store.setError(e);
+        store.setErrorAction(e);
       } finally {
         store.isLoading = false;
       }

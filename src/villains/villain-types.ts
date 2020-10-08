@@ -15,18 +15,18 @@ export type Villain = {
 
 export type VillainActionType = {
   /*non-asynchronous*/
-  setVillain: (hero: Villain) => void;
-  setError: (error: any) => void;
+  setVillainAction: (hero: Villain) => void;
+  setErrorAction: (error: any) => void;
 
   /*computed or derived values*/
-  totalVillains: () => number;
+  totalVillainsAction: () => number;
 
   /*asynchronous*/
-  getVillains: () => Promise<void>;
-  getVillainById: (id: string) => Promise<void>;
-  postVillain: (hero: Villain) => Promise<void>;
-  putVillain: (hero: Villain) => Promise<void>;
-  deleteVillain: (id: string) => Promise<void>;
+  getVillainsAction: () => Promise<void>;
+  getVillainByIdAction: (id: string) => Promise<void>;
+  postVillainAction: (hero: Villain) => Promise<void>;
+  putVillainAction: (hero: Villain) => Promise<void>;
+  deleteVillainAction: (id: string) => Promise<void>;
 };
 
 export type VillainStoreSchema = {} & VillainStateType & VillainActionType;

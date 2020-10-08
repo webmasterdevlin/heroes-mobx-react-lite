@@ -15,7 +15,7 @@ const {heroes, hero, getVillains} = useContext(villainContext);
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
   useEffect(() => {
-    store.villainStore.getVillains().then();
+    store.villainStore.getVillainsAction().then();
   }, []); // empty array needed here
 
   const showNewItemForm = () => {
@@ -25,13 +25,13 @@ const {heroes, hero, getVillains} = useContext(villainContext);
     const newVillain = { ...store.villainStore.villain };
     const { name, value } = input;
     newVillain[name] = value;
-    store.villainStore.setVillain(newVillain);
+    store.villainStore.setVillainAction(newVillain);
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    await store.villainStore.postVillain(store.villainStore.villain);
+    await store.villainStore.postVillainAction(store.villainStore.villain);
     setIsShowNewItemForm(!isShowNewItemForm);
   };
 
@@ -39,7 +39,7 @@ const {heroes, hero, getVillains} = useContext(villainContext);
     const isConfirmed = window.confirm(`Delete ${name}?`);
     if (!isConfirmed) return;
 
-    await store.villainStore.deleteVillain(id);
+    await store.villainStore.deleteVillainAction(id);
   };
 
   return (

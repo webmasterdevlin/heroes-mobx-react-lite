@@ -570,13 +570,6 @@
   ],
   "villains": [
     {
-      "id": "A3D523C0-F181-B49D-7F88-E8D72DD2EEC0",
-      "firstName": "Justin",
-      "lastName": "Lynch",
-      "house": "Georgia",
-      "knownAs": "Risus Quis Associates"
-    },
-    {
       "id": "E87B579D-42D0-E13A-52D5-0BC7E816B76F",
       "firstName": "Dylan",
       "lastName": "Martinez",

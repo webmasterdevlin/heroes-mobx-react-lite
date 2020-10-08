@@ -15,18 +15,18 @@ export type Hero = {
 // FIX: all any
 export type HeroActionType = {
   /*non-async*/
-  setError: (error: any) => void;
-  setHero: (hero: Hero) => void;
+  setErrorAction: (error: any) => void;
+  setHeroAction: (hero: Hero) => void;
 
   /*computed or derived values*/
-  totalHeroes: () => number;
+  totalHeroesAction: () => number;
 
   /*async*/
-  getHeroes: () => Promise<void>;
-  deleteHero: (id: string) => Promise<void>;
-  postHero: (hero: Hero) => Promise<void>;
-  putHero: (hero: Hero) => Promise<void>;
-  getHeroById: (id: string) => Promise<void>;
+  getHeroesAction: () => Promise<void>;
+  deleteHeroAction: (id: string) => Promise<void>;
+  postHeroAction: (hero: Hero) => Promise<void>;
+  putHeroAction: (hero: Hero) => Promise<void>;
+  getHeroByIdAction: (id: string) => Promise<void>;
 };
 
 export type HeroStoreSchema = {} & HeroStateType & HeroActionType;

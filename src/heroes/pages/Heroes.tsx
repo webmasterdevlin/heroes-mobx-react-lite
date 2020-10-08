@@ -14,7 +14,7 @@ const Heroes = observer(() => {
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
   useEffect(() => {
-    store.heroStore.getHeroes().then();
+    store.heroStore.getHeroesAction().then();
   }, []); // empty array needed here
 
   const showNewItemForm = () => {
@@ -24,13 +24,13 @@ const Heroes = observer(() => {
     const newHero = { ...store.heroStore.hero };
     const { name, value } = input;
     newHero[name] = value;
-    store.heroStore.setHero(newHero);
+    store.heroStore.setHeroAction(newHero);
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    store.heroStore.postHero(store.heroStore.hero).then();
+    store.heroStore.postHeroAction(store.heroStore.hero).then();
     setIsShowNewItemForm(!isShowNewItemForm);
   };
 
@@ -38,7 +38,7 @@ const Heroes = observer(() => {
     const isConfirmed = window.confirm(`Delete ${name}?`);
     if (!isConfirmed) return;
 
-    await store.heroStore.deleteHero(id);
+    await store.heroStore.deleteHeroAction(id);
   };
 
   return (

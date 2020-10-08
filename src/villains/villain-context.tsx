@@ -1,11 +1,11 @@
 import React from "react";
 import { useLocalObservable } from "mobx-react-lite";
 import {
-  deleteVillain,
-  getVillainById,
-  getVillains,
-  postVillain,
-  putVillain,
+  deleteVillainAxios,
+  getVillainByIdAxios,
+  getVillainsAxios,
+  postVillainAxios,
+  putVillainAxios,
 } from "./villain-service";
 import { Villain, VillainStateType } from "./villain-types";
 
@@ -28,78 +28,78 @@ const VillainContext = () => {
     ...initialValues,
 
     /*non-asynchronous actions*/
-    setVillain(villain: Villain) {
+    setVillainAction(villain: Villain) {
       store.villain = villain;
     },
-    setError({ message }: any) {
+    setErrorAction({ message }: any) {
       store.error = message;
       console.log(message);
     },
 
     /*computed values i.e. derived state*/
-    get totalVillains() {
+    get totalVillainsAction() {
       return store.villains.length;
     },
 
     /*asynchronous actions*/
-    async getVillains() {
-      store.setError("");
+    async getVillainsAction() {
+      store.setErrorAction("");
       store.isLoading = true;
       try {
-        store.villains = (await getVillains()).data;
+        store.villains = (await getVillainsAxios()).data;
       } catch (e) {
-        store.setError(e);
+        store.setErrorAction(e);
       } finally {
         store.isLoading = false;
       }
     },
-    async getVillainById(id: string) {
-      store.setError("");
+    async getVillainByIdAction(id: string) {
+      store.setErrorAction("");
       store.isLoading = true;
       try {
-        const { data } = await getVillainById(id);
+        const { data } = await getVillainByIdAxios(id);
         store.villain = data;
       } catch (e) {
-        store.setError(e);
+        store.setErrorAction(e);
       } finally {
         store.isLoading = false;
       }
     },
-    async postVillain(newVillain: Villain) {
-      store.setError("");
+    async postVillainAction(newVillain: Villain) {
+      store.setErrorAction("");
       store.isLoading = true;
       try {
-        store.villains.unshift((await postVillain(newVillain)).data);
+        store.villains.unshift((await postVillainAxios(newVillain)).data);
       } catch (e) {
-        store.setError(e);
+        store.setErrorAction(e);
       } finally {
         store.isLoading = false;
       }
     },
 
     // asynchronous actions also. Optimistic UI update. No need for showing loader/spinner.
-    async deleteVillain(id: string) {
-      store.setError("");
+    async deleteVillainAction(id: string) {
+      store.setErrorAction("");
       const previousVillains = store.villains;
       store.villains = store.villains.filter((h) => h.id !== id);
       try {
-        await deleteVillain(id);
+        await deleteVillainAxios(id);
       } catch (e) {
         store.villains = previousVillains;
-        store.setError(e);
+        store.setErrorAction(e);
       }
     },
-    async putVillain(updatedVillain: Villain) {
-      store.setError("");
+    async putVillainAction(updatedVillain: Villain) {
+      store.setErrorAction("");
       store.isLoading = true;
       try {
-        await putVillain(updatedVillain);
+        await putVillainAxios(updatedVillain);
         const index = store.villains.findIndex(
           (v) => v.id === updatedVillain.id
         );
         store.villains[index] = updatedVillain;
       } catch (e) {
-        store.setError(e);
+        store.setErrorAction(e);
       } finally {
         store.isLoading = false;
       }

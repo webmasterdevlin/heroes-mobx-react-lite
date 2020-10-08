@@ -11,19 +11,19 @@ const EditVillain: FC<Props> = observer(({ id }) => {
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    store.villainStore.getVillainById(id).then();
+    store.villainStore.getVillainByIdAction(id).then();
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
     const updatedVillain = { ...store.villainStore.villain };
     const { name, value } = input;
     updatedVillain[name] = value;
-    await store.villainStore.setVillain(updatedVillain);
+    await store.villainStore.setVillainAction(updatedVillain);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await store.villainStore.putVillain(store.villainStore.villain);
+    await store.villainStore.putVillainAction(store.villainStore.villain);
     setIsSuccess(!isSuccess);
   };
 
