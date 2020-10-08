@@ -5,18 +5,20 @@ import { HeroStoreSchema } from "../heroes/hero-types";
 import { VillainStoreSchema } from "../villains/villain-types";
 
 type RootStoreSchema = {
-  heroes: HeroStoreSchema;
-  villains: VillainStoreSchema;
+  heroStore: HeroStoreSchema;
+  villainStore: VillainStoreSchema;
 };
 
 export const RootStoreContext = createContext<RootStoreSchema>(null);
 
 const RootStore = ({ children }) => {
-  const heroes = useHeroContext();
-  const villains = useVillainContext();
+  const heroContext = useHeroContext();
+  const villainContext = useVillainContext();
 
   return (
-    <RootStoreContext.Provider value={{ heroes, villains }}>
+    <RootStoreContext.Provider
+      value={{ heroStore: heroContext, villainStore: villainContext }}
+    >
       {children}
     </RootStoreContext.Provider>
   );

@@ -9,8 +9,8 @@ Hooks, Mobx-React-Lite, HTTP request (using axios), navigation params, 2 stores 
 Create or go to your demo directory then run the following in the terminal or cmd.
 
 ```sh
-$ git clone https://github.com/webmasterdevlin/heroes-mobx-react-lite.git
-$ cd heroes-mobx-react-lite
+$ git clone https://github.com/webmasterdevlin/heroStore-mobx-react-lite.git
+$ cd heroStore-mobx-react-lite
 $ npm install
 $ npm run start
 ```

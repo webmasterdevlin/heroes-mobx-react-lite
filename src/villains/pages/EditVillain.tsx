@@ -3,27 +3,27 @@ import { observer } from "mobx-react-lite";
 import { RootStoreContext } from "../../store/root-store";
 
 type Props = {
-  id: string
-}
-  /* observer converts component into reactive component*/
-const EditVillain: FC<Props> = observer(({id}) => {
+  id: string;
+};
+/* observer converts component into reactive component*/
+const EditVillain: FC<Props> = observer(({ id }) => {
   const store = useContext(RootStoreContext);
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    store.villains.getVillainById(id).then();
+    store.villainStore.getVillainById(id).then();
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
-    const updatedVillain = { ...store.villains.villain };
+    const updatedVillain = { ...store.villainStore.villain };
     const { name, value } = input;
     updatedVillain[name] = value;
-    await store.villains.setVillain(updatedVillain);
+    await store.villainStore.setVillain(updatedVillain);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await store.villains.putVillain(store.villains.villain);
+    await store.villainStore.putVillain(store.villainStore.villain);
     setIsSuccess(!isSuccess);
   };
 
@@ -31,10 +31,10 @@ const EditVillain: FC<Props> = observer(({id}) => {
     window.history.back();
   };
 
-  return  (
+  return (
     <>
       <h2>Edit Villain</h2>
-      {store.villains.isLoading ? (
+      {store.villainStore.isLoading ? (
         <div
           style={{
             display: "flex",
@@ -62,7 +62,7 @@ const EditVillain: FC<Props> = observer(({id}) => {
                 <label htmlFor="firstName">First Name</label>
                 <input
                   name="firstName"
-                  value={store.villains.villain.firstName}
+                  value={store.villainStore.villain.firstName}
                   onChange={handleInputChange}
                   type="text"
                   id="firstName"
@@ -73,7 +73,7 @@ const EditVillain: FC<Props> = observer(({id}) => {
                 <label>Last Name</label>
                 <input
                   name="lastName"
-                  value={store.villains.villain.lastName}
+                  value={store.villainStore.villain.lastName}
                   onChange={handleInputChange}
                   type="text"
                   id="lastName"
@@ -84,7 +84,7 @@ const EditVillain: FC<Props> = observer(({id}) => {
             <label className="mt-3">House</label>
             <input
               name="house"
-              value={store.villains.villain.house}
+              value={store.villainStore.villain.house}
               onChange={handleInputChange}
               type="text"
               id="house"
@@ -93,7 +93,7 @@ const EditVillain: FC<Props> = observer(({id}) => {
             <label className="mt-3">Known as</label>
             <input
               name="knownAs"
-              value={store.villains.villain.knownAs}
+              value={store.villainStore.villain.knownAs}
               onChange={handleInputChange}
               type="text"
               id="knownAs"
@@ -122,6 +122,6 @@ const EditVillain: FC<Props> = observer(({id}) => {
         </div>
       )}
     </>
-  )
+  );
 });
 export default EditVillain;

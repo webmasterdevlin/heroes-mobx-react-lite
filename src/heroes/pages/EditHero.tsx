@@ -3,30 +3,29 @@ import { observer } from "mobx-react-lite";
 import { useHistory, useParams } from "react-router";
 import { RootStoreContext } from "../../store/root-store";
 
-
 type Props = {
-  id: string
-}
-  /* observer converts component into reactive component*/
-const EditHero:FC<Props> = observer(({id}) => {
+  id: string;
+};
+/* observer converts component into reactive component*/
+const EditHero: FC<Props> = observer(({ id }) => {
   const store = useContext(RootStoreContext);
   const history = useHistory();
 
   const [isSuccess, setIsSuccess] = useState(false);
   useEffect(() => {
-    store.heroes.getHeroById(id);
+    store.heroStore.getHeroById(id);
   }, []);
 
   const handleInputChange = async ({ currentTarget: input }) => {
-    const updatedHero = { ...store.heroes.hero };
+    const updatedHero = { ...store.heroStore.hero };
     const { name, value } = input;
     updatedHero[name] = value;
-    await store.heroes.setHero(updatedHero);
+    await store.heroStore.setHero(updatedHero);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    await store.heroes.putHero(store.heroes.hero);
+    await store.heroStore.putHero(store.heroStore.hero);
     setIsSuccess(!isSuccess);
   };
 
@@ -34,11 +33,10 @@ const EditHero:FC<Props> = observer(({id}) => {
     history.goBack();
   };
 
-
   return (
     <>
       <h2>Edit Hero</h2>
-      {store.heroes.isLoading ? (
+      {store.heroStore.isLoading ? (
         <div
           style={{
             display: "flex",
@@ -66,7 +64,7 @@ const EditHero:FC<Props> = observer(({id}) => {
                 <label htmlFor="firstName">First Name</label>
                 <input
                   name="firstName"
-                  value={store.heroes.hero.firstName}
+                  value={store.heroStore.hero.firstName}
                   onChange={handleInputChange}
                   type="text"
                   id="firstName"
@@ -77,7 +75,7 @@ const EditHero:FC<Props> = observer(({id}) => {
                 <label>Last Name</label>
                 <input
                   name="lastName"
-                  value={store.heroes.hero.lastName}
+                  value={store.heroStore.hero.lastName}
                   onChange={handleInputChange}
                   type="text"
                   id="lastName"
@@ -88,7 +86,7 @@ const EditHero:FC<Props> = observer(({id}) => {
             <label className="mt-3">House</label>
             <input
               name="house"
-              value={store.heroes.hero.house}
+              value={store.heroStore.hero.house}
               onChange={handleInputChange}
               type="text"
               id="house"
@@ -97,7 +95,7 @@ const EditHero:FC<Props> = observer(({id}) => {
             <label className="mt-3">Known as</label>
             <input
               name="knownAs"
-              value={store.heroes.hero.knownAs}
+              value={store.heroStore.hero.knownAs}
               onChange={handleInputChange}
               type="text"
               id="knownAs"
@@ -126,6 +124,6 @@ const EditHero:FC<Props> = observer(({id}) => {
         </div>
       )}
     </>
-  )
+  );
 });
 export default EditHero;

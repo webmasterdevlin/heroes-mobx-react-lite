@@ -7,11 +7,11 @@ import EditVillain from "./villains/pages/EditVillain";
 
 const RootRouter = () => (
   <Router>
-    <Heroes path="heroes" />
-    <Villains path="villains" />
+    <Heroes path="heroStore" />
+    <Villains path="villainStore" />
     <EditHero path="edit-hero/:id" />
     <EditVillain path="edit-villain/:id" />
-    <Redirect from="/" to="heroes" noThrow />
+    <Redirect from="/" to="heroStore" noThrow />
   </Router>
 );
 

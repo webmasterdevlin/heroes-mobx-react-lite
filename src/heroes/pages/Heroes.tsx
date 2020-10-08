@@ -4,7 +4,7 @@ import { Link } from "@reach/router";
 import { observer } from "mobx-react-lite";
 import { RootStoreContext } from "../../store/root-store";
 
-  /* observer converts component into reactive component*/
+/* observer converts component into reactive component*/
 const Heroes = observer(() => {
   /* Don't destructure. MobX observable are objects (and derivatives) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.
    example:
@@ -14,23 +14,23 @@ const Heroes = observer(() => {
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
   useEffect(() => {
-    store.heroes.getHeroes().then();
+    store.heroStore.getHeroes().then();
   }, []); // empty array needed here
 
   const showNewItemForm = () => {
     setIsShowNewItemForm(!isShowNewItemForm);
   };
   const onChange = ({ currentTarget: input }) => {
-    const newHero = { ...store.heroes.hero };
+    const newHero = { ...store.heroStore.hero };
     const { name, value } = input;
     newHero[name] = value;
-    store.heroes.setHero(newHero);
+    store.heroStore.setHero(newHero);
   };
 
   const onSubmit = async (event) => {
     event.preventDefault();
 
-    store.heroes.postHero(store.heroes.hero).then();
+    store.heroStore.postHero(store.heroStore.hero).then();
     setIsShowNewItemForm(!isShowNewItemForm);
   };
 
@@ -38,7 +38,7 @@ const Heroes = observer(() => {
     const isConfirmed = window.confirm(`Delete ${name}?`);
     if (!isConfirmed) return;
 
-    await store.heroes.deleteHero(id);
+    await store.heroStore.deleteHero(id);
   };
 
   return (
@@ -49,7 +49,7 @@ const Heroes = observer(() => {
         handleOnSubmit={onSubmit}
         handleShowNewItemForm={showNewItemForm}
       />
-      {store.heroes.isLoading ? (
+      {store.heroStore.isLoading ? (
         <div
           style={{
             display: "flex",
@@ -70,7 +70,7 @@ const Heroes = observer(() => {
           </div>
         </div>
       ) : (
-        store.heroes.heroes.map((item) => (
+        store.heroStore.heroes.map((item) => (
           <div key={item.id} className="card mt-3" style={{ width: "auto" }}>
             <div className="card-header">
               <h3 className="card-title">
@@ -100,6 +100,7 @@ const Heroes = observer(() => {
           </div>
         ))
       )}
-    </> 
-)});
+    </>
+  );
+});
 export default Heroes;

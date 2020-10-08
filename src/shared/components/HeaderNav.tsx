@@ -43,18 +43,18 @@ export default function HeaderNav() {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/villains">
+            <Link className="nav-link" to="/villainStore">
               Villains
             </Link>
           </li>
         </ul>
 
         <span className="mr-5" style={{ color: "purple", fontSize: "24px" }}>
-          Total heroes: {store.heroes.totalHeroes}
+          Total heroes: {store.heroStore.totalHeroes}
         </span>
 
         <span className="mr-5" style={{ color: "purple", fontSize: "24px" }}>
-          Total villains: {store.villains.totalVillains}
+          Total villainStore: {store.villainStore.totalVillains}
         </span>
 
         <ul className="navbar-nav my-2 my-lg-0">
