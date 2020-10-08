@@ -1,5 +1,5 @@
-import React, { Context, createContext } from "react";
-import { useLocalStore } from "mobx-react-lite";
+import React from "react";
+import { useLocalObservable } from "mobx-react-lite";
 import {
   deleteHero,
   getHeroById,
@@ -7,7 +7,7 @@ import {
   postHero,
   putHero,
 } from "./hero-service";
-import { Hero, HeroStateType, HeroStoreSchema } from "./hero-types";
+import { Hero, HeroStateType } from "./hero-types";
 
 const initialValues: HeroStateType = {
   heroes: [],
@@ -22,12 +22,24 @@ const initialValues: HeroStateType = {
   error: "",
 };
 
-export const heroContext = createContext<HeroStoreSchema>(null);
-
 const HeroContext = () => {
-  const store = useLocalStore(() => ({
+  const store = useLocalObservable(() => ({
     /*observables*/
     ...initialValues,
+
+    /*non-asynchronous actions*/
+    setHero(hero: Hero) {
+      store.hero = hero;
+    },
+    setError({ message }: any) {
+      store.error = message;
+      console.log(message);
+    },
+
+    /*computed values i.e. derived state*/
+    get totalHeroes() {
+      return store.heroes.length;
+    },
 
     /*asynchronous actions*/
     async getHeroes() {
@@ -89,20 +101,6 @@ const HeroContext = () => {
       } finally {
         store.isLoading = false;
       }
-    },
-
-    /*non-asynchronous actions*/
-    setHero(hero: Hero) {
-      store.hero = hero;
-    },
-    setError({ message }: any) {
-      store.error = message;
-      console.log(message);
-    },
-
-    /*computed values i.e. derived state*/
-    get totalHeroes() {
-      return store.heroes.length;
     },
   }));
   return store;

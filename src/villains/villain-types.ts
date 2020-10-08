@@ -12,16 +12,21 @@ export type Villain = {
   house: string;
   knownAs: string;
 };
-// FIX: all any
+
 export type VillainActionType = {
+  /*non-asynchronous*/
+  setVillain: (hero: Villain) => void;
+  setError: (error: any) => void;
+
+  /*computed or derived values*/
+  totalVillains: () => number;
+
+  /*asynchronous*/
   getVillains: () => Promise<void>;
   getVillainById: (id: string) => Promise<void>;
-  setError: (error: any) => void;
   postVillain: (hero: Villain) => Promise<void>;
-  setVillain: (hero: Villain) => void;
   putVillain: (hero: Villain) => Promise<void>;
   deleteVillain: (id: string) => Promise<void>;
-  totalVillains: () => number;
 };
 
 export type VillainStoreSchema = {} & VillainStateType & VillainActionType;

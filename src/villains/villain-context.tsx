@@ -1,5 +1,5 @@
-import React, { createContext } from "react";
-import { useLocalStore } from "mobx-react-lite";
+import React from "react";
+import { useLocalObservable } from "mobx-react-lite";
 import {
   deleteVillain,
   getVillainById,
@@ -7,7 +7,7 @@ import {
   postVillain,
   putVillain,
 } from "./villain-service";
-import { Villain, VillainStateType, VillainStoreSchema } from "./villain-types";
+import { Villain, VillainStateType } from "./villain-types";
 
 const initialValues: VillainStateType = {
   villains: [],
@@ -22,12 +22,24 @@ const initialValues: VillainStateType = {
   error: "",
 };
 
-export const villainContext = createContext<VillainStoreSchema>(null);
-
 const VillainContext = () => {
-  const store = useLocalStore(() => ({
+  const store = useLocalObservable(() => ({
     /*observables*/
     ...initialValues,
+
+    /*non-asynchronous actions*/
+    setVillain(villain: Villain) {
+      store.villain = villain;
+    },
+    setError({ message }: any) {
+      store.error = message;
+      console.log(message);
+    },
+
+    /*computed values i.e. derived state*/
+    get totalVillains() {
+      return store.villains.length;
+    },
 
     /*asynchronous actions*/
     async getVillains() {
@@ -91,19 +103,6 @@ const VillainContext = () => {
       } finally {
         store.isLoading = false;
       }
-    },
-    /*non-asynchronous actions*/
-    setVillain(villain: Villain) {
-      store.villain = villain;
-    },
-    setError({ message }: any) {
-      store.error = message;
-      console.log(message);
-    },
-
-    /*computed values i.e. derived state*/
-    get totalVillains() {
-      return store.villains.length;
     },
   }));
 
