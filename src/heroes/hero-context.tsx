@@ -65,7 +65,7 @@ const HeroContext = () => {
         store.isLoading = false;
       }
     },
-    async postHero(newHero: Hero) {
+    async postHeroAction(newHero: Hero) {
       store.setErrorAction("");
       store.isLoading = true;
       try {
@@ -77,7 +77,7 @@ const HeroContext = () => {
       }
     },
     // asynchronous actions (pessimistic UI update)
-    async deleteHero(id: string) {
+    async deleteHeroAction(id: string) {
       store.setErrorAction("");
       store.isLoading = true;
       try {
@@ -89,7 +89,7 @@ const HeroContext = () => {
         store.isLoading = false;
       }
     },
-    async putHero(updatedHero: Hero) {
+    async putHeroAction(updatedHero: Hero) {
       store.setErrorAction("");
       store.isLoading = true;
       try {
