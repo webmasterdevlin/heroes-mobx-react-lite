@@ -1,13 +1,6 @@
 {
   "heroes": [
     {
-      "id": "BB795856-AA2E-95A7-32EF-3E71D3D87721",
-      "firstName": "Tatiana",
-      "lastName": "Curtis",
-      "house": "Viet Nam",
-      "knownAs": "Velit LLC"
-    },
-    {
       "id": "36708E15-84F9-DAAA-AB5B-F404AFFD3FCC",
       "firstName": "Dana",
       "lastName": "Branch",

@@ -5,6 +5,6 @@ export const api = axios.create({
 });
 
 export enum Endpoints {
-  heroes = "http://localhost:5000/heroes/",
-  villains = "http://localhost:5000/villains/",
+  heroes = "heroes/",
+  villains = "villains/",
 }
