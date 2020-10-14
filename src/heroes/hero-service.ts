@@ -1,19 +1,19 @@
-import { Hero } from "./hero-types";
+import { HeroModel } from "./hero-types";
 import { api, Endpoints } from "../utils/axios-config";
 
 export async function getHeroesAxios() {
-  return await api.get<Hero[]>(Endpoints.heroes);
+  return await api.get<HeroModel[]>(Endpoints.heroes);
 }
 
 export async function getHeroByIdAxios(id: string) {
-  return await api.get<Hero>(`${Endpoints.heroes}${id}`);
+  return await api.get<HeroModel>(`${Endpoints.heroes}${id}`);
 }
 
-export async function postHeroAxios(hero: Hero) {
-  return await api.post<Hero>(Endpoints.heroes, hero);
+export async function postHeroAxios(hero: HeroModel) {
+  return await api.post<HeroModel>(Endpoints.heroes, hero);
 }
 
-export async function putHeroAxios(hero: Hero) {
+export async function putHeroAxios(hero: HeroModel) {
   return await api.put<void>(`${Endpoints.heroes}${hero.id}`, hero);
 }
 

@@ -7,7 +7,7 @@ import {
   postHeroAxios,
   putHeroAxios,
 } from "./hero-service";
-import { Hero, HeroStateType } from "./hero-types";
+import { HeroModel, HeroStateType } from "./hero-types";
 
 const initialValues: HeroStateType = {
   heroes: [],
@@ -28,7 +28,7 @@ const HeroContext = () => {
     ...initialValues,
 
     /*non-asynchronous actions*/
-    setHeroAction(hero: Hero) {
+    setHeroAction(hero: HeroModel) {
       store.hero = hero;
     },
     setErrorAction({ message }: any) {
@@ -65,7 +65,7 @@ const HeroContext = () => {
         store.isLoading = false;
       }
     },
-    async postHeroAction(newHero: Hero) {
+    async postHeroAction(newHero: HeroModel) {
       store.setErrorAction("");
       store.isLoading = true;
       try {
@@ -89,7 +89,7 @@ const HeroContext = () => {
         store.isLoading = false;
       }
     },
-    async putHeroAction(updatedHero: Hero) {
+    async putHeroAction(updatedHero: HeroModel) {
       store.setErrorAction("");
       store.isLoading = true;
       try {

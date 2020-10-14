@@ -1,11 +1,11 @@
 export type HeroStateType = {
-  heroes: Hero[];
-  hero: Hero;
+  heroes: HeroModel[];
+  hero: HeroModel;
   error: string;
   isLoading: boolean;
 };
 
-export type Hero = {
+export type HeroModel = {
   id: string;
   firstName: string;
   lastName: string;
@@ -16,7 +16,7 @@ export type Hero = {
 export type HeroActionType = {
   /*non-async*/
   setErrorAction: (error: any) => void;
-  setHeroAction: (hero: Hero) => void;
+  setHeroAction: (hero: HeroModel) => void;
 
   /*computed or derived values*/
   totalHeroesAction: () => number;
@@ -24,8 +24,8 @@ export type HeroActionType = {
   /*async*/
   getHeroesAction: () => Promise<void>;
   deleteHeroAction: (id: string) => Promise<void>;
-  postHeroAction: (hero: Hero) => Promise<void>;
-  putHeroAction: (hero: Hero) => Promise<void>;
+  postHeroAction: (hero: HeroModel) => Promise<void>;
+  putHeroAction: (hero: HeroModel) => Promise<void>;
   getHeroByIdAction: (id: string) => Promise<void>;
 };
 

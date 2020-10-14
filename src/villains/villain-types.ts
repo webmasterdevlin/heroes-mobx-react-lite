@@ -1,11 +1,11 @@
 export type VillainStateType = {
-  villains: Villain[];
-  villain: Villain;
+  villains: VillainModel[];
+  villain: VillainModel;
   error: string;
   isLoading: boolean;
 };
 
-export type Villain = {
+export type VillainModel = {
   id: string;
   firstName: string;
   lastName: string;
@@ -15,7 +15,7 @@ export type Villain = {
 
 export type VillainActionType = {
   /*non-asynchronous*/
-  setVillainAction: (hero: Villain) => void;
+  setVillainAction: (hero: VillainModel) => void;
   setErrorAction: (error: any) => void;
 
   /*computed or derived values*/
@@ -24,8 +24,8 @@ export type VillainActionType = {
   /*asynchronous*/
   getVillainsAction: () => Promise<void>;
   getVillainByIdAction: (id: string) => Promise<void>;
-  postVillainAction: (hero: Villain) => Promise<void>;
-  putVillainAction: (hero: Villain) => Promise<void>;
+  postVillainAction: (hero: VillainModel) => Promise<void>;
+  putVillainAction: (hero: VillainModel) => Promise<void>;
   deleteVillainAction: (id: string) => Promise<void>;
 };
 

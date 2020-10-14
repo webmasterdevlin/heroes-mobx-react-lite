@@ -7,7 +7,7 @@ import {
   postVillainAxios,
   putVillainAxios,
 } from "./villain-service";
-import { Villain, VillainStateType } from "./villain-types";
+import { VillainModel, VillainStateType } from "./villain-types";
 
 const initialValues: VillainStateType = {
   villains: [],
@@ -28,7 +28,7 @@ const VillainContext = () => {
     ...initialValues,
 
     /*non-asynchronous actions*/
-    setVillainAction(villain: Villain) {
+    setVillainAction(villain: VillainModel) {
       store.villain = villain;
     },
     setErrorAction({ message }: any) {
@@ -65,7 +65,7 @@ const VillainContext = () => {
         store.isLoading = false;
       }
     },
-    async postVillainAction(newVillain: Villain) {
+    async postVillainAction(newVillain: VillainModel) {
       store.setErrorAction("");
       store.isLoading = true;
       try {
@@ -89,7 +89,7 @@ const VillainContext = () => {
         store.setErrorAction(e);
       }
     },
-    async putVillainAction(updatedVillain: Villain) {
+    async putVillainAction(updatedVillain: VillainModel) {
       store.setErrorAction("");
       store.isLoading = true;
       try {
