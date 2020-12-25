@@ -1,5 +1,8 @@
 import React from "react";
 import { useLocalObservable } from "mobx-react-lite";
+
+import { HeroModel, HeroStateType } from "./hero-types";
+
 import {
   deleteHeroAxios,
   getHeroByIdAxios,
@@ -7,7 +10,6 @@ import {
   postHeroAxios,
   putHeroAxios,
 } from "./hero-service";
-import { HeroModel, HeroStateType } from "./hero-types";
 
 const initialValues: HeroStateType = {
   heroes: [],
@@ -31,9 +33,9 @@ const HeroContext = () => {
     setHeroAction(hero: HeroModel) {
       store.hero = hero;
     },
+
     setErrorAction({ message }: any) {
       store.error = message;
-      console.log(message);
     },
 
     /*computed values i.e. derived state*/
@@ -49,9 +51,8 @@ const HeroContext = () => {
         store.heroes = (await getHeroesAxios()).data;
       } catch (e) {
         store.setErrorAction(e);
-      } finally {
-        store.isLoading = false;
       }
+      store.isLoading = false;
     },
     async getHeroByIdAction(id: string) {
       store.setErrorAction("");
@@ -61,48 +62,45 @@ const HeroContext = () => {
         store.hero = data;
       } catch (e) {
         store.setErrorAction(e);
-      } finally {
-        store.isLoading = false;
       }
+      store.isLoading = false;
     },
+    // asynchronous actions (pessimistic UI update)
     async postHeroAction(newHero: HeroModel) {
       store.setErrorAction("");
       store.isLoading = true;
       try {
-        store.heroes.unshift((await postHeroAxios(newHero)).data);
+        store.heroes.push((await postHeroAxios(newHero)).data);
       } catch (e) {
         store.setErrorAction(e);
-      } finally {
-        store.isLoading = false;
       }
+      store.isLoading = false;
     },
-    // asynchronous actions (pessimistic UI update)
+
+    // asynchronous actions also. Optimistic UI update. No need for showing loader/spinner.
     async deleteHeroAction(id: string) {
       store.setErrorAction("");
-      store.isLoading = true;
+      const previousHeroes = store.heroes;
+      store.heroes = store.heroes.filter((h) => h.id !== id);
       try {
         await deleteHeroAxios(id);
-        store.heroes = store.heroes.filter((h) => h.id !== id);
       } catch (e) {
         store.setErrorAction(e);
-      } finally {
-        store.isLoading = false;
+        store.heroes = previousHeroes;
       }
     },
     async putHeroAction(updatedHero: HeroModel) {
       store.setErrorAction("");
-      store.isLoading = true;
       try {
         await putHeroAxios(updatedHero);
         const index = store.heroes.findIndex((h) => h.id === updatedHero.id);
         store.heroes[index] = updatedHero;
       } catch (e) {
         store.setErrorAction(e);
-      } finally {
-        store.isLoading = false;
       }
     },
   }));
+
   return store;
 };
 

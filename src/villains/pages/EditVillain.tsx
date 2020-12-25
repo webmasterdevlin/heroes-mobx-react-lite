@@ -1,121 +1,105 @@
-import React, { FC, useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { useHistory, useParams } from "react-router";
 import { observer } from "mobx-react-lite";
+import { Formik } from "formik";
+
 import { RootStoreContext } from "../../store/root-store";
 
-type Props = {
-  id: string;
-};
 /* observer converts component into reactive component*/
-const EditVillain: FC<Props> = observer(({ id }) => {
+const EditVillain = observer(() => {
   const store = useContext(RootStoreContext);
-
+  const { id } = useParams<{ id: string }>();
   const [isSuccess, setIsSuccess] = useState(false);
+  const history = useHistory();
+
   useEffect(() => {
-    store.villainStore.getVillainByIdAction(id).then();
+    store.villainStore.getVillainByIdAction(id);
   }, []);
 
-  const handleInputChange = async ({ currentTarget: input }) => {
-    const updatedVillain = { ...store.villainStore.villain };
-    const { name, value } = input;
-    updatedVillain[name] = value;
-    await store.villainStore.setVillainAction(updatedVillain);
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    await store.villainStore.putVillainAction(store.villainStore.villain);
-    setIsSuccess(!isSuccess);
-  };
-
   const handleBackButton = () => {
-    window.history.back();
+    history.goBack();
   };
 
   return (
     <>
       <h2>Edit Villain</h2>
-      {store.villainStore.isLoading ? (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
+      <div className="card my-3" style={{ width: "auto" }}>
+        <Formik
+          enableReinitialize
+          initialValues={store?.villainStore?.villain}
+          validationSchema={null}
+          onSubmit={async (values) => {
+            try {
+              await store.villainStore.putVillainAction(values);
+              setIsSuccess(!isSuccess);
+            } catch (e) {
+              console.log(e);
+            }
           }}
         >
-          <div
-            className="spinner-border"
-            style={{
-              width: "9rem",
-              height: "9rem",
-              color: "purple",
-            }}
-            role="status"
-          >
-            <span className="sr-only">Loading...</span>
-          </div>
-        </div>
-      ) : (
-        <div className="card my-3" style={{ width: "auto" }}>
-          <form className="card-header" onSubmit={handleSubmit}>
-            <section className="d-flex flex-row">
-              <div className="mt-3 mr-3 input-width">
-                <label htmlFor="firstName">First Name</label>
-                <input
-                  name="firstName"
-                  value={store.villainStore.villain.firstName}
-                  onChange={handleInputChange}
-                  type="text"
-                  id="firstName"
-                  className="form-control"
-                />
-              </div>
-              <div className="mt-3 ml-3 input-width">
-                <label>Last Name</label>
-                <input
-                  name="lastName"
-                  value={store.villainStore.villain.lastName}
-                  onChange={handleInputChange}
-                  type="text"
-                  id="lastName"
-                  className="form-control"
-                />
-              </div>
-            </section>
-            <label className="mt-3">House</label>
-            <input
-              name="house"
-              value={store.villainStore.villain.house}
-              onChange={handleInputChange}
-              type="text"
-              id="house"
-              className="form-control"
-            />
-            <label className="mt-3">Known as</label>
-            <input
-              name="knownAs"
-              value={store.villainStore.villain.knownAs}
-              onChange={handleInputChange}
-              type="text"
-              id="knownAs"
-              className="form-control"
-            />
-            <button
-              type="submit"
-              disabled={isSuccess}
-              className="btn btn-info mt-3"
-            >
-              Update
-            </button>
-            <button
-              onClick={handleBackButton}
-              type="button"
-              className="btn btn-outline-info mt-3 ml-3"
-            >
-              Back
-            </button>
-          </form>
-        </div>
-      )}
+          {(formikProps) => (
+            <form className="card-header" onSubmit={formikProps.handleSubmit}>
+              <section className="d-flex flex-row">
+                <div className="mt-3 mr-3 input-width">
+                  <label htmlFor="firstName">First Name</label>
+                  <input
+                    name="firstName"
+                    type="text"
+                    id="firstName"
+                    className="form-control"
+                    value={formikProps.values.firstName}
+                    onChange={formikProps.handleChange("firstName")}
+                  />
+                </div>
+                <div className="mt-3 ml-3 input-width">
+                  <label>Last Name</label>
+                  <input
+                    name="lastName"
+                    type="text"
+                    id="lastName"
+                    className="form-control"
+                    value={formikProps.values.lastName}
+                    onChange={formikProps.handleChange("lastName")}
+                  />
+                </div>
+              </section>
+              <label className="mt-3">House</label>
+              <input
+                name="house"
+                type="text"
+                id="house"
+                className="form-control"
+                value={formikProps.values.house}
+                onChange={formikProps.handleChange("house")}
+              />
+              <label className="mt-3">Known as</label>
+              <input
+                name="knownAs"
+                type="text"
+                id="knownAs"
+                className="form-control"
+                value={formikProps.values.knownAs}
+                onChange={formikProps.handleChange("knownAs")}
+              />
+              <button
+                type="submit"
+                disabled={isSuccess}
+                className="btn btn-info mt-3"
+              >
+                Update
+              </button>
+              <button
+                onClick={handleBackButton}
+                type="button"
+                className="btn btn-outline-info mt-3 ml-3"
+              >
+                Back
+              </button>
+            </form>
+          )}
+        </Formik>
+      </div>
+
       {isSuccess && (
         <div className="alert alert-success col-md-3" role="alert">
           This villain has been updated!

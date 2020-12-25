@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
 import NewItemForm from "../../shared/components/NewItemForm";
-import { Link } from "@reach/router";
 import { observer } from "mobx-react-lite";
 import { RootStoreContext } from "../../store/root-store";
+import { Link } from "react-router-dom";
 
 /* observer converts component into reactive component*/
 const Villains = observer(() => {
-  /* Don't destructure. MobX observable are objects (and derivates) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.
+  /* Don't destructure. MobX observable are objects (and derives) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.
 example:
 const {heroes, hero, getVillains} = useContext(villainContext);
 */
@@ -44,12 +44,7 @@ const {heroes, hero, getVillains} = useContext(villainContext);
 
   return (
     <>
-      <NewItemForm
-        isShowNewItemForm={isShowNewItemForm}
-        handleOnChange={onChange}
-        handleOnSubmit={onSubmit}
-        handleShowNewItemForm={showNewItemForm}
-      />
+      <NewItemForm />
       {store.villainStore.isLoading ? (
         <div
           style={{

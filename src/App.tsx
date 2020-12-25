@@ -1,23 +1,21 @@
 import React from "react";
-import "./App.css";
 import { BrowserRouter } from "react-router-dom";
-import RootRouter from "./root-router";
+
+import Routes from "./routes";
 import HeaderNav from "./shared/components/HeaderNav";
 import RootStore from "./store/root-store";
 
-function App() {
-  return (
-    <RootStore>
-      <BrowserRouter>
-        <>
-          <HeaderNav />
-          <div className="container">
-            <RootRouter />
-          </div>
-        </>
-      </BrowserRouter>
-    </RootStore>
-  );
-}
+const App = () => (
+  <RootStore>
+    <BrowserRouter>
+      <>
+        <HeaderNav />
+        <div className="container">
+          <Routes />
+        </div>
+      </>
+    </BrowserRouter>
+  </RootStore>
+);
 
 export default App;

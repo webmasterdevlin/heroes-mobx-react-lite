@@ -1,40 +1,22 @@
-import React, { useState, useEffect, useContext } from "react";
-import NewItemForm from "../../shared/components/NewItemForm";
-import { Link } from "@reach/router";
+import React, { useEffect, useContext } from "react";
 import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
+
+import NewItemForm from "../../shared/components/NewItemForm";
 import { RootStoreContext } from "../../store/root-store";
 
 /* observer converts component into reactive component*/
 const Heroes = observer(() => {
-  /* Don't destructure. MobX observable are objects (and derivatives) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.
-   example:
-   const { heroes,hero, getHeroes,  postHero, setHero,deleteHero,isLoading } = useContext(heroContext);*/
+  /* Don't destructure. MobX observable are objects (and derives) only. When destructuring, any primitive variables will remain at latest values and won't be observable anymore. Use boxed observables to track primitive values exclusively or preferably pass a whole state object around.
+ example:
+ const { heroes,hero, getHeroes,  postHero, setHero,deleteHero,isLoading } = useContext(heroContext);*/
   const store = useContext(RootStoreContext);
-
-  const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
 
   useEffect(() => {
     store.heroStore.getHeroesAction().then();
   }, []); // empty array needed here
 
-  const showNewItemForm = () => {
-    setIsShowNewItemForm(!isShowNewItemForm);
-  };
-  const onChange = ({ currentTarget: input }) => {
-    const newHero = { ...store.heroStore.hero };
-    const { name, value } = input;
-    newHero[name] = value;
-    store.heroStore.setHeroAction(newHero);
-  };
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
-    store.heroStore.postHeroAction(store.heroStore.hero).then();
-    setIsShowNewItemForm(!isShowNewItemForm);
-  };
-
-  const removeItem = async (id, name) => {
+  const handleRemoveItem = async (id, name) => {
     const isConfirmed = window.confirm(`Delete ${name}?`);
     if (!isConfirmed) return;
 
@@ -43,12 +25,7 @@ const Heroes = observer(() => {
 
   return (
     <>
-      <NewItemForm
-        isShowNewItemForm={isShowNewItemForm}
-        handleOnChange={onChange}
-        handleOnSubmit={onSubmit}
-        handleShowNewItemForm={showNewItemForm}
-      />
+      <NewItemForm />
       {store.heroStore.isLoading ? (
         <div
           style={{
@@ -89,7 +66,7 @@ const Heroes = observer(() => {
                   Edit
                 </Link>
                 <button
-                  onClick={() => removeItem(item.id, item.firstName)}
+                  onClick={() => handleRemoveItem(item.id, item.firstName)}
                   className="btn btn-outline-danger card-link col text-center"
                 >
                   <span className="fas fa-eraser  mr-2" />
