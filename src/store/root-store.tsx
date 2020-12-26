@@ -1,8 +1,8 @@
 import React, { createContext } from "react";
-import useHeroContext from "../heroes/hero-context";
-import useVillainContext from "../villains/villain-context";
-import { HeroStoreSchema } from "../heroes/hero-types";
-import { VillainStoreSchema } from "../villains/villain-types";
+import useHeroContext from "heroes/hero-context";
+import useVillainContext from "villains/villain-context";
+import { HeroStoreSchema } from "heroes/hero-types";
+import { VillainStoreSchema } from "villains/villain-types";
 
 type RootStoreSchema = {
   heroStore: HeroStoreSchema;

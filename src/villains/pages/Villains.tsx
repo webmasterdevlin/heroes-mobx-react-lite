@@ -1,7 +1,8 @@
 import React, { useEffect, useContext, useState } from "react";
-import FormSubmission from "../../shared/components/FormSubmission";
 import { observer } from "mobx-react-lite";
-import { RootStoreContext } from "../../store/root-store";
+
+import FormSubmission from "shared/components/FormSubmission";
+import { RootStoreContext } from "store/root-store";
 import { VillainModel } from "../villain-types";
 
 /* observer converts component into reactive component*/

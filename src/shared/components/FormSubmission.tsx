@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
 
-import { HeroModel } from "../../heroes/hero-types";
-import { VillainModel } from "../../villains/villain-types";
+import { HeroModel } from "heroes/hero-types";
+import { VillainModel } from "villains/villain-types";
 
 type Props = {
   text: string;
