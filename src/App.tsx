@@ -12,9 +12,7 @@ const App = () => (
         <HeaderNav />
         <div className="container">
           <div className="vertical-center">
-            <div>
-              <Routes />
-            </div>
+            <Routes />
           </div>
         </div>
       </>
