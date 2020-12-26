@@ -112,7 +112,10 @@ const {villains, villain, getVillains} = useContext(villainContext);
                       ) : (
                         <button
                           className="btn btn-primary card-link col text-center"
-                          onClick={() => setEditingTracker(v.id)}
+                          onClick={() => {
+                            setEditingTracker(v.id);
+                            store.villainStore.setVillainAction(v);
+                          }}
                         >
                           Edit
                         </button>

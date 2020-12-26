@@ -12,7 +12,7 @@ const HeaderNav = observer(() => {
   };
 
   return useObserver(() => (
-    <nav className="navbar navbar-expand-lg navbar-light bg-light mb-5">
+    <nav className="sticky-top navbar navbar-expand-lg navbar-light bg-light mb-5">
       <div className="container-fluid">
         <span className="navbar-brand me-5">
           <Link className="nav-link" to="/">
@@ -20,7 +20,6 @@ const HeaderNav = observer(() => {
             React Tour of Heroes
           </Link>
         </span>
-
         <button
           onClick={toggleNavBar}
           className="navbar-toggler"
@@ -33,7 +32,6 @@ const HeaderNav = observer(() => {
         >
           <span className=" navbar-toggler-icon" />
         </button>
-
         <div
           className={
             navIsCollapse ? "collapse navbar-collapse" : "navbar-collapse"
@@ -56,9 +54,14 @@ const HeaderNav = observer(() => {
           <span className="me-5" style={{ color: "purple", fontSize: "24px" }}>
             Total heroes: {store.heroStore.totalHeroesAction}
           </span>
-
           <span className="me-5" style={{ color: "purple", fontSize: "24px" }}>
             Total villains: {store.villainStore.totalVillainsAction}
+          </span>
+          <span className="me-5" style={{ color: "purple", fontSize: "24px" }}>
+            Last Edited Hero: {store.heroStore.hero.firstName}
+          </span>
+          <span className="me-5" style={{ color: "purple", fontSize: "24px" }}>
+            Last Edited Villain: {store.villainStore.villain.firstName}
           </span>
         </div>
       </div>

@@ -105,14 +105,19 @@ const Heroes = observer(() => {
                       {editingTracker === h.id ? (
                         <button
                           className="btn btn-info card-link col text-center"
-                          onClick={() => setEditingTracker("0")}
+                          onClick={() => {
+                            setEditingTracker("0");
+                          }}
                         >
                           Cancel
                         </button>
                       ) : (
                         <button
                           className="btn btn-primary card-link col text-center"
-                          onClick={() => setEditingTracker(h.id)}
+                          onClick={() => {
+                            store.heroStore.setHeroAction(h);
+                            setEditingTracker(h.id);
+                          }}
                         >
                           Edit
                         </button>

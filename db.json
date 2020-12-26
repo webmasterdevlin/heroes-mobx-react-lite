@@ -2,7 +2,7 @@
   "heroes": [
     {
       "id": "7ggew732dw",
-      "firstName": "Barry",
+      "firstName": "Barrys",
       "lastName": "Allen",
       "house": "DC",
       "knownAs": "Flash"
@@ -55,18 +55,11 @@
       "lastName": "Von Doom",
       "house": "Marvel",
       "knownAs": "Doctor Doom"
-    },
-    {
-      "id": "365OwTK",
-      "firstName": "adas32",
-      "lastName": "asdas",
-      "house": "asd",
-      "knownAs": "asd"
     }
   ],
   "villains": [
     {
-      "firstName": "Devlins",
+      "firstName": "Devlin",
       "lastName": "Duldulao",
       "house": "inmeta",
       "knownAs": "Ninja Wah",

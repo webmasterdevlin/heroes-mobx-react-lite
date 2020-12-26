@@ -15,7 +15,7 @@ export type VillainModel = {
 
 export type VillainActionType = {
   /*non-asynchronous*/
-  setVillainAction: (hero: VillainModel) => void;
+  setVillainAction: (villain: VillainModel) => void;
   setErrorAction: (error: any) => void;
 
   /*computed or derived values*/
@@ -23,9 +23,8 @@ export type VillainActionType = {
 
   /*asynchronous*/
   getVillainsAction: () => Promise<void>;
-  getVillainByIdAction: (id: string) => Promise<void>;
-  postVillainAction: (hero: VillainModel) => Promise<void>;
-  putVillainAction: (hero: VillainModel) => Promise<void>;
+  postVillainAction: (villain: VillainModel) => Promise<void>;
+  putVillainAction: (villain: VillainModel) => Promise<void>;
   deleteVillainAction: (id: string) => Promise<void>;
 };
 

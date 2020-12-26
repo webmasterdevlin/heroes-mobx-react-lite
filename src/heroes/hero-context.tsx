@@ -4,9 +4,8 @@ import { useLocalObservable } from "mobx-react-lite";
 import { HeroModel, HeroStateType } from "./hero-types";
 
 import {
-  deleteHeroAxios,
-  getHeroByIdAxios,
   getHeroesAxios,
+  deleteHeroAxios,
   postHeroAxios,
   putHeroAxios,
 } from "./hero-service";
@@ -54,17 +53,7 @@ const HeroContext = () => {
       }
       store.isLoading = false;
     },
-    async getHeroByIdAction(id: string) {
-      store.setErrorAction("");
-      store.isLoading = true;
-      try {
-        const { data } = await getHeroByIdAxios(id);
-        store.hero = data;
-      } catch (e) {
-        store.setErrorAction(e);
-      }
-      store.isLoading = false;
-    },
+
     // asynchronous actions (pessimistic UI update)
     async postHeroAction(newHero: HeroModel) {
       store.setErrorAction("");
@@ -89,14 +78,19 @@ const HeroContext = () => {
         store.heroes = previousHeroes;
       }
     },
+
     async putHeroAction(updatedHero: HeroModel) {
       store.setErrorAction("");
+      const index = store.heroes.findIndex((h) => h.id === updatedHero.id);
+      const unedited = store.heroes[index];
+      store.heroes[index] = updatedHero;
+      store.setHeroAction(updatedHero);
       try {
         await putHeroAxios(updatedHero);
-        const index = store.heroes.findIndex((h) => h.id === updatedHero.id);
-        store.heroes[index] = updatedHero;
       } catch (e) {
         store.setErrorAction(e);
+        store.heroes[index] = unedited;
+        store.setHeroAction(unedited);
       }
     },
   }));

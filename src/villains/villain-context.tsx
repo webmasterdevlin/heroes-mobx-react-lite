@@ -3,9 +3,8 @@ import { useLocalObservable } from "mobx-react-lite";
 
 import { VillainModel, VillainStateType } from "./villain-types";
 import {
-  deleteVillainAxios,
-  getVillainByIdAxios,
   getVillainsAxios,
+  deleteVillainAxios,
   postVillainAxios,
   putVillainAxios,
 } from "./villain-service";
@@ -53,17 +52,6 @@ const VillainContext = () => {
       }
       store.isLoading = false;
     },
-    async getVillainByIdAction(id: string) {
-      store.setErrorAction("");
-      store.isLoading = true;
-      try {
-        const { data } = await getVillainByIdAxios(id);
-        store.villain = data;
-      } catch (e) {
-        store.setErrorAction(e);
-      }
-      store.isLoading = false;
-    },
 
     // asynchronous actions (pessimistic UI update)
     async postVillainAction(newVillain: VillainModel) {
@@ -89,16 +77,19 @@ const VillainContext = () => {
         store.villains = previousVillains;
       }
     },
+
     async putVillainAction(updatedVillain: VillainModel) {
       store.setErrorAction("");
       const index = store.villains.findIndex((v) => v.id === updatedVillain.id);
+      const unedited = store.villains[index];
       store.villains[index] = updatedVillain;
-      const previousVillains = store.villains;
+      store.setVillainAction(updatedVillain);
       try {
         await putVillainAxios(updatedVillain);
       } catch (e) {
         store.setErrorAction(e);
-        store.villains = previousVillains;
+        store.villains[index] = unedited;
+        store.setVillainAction(unedited);
       }
     },
   }));
