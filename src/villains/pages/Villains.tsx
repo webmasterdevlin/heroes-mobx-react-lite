@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useEffect, useContext } from "react";
 import NewItemForm from "../../shared/components/NewItemForm";
 import { observer } from "mobx-react-lite";
 import { RootStoreContext } from "../../store/root-store";
@@ -12,28 +12,9 @@ const {heroes, hero, getVillains} = useContext(villainContext);
 */
   const store = useContext(RootStoreContext);
 
-  const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
-
   useEffect(() => {
     store.villainStore.getVillainsAction().then();
   }, []); // empty array needed here
-
-  const showNewItemForm = () => {
-    setIsShowNewItemForm(!isShowNewItemForm);
-  };
-  const onChange = ({ currentTarget: input }) => {
-    const newVillain = { ...store.villainStore.villain };
-    const { name, value } = input;
-    newVillain[name] = value;
-    store.villainStore.setVillainAction(newVillain);
-  };
-
-  const onSubmit = async (event) => {
-    event.preventDefault();
-
-    await store.villainStore.postVillainAction(store.villainStore.villain);
-    setIsShowNewItemForm(!isShowNewItemForm);
-  };
 
   const removeItem = async (id, name) => {
     const isConfirmed = window.confirm(`Delete ${name}?`);

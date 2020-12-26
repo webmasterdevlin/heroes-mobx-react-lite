@@ -1,9 +1,9 @@
 import { Formik } from "formik";
 import React, { useContext, useState } from "react";
-import { RootStoreContext } from "../../store/root-store";
-import { values } from "mobx";
 
-const NewItemForm = ({}) => {
+import { RootStoreContext } from "../../store/root-store";
+
+const NewItemForm = () => {
   const store = useContext(RootStoreContext);
 
   const [isShowNewItemForm, setIsShowNewItemForm] = useState(false);
