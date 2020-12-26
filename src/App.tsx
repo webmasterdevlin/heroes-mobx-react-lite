@@ -11,7 +11,11 @@ const App = () => (
       <>
         <HeaderNav />
         <div className="container">
-          <Routes />
+          <div className="vertical-center">
+            <div>
+              <Routes />
+            </div>
+          </div>
         </div>
       </>
     </BrowserRouter>

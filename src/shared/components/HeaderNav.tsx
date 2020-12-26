@@ -58,7 +58,7 @@ const HeaderNav = observer(() => {
           </span>
 
           <span className="me-5" style={{ color: "purple", fontSize: "24px" }}>
-            Total villainStore: {store.villainStore.totalVillainsAction}
+            Total villains: {store.villainStore.totalVillainsAction}
           </span>
         </div>
       </div>

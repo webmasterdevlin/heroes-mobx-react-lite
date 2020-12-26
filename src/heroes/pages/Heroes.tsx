@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,8 @@ const Heroes = observer(() => {
  const { heroes,hero, getHeroes,  postHero, setHero,deleteHero,isLoading } = useContext(heroContext);*/
   const store = useContext(RootStoreContext);
 
+  const [editingTracker, setEditingTracker] = useState("0");
+
   useEffect(() => {
     store.heroStore.getHeroesAction().then();
   }, []); // empty array needed here
@@ -24,8 +26,7 @@ const Heroes = observer(() => {
   };
 
   return (
-    <>
-      <NewItemForm />
+    <div className="card-header">
       {store.heroStore.isLoading ? (
         <div
           style={{
@@ -36,48 +37,51 @@ const Heroes = observer(() => {
         >
           <div
             className="spinner-border"
-            style={{
-              width: "9rem",
-              height: "9rem",
-              color: "purple",
-            }}
+            style={{ width: " 6rem", height: "6rem", color: "purple" }}
             role="status"
-          >
-            <span className="sr-only">Loading...</span>
-          </div>
+          />
         </div>
       ) : (
-        store.heroStore.heroes.map((item) => (
-          <div key={item.id} className="card mt-3" style={{ width: "auto" }}>
-            <div className="card-header">
-              <h3 className="card-title">
-                {item.firstName} {item.lastName}
-              </h3>
-              <h5 className="card-subtitle mb-2 text-muted">{item.house}</h5>
-              <p className="card-text">{item.knownAs}</p>
-            </div>
-            <section className="card-body">
-              <div className="row">
-                <Link
-                  to={`/edit-hero/${item.id}`}
-                  className="btn btn-primary card-link col text-center"
-                >
-                  <span className="fas fa-edit  mr-2" />
-                  Edit
-                </Link>
-                <button
-                  onClick={() => handleRemoveItem(item.id, item.firstName)}
-                  className="btn btn-outline-danger card-link col text-center"
-                >
-                  <span className="fas fa-eraser  mr-2" />
-                  Delete
-                </button>
+        <div className="card mt-3" style={{ width: "auto" }}>
+          <div>
+            {store.heroStore.heroes.map((h) => (
+              <div key={h.id} className="card-header">
+                <h3 className="card-title">
+                  {h.firstName} {h.lastName}
+                </h3>
+                <h5 className="card-subtitle mb-2 text-muted">{h.house}</h5>
+                <p className="card-text">{h.knownAs}</p>
+                <section className="card-body">
+                  <div className="row">
+                    {editingTracker === h.id ? (
+                      <button
+                        className="btn btn-info card-link col text-center"
+                        onClick={() => setEditingTracker("0")}
+                      >
+                        Cancel
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-primary card-link col text-center"
+                        onClick={() => setEditingTracker(h.id)}
+                      >
+                        Edit
+                      </button>
+                    )}
+                    <button
+                      className="btn btn-outline-danger card-link col text-center"
+                      onClick={() => handleRemoveItem(h.id, h.firstName)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </section>
               </div>
-            </section>
+            ))}
           </div>
-        ))
+        </div>
       )}
-    </>
+    </div>
   );
 });
 export default Heroes;
