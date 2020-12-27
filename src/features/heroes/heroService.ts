@@ -1,4 +1,4 @@
-import { api, Endpoints } from "utils/axios-config";
+import { api, Endpoints } from "api/axios-config";
 import { HeroModel } from "./heroTypes";
 
 export async function getHeroesAxios() {

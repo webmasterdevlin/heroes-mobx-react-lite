@@ -1,10 +1,11 @@
 import React, { lazy, Suspense } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router";
+import HomePage from "./pages/HomePage";
 
 const Routes = () => (
   <Suspense fallback={<h2>Loading..</h2>}>
     <Switch>
-      <Redirect path={"/"} to={"heroes"} exact />
+      <Route path={"/"} component={HomePage} exact />
       <Route
         path={"/heroes"}
         component={lazy(() => import("./pages/HeroesPage"))}
