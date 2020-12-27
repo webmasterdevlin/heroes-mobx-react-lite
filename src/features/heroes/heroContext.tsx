@@ -1,24 +1,24 @@
 import React from "react";
 import { useLocalObservable } from "mobx-react-lite";
 
-import { HeroModel, HeroStateType } from "./hero-types";
+import { HeroModel, HeroStateType } from "./heroTypes";
 
 import {
   getHeroesAxios,
   deleteHeroAxios,
   postHeroAxios,
   putHeroAxios,
-} from "./hero-service";
+} from "./heroService";
 
 const initialValues: HeroStateType = {
-  heroes: [],
+  heroes: [] as HeroModel[],
   hero: {
     id: "",
     firstName: "",
     lastName: "",
     house: "",
     knownAs: "",
-  },
+  } as HeroModel,
   isLoading: false,
   error: "",
 };

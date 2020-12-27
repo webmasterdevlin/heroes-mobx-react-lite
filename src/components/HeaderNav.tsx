@@ -1,11 +1,10 @@
 import React, { useState, useContext } from "react";
 import { observer, useObserver } from "mobx-react-lite";
 import { Link } from "react-router-dom";
-
-import { RootStoreContext } from "store/root-store";
+import { RootStoreContext } from "store/rootStore";
 
 const HeaderNav = observer(() => {
-  const store = useContext(RootStoreContext);
+  const { antiHeroStore, heroStore } = useContext(RootStoreContext);
   const [navIsCollapse, setNavIsCollapse] = useState(true);
 
   const toggleNavBar = () => {
@@ -46,23 +45,23 @@ const HeaderNav = observer(() => {
               </Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/villains">
-                Villains
+              <Link className="nav-link" to="/anti-heroes">
+                AntiHeroes
               </Link>
             </li>
           </ul>
 
-          <span className="me-5" style={{ color: "purple", fontSize: "24px" }}>
-            Total heroes: {store.heroStore.totalHeroesAction}
+          <span className="me-5" style={{ color: "purple" }}>
+            Total heroes: {heroStore.totalHeroesAction}
           </span>
-          <span className="me-5" style={{ color: "purple", fontSize: "24px" }}>
-            Total villains: {store.villainStore.totalVillainsAction}
+          <span className="me-5" style={{ color: "purple" }}>
+            Total anti-heroes: {antiHeroStore.totalAntiHeroesAction}
           </span>
-          <span className="me-5" style={{ color: "purple", fontSize: "24px" }}>
-            Last Edited Hero: {store.heroStore.hero.firstName}
+          <span className="me-5" style={{ color: "purple" }}>
+            Last Edited Hero: {heroStore.hero.firstName}
           </span>
-          <span className="me-5" style={{ color: "purple", fontSize: "24px" }}>
-            Last Edited Villain: {store.villainStore.villain.firstName}
+          <span className="me-5" style={{ color: "purple" }}>
+            Last Edited AntiHero: {antiHeroStore.antiHero.firstName}
           </span>
         </div>
       </div>

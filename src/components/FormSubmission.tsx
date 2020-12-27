@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { Formik } from "formik";
-
-import { HeroModel } from "heroes/hero-types";
-import { VillainModel } from "villains/villain-types";
+import { HeroModel } from "features/heroes/heroTypes";
+import { AntiHeroModel } from "features/antiHeroes/antiHeroTypes";
 
 type Props = {
   text: string;
-  obj: HeroModel | VillainModel;
-  handleSubmit: (obj: HeroModel | VillainModel) => Promise<void>;
+  obj: HeroModel | AntiHeroModel;
+  handleSubmit: (obj: HeroModel | AntiHeroModel) => Promise<void>;
 };
 
 const FormSubmission = ({ text, obj, handleSubmit }: Props) => {
@@ -35,10 +34,8 @@ const FormSubmission = ({ text, obj, handleSubmit }: Props) => {
             onSubmit={formikProps.handleSubmit}
           >
             <div className="d-flex flex-column">
-              <section className="form-group">
-                <label htmlFor="firstName" className="me-4">
-                  First Name
-                </label>
+              <section className="form-group mb-2">
+                <label htmlFor="firstName">First Name</label>
                 <input
                   placeholder="📛"
                   name="firstName"
@@ -50,10 +47,8 @@ const FormSubmission = ({ text, obj, handleSubmit }: Props) => {
                   className="form-control"
                 />
               </section>
-              <section className="form-group">
-                <label htmlFor="lastName" className="me-4">
-                  Last Name
-                </label>
+              <section className="form-group mb-2">
+                <label htmlFor="lastName">Last Name</label>
                 <input
                   placeholder="📛"
                   name="lastName"
@@ -64,10 +59,8 @@ const FormSubmission = ({ text, obj, handleSubmit }: Props) => {
                   className="form-control"
                 />
               </section>
-              <section className="form-group">
-                <label htmlFor="house" className="me-3">
-                  House
-                </label>
+              <section className="form-group mb-2">
+                <label htmlFor="house">House</label>
                 <input
                   placeholder="🏠"
                   name="house"
@@ -78,10 +71,8 @@ const FormSubmission = ({ text, obj, handleSubmit }: Props) => {
                   className="form-control"
                 />
               </section>
-              <section className="form-group">
-                <label htmlFor="knownAs" className="me-3">
-                  Known as
-                </label>
+              <section className="form-group mb-2">
+                <label htmlFor="knownAs">Known as</label>
                 <input
                   placeholder="👀"
                   name="knownAs"
