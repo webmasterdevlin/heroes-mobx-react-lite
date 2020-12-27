@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from "react";
 import { Redirect, Route, Switch } from "react-router";
-import HomePage from "./pages/HomePage";
+import HomePage from "pages/HomePage";
 
 const Routes = () => (
   <Suspense fallback={<h2>Loading..</h2>}>
