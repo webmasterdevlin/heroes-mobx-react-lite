@@ -22,7 +22,7 @@ const {antiHeroes, antiHero, getAntiHeroes} = useContext(antiHeroContext);
   });
 
   useEffect(() => {
-    antiHeroStore.getAntiHeroesAction().then();
+    antiHeroStore.getAntiHeroesAction();
   }, []); // empty array needed here
 
   const handleRemoveItem = async (id, name) => {
@@ -67,68 +67,68 @@ const {antiHeroes, antiHero, getAntiHeroes} = useContext(antiHeroContext);
             />
           </div>
         ) : (
-          <div style={{ width: "auto" }}>
-            {antiHeroStore.antiHeroes.map((ah) => (
-              <div key={ah.id} className="card mt-3">
-                {editingTracker === ah.id ? (
-                  <div
-                    className="card-header"
-                    style={{
-                      display: "flex",
-                      justifyContent: "flex-start",
-                    }}
-                  >
-                    <FormSubmission
-                      text={"Update"}
-                      obj={ah}
-                      handleSubmit={antiHeroStore.putAntiHeroAction}
-                    />
-                  </div>
-                ) : (
-                  <div className="card-header">
-                    <h3 className="card-title">
-                      {ah.firstName} {ah.lastName}
-                    </h3>
-                    <h5 className="card-subtitle mb-2 text-muted">
-                      {ah.house}
-                    </h5>
-                    <p className="card-text">{ah.knownAs}</p>
-                  </div>
-                )}
-                <section className="card-body">
-                  <div>
-                    {editingTracker === ah.id ? (
-                      <button
-                        className="btn btn-info card-link col text-center"
-                        onClick={() => {
-                          setEditingTracker("0");
-                        }}
-                      >
-                        Cancel
-                      </button>
-                    ) : (
-                      <button
-                        className="btn btn-primary card-link col text-center"
-                        onClick={() => {
-                          antiHeroStore.setAntiHeroAction(ah);
-                          setEditingTracker(ah.id);
-                        }}
-                      >
-                        Edit
-                      </button>
-                    )}
-                    <button
-                      className="btn btn-outline-danger card-link col text-center"
-                      onClick={() => handleRemoveItem(ah.id, ah.firstName)}
+            <div style={{ width: "auto" }}>
+              {antiHeroStore.antiHeroes.map((ah) => (
+                <div key={ah.id} className="card mt-3">
+                  {editingTracker === ah.id ? (
+                    <div
+                      className="card-header"
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-start",
+                      }}
                     >
-                      Delete
+                      <FormSubmission
+                        text={"Update"}
+                        obj={ah}
+                        handleSubmit={antiHeroStore.putAntiHeroAction}
+                      />
+                    </div>
+                  ) : (
+                      <div className="card-header">
+                        <h3 className="card-title">
+                          {ah.firstName} {ah.lastName}
+                        </h3>
+                        <h5 className="card-subtitle mb-2 text-muted">
+                          {ah.house}
+                        </h5>
+                        <p className="card-text">{ah.knownAs}</p>
+                      </div>
+                    )}
+                  <section className="card-body">
+                    <div>
+                      {editingTracker === ah.id ? (
+                        <button
+                          className="btn btn-info card-link col text-center"
+                          onClick={() => {
+                            setEditingTracker("0");
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      ) : (
+                          <button
+                            className="btn btn-primary card-link col text-center"
+                            onClick={() => {
+                              antiHeroStore.setAntiHeroAction(ah);
+                              setEditingTracker(ah.id);
+                            }}
+                          >
+                            Edit
+                          </button>
+                        )}
+                      <button
+                        className="btn btn-outline-danger card-link col text-center"
+                        onClick={() => handleRemoveItem(ah.id, ah.firstName)}
+                      >
+                        Delete
                     </button>
-                  </div>
-                </section>
-              </div>
-            ))}
-          </div>
-        )}
+                    </div>
+                  </section>
+                </div>
+              ))}
+            </div>
+          )}
       </div>
     </div>
   );
