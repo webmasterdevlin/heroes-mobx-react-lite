@@ -1,12 +1,12 @@
 import React, { useContext } from "react";
-import { observer, useObserver } from "mobx-react-lite";
+import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
 import { RootStoreContext } from "store/rootStore";
 
 const HeaderNav = observer(() => {
   const { antiHeroStore, heroStore } = useContext(RootStoreContext);
 
-  return useObserver(() => (
+  return (
     <nav className="sticky-top navbar navbar-expand-lg navbar-light bg-light mb-5">
       <div className="container-fluid">
         <span className="navbar-brand me-5">
@@ -43,7 +43,7 @@ const HeaderNav = observer(() => {
         </span>
       </div>
     </nav>
-  ));
+  );
 });
 
 export default HeaderNav;
