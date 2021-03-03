@@ -9,7 +9,7 @@ import {
   putAntiHeroAxios,
 } from "./antiHeroService";
 
-const initialValues: AntiHeroStateType = {
+export const initialValues: AntiHeroStateType = {
   antiHeroes: [] as AntiHeroModel[],
   antiHero: {
     id: "",
