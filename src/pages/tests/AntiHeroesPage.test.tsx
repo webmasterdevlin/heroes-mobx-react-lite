@@ -2,10 +2,10 @@ import { render, screen } from "test-utils/testing-library-utils";
 import AntiHeroesPage from "../AntiHeroesPage";
 
 describe("Anti Heroes Page", () => {
-  test.skip("AntiHeroesPage's title is visible", () => {
+  test("AntiHeroesPage's title is visible", () => {
     render(<AntiHeroesPage />);
 
-    const title = screen.getByRole("heading", { name: "Anti HeroesPage" });
+    const title = screen.getByRole("heading", { name: "Anti Heroes Page" });
 
     expect(title).toBeInTheDocument();
   });
