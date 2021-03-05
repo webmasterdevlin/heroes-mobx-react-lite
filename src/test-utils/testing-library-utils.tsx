@@ -1,11 +1,9 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import { render as rtlRender } from "@testing-library/react";
-
-// Import your own reducer
 import { initialValues as reducerInitialState } from "features/antiHeroes/antiHeroContext";
 
 import RootStore from "../store/rootStore";
-import { BrowserRouter } from "react-router-dom";
 import HeaderNav from "../components/HeaderNav";
 
 function render(
@@ -17,7 +15,9 @@ function render(
       <RootStore>
         <BrowserRouter>
           <HeaderNav />
-          {children}
+          <div className="container">
+            <div className="vertical-center">{children}</div>
+          </div>
         </BrowserRouter>
       </RootStore>
     );
