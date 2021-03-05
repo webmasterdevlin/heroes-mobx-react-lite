@@ -11,7 +11,6 @@ describe("Anti Heroes Page", () => {
     render(<AntiHeroesPage />);
 
     const title = screen.getByRole("heading", { name: "Anti Heroes Page" });
-
     expect(title).toBeInTheDocument();
   });
 
