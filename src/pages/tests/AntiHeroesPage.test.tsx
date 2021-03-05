@@ -1,5 +1,16 @@
-import { render, screen } from "test-utils/testing-library-utils";
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+} from "test-utils/testing-library-utils";
 import AntiHeroesPage from "../AntiHeroesPage";
+import useAntiHeroContext from "../../features/antiHeroes/antiHeroContext";
+import React from "react";
+import { act } from "@testing-library/react";
+import HeaderNav from "../../components/HeaderNav";
+import { BrowserRouter } from "react-router-dom";
+import RootStore from "../../store/rootStore";
 
 describe("Anti Heroes Page", () => {
   test("AntiHeroesPage's title is visible", () => {
@@ -10,20 +21,24 @@ describe("Anti Heroes Page", () => {
     expect(title).toBeInTheDocument();
   });
 
-  test.skip("Anti heroes loading", async () => {
+  it("should render inputs", async () => {
     render(<AntiHeroesPage />);
 
-    const loading = screen.getByRole("heading", {
-      name: "Loading.. Please wait..",
+    const firstName: any = await screen.queryByRole("textbox", {
+      name: "First Name",
     });
-
-    expect(loading).toHaveTextContent("Loading.. Please wait..");
+    await waitFor(() => {
+      fireEvent.change(firstName, { target: { value: "Devlin" } });
+    });
+    expect(firstName.value).toBe("Devlin");
   });
 
-  test.skip("Mark Buttons are visible", async () => {
+  it("should render anti heroes", async function () {
     render(<AntiHeroesPage />);
 
-    const markButtons = screen.getByRole("button", { name: "Save Character" });
-    expect(markButtons).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.queryAllByRole("button")).toHaveLength(13);
+      expect(screen.getByText("Total anti-heroes: 6")).toBeInTheDocument();
+    });
   });
 });

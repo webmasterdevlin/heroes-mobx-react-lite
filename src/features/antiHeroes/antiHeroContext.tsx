@@ -8,6 +8,7 @@ import {
   postAntiHeroAxios,
   putAntiHeroAxios,
 } from "./antiHeroService";
+import { runInAction } from "mobx";
 
 export const initialValues: AntiHeroStateType = {
   antiHeroes: [] as AntiHeroModel[],
@@ -44,13 +45,22 @@ const AntiHeroContext = () => {
     /*asynchronous actions*/
     async getAntiHeroesAction() {
       store.setErrorAction("");
-      store.isLoading = true;
+      runInAction(() => {
+        store.isLoading = true;
+      });
+
       try {
-        store.antiHeroes = (await getAntiHeroesAxios()).data;
+        const { data } = await getAntiHeroesAxios();
+        runInAction(() => {
+          store.antiHeroes = data;
+        });
       } catch (e) {
         store.setErrorAction(e);
       }
-      store.isLoading = false;
+
+      runInAction(() => {
+        store.isLoading = false;
+      });
     },
 
     // asynchronous actions (pessimistic UI update)

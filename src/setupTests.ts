@@ -8,7 +8,7 @@ import { server } from "./mocks/server";
 // src/setupTests.js
 
 // Establish API mocking before all tests.
-beforeAll(() => server.listen());
+beforeAll( () => server.listen());
 
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
