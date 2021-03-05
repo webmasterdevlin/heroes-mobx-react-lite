@@ -45,6 +45,7 @@ const AntiHeroContext = () => {
     /*asynchronous actions*/
     async getAntiHeroesAction() {
       store.setErrorAction("");
+
       runInAction(() => {
         store.isLoading = true;
       });

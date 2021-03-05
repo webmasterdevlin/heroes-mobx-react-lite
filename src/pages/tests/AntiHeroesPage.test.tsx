@@ -5,15 +5,9 @@ import {
   waitFor,
 } from "test-utils/testing-library-utils";
 import AntiHeroesPage from "../AntiHeroesPage";
-import useAntiHeroContext from "../../features/antiHeroes/antiHeroContext";
-import React from "react";
-import { act } from "@testing-library/react";
-import HeaderNav from "../../components/HeaderNav";
-import { BrowserRouter } from "react-router-dom";
-import RootStore from "../../store/rootStore";
 
 describe("Anti Heroes Page", () => {
-  test("AntiHeroesPage's title is visible", () => {
+  it("should render title", () => {
     render(<AntiHeroesPage />);
 
     const title = screen.getByRole("heading", { name: "Anti Heroes Page" });

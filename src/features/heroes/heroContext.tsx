@@ -9,6 +9,7 @@ import {
   postHeroAxios,
   putHeroAxios,
 } from "./heroService";
+import { runInAction } from "mobx";
 
 const initialValues: HeroStateType = {
   heroes: [] as HeroModel[],
@@ -45,13 +46,23 @@ const HeroContext = () => {
     /*asynchronous actions*/
     async getHeroesAction() {
       store.setErrorAction("");
-      store.isLoading = true;
+
+      runInAction(() => {
+        store.isLoading = true;
+      });
+
       try {
-        store.heroes = (await getHeroesAxios()).data;
+        const { data } = await getHeroesAxios();
+        runInAction(() => {
+          store.heroes = data;
+        });
       } catch (e) {
         store.setErrorAction(e);
       }
-      store.isLoading = false;
+
+      runInAction(() => {
+        store.isLoading = false;
+      });
     },
 
     // asynchronous actions (pessimistic UI update)
