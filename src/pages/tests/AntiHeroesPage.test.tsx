@@ -26,7 +26,7 @@ describe("Anti Heroes Page", () => {
     expect(firstName).toHaveValue("Devlin");
   });
 
-  it("should render anti heroes", async function () {
+  it("should show exact number of anti heroes in main content and navigation bar", async () => {
     render(<AntiHeroesPage />);
 
     await waitFor(() => {
