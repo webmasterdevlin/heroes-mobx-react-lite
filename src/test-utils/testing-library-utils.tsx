@@ -6,24 +6,23 @@ import { initialValues as reducerInitialState } from "features/antiHeroes/antiHe
 import RootStore from "../store/rootStore";
 import HeaderNav from "../components/HeaderNav";
 
-function render(
+const render = (
   ui,
   { initialState = reducerInitialState, ...renderOptions } = {}
-) {
-  function Wrapper({ children }) {
-    return (
-      <RootStore>
-        <BrowserRouter>
-          <HeaderNav />
-          <div className="container">
-            <div className="vertical-center">{children}</div>
-          </div>
-        </BrowserRouter>
-      </RootStore>
-    );
-  }
+) => {
+  const Wrapper = ({ children }) => (
+    <RootStore>
+      <BrowserRouter>
+        <HeaderNav />
+        <div className="container">
+          <div className="vertical-center">{children}</div>
+        </div>
+      </BrowserRouter>
+    </RootStore>
+  );
+
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
-}
+};
 
 // re-export everything
 export * from "@testing-library/react";
