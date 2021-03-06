@@ -10,7 +10,7 @@ import {
 } from "./antiHeroService";
 import { runInAction } from "mobx";
 
-export const initialValues: AntiHeroStateType = {
+const initialValues: AntiHeroStateType = {
   antiHeroes: [] as AntiHeroModel[],
   antiHero: {
     id: "",
