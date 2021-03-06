@@ -17,20 +17,20 @@ describe("Anti Heroes Page", () => {
   it("should render inputs", async () => {
     render(<AntiHeroesPage />);
 
-    const firstName: any = await screen.queryByRole("textbox", {
+    const firstName: any = screen.queryByRole("textbox", {
       name: "First Name",
     });
     await waitFor(() => {
       fireEvent.change(firstName, { target: { value: "Devlin" } });
     });
-    expect(firstName.value).toBe("Devlin");
+    expect(firstName).toHaveValue("Devlin");
   });
 
   it("should render anti heroes", async function () {
     render(<AntiHeroesPage />);
 
     await waitFor(() => {
-      expect(screen.queryAllByRole("button")).toHaveLength(13);
+      expect(screen.queryAllByRole("card")).toHaveLength(6);
       expect(screen.getByText("Total anti-heroes: 6")).toBeInTheDocument();
     });
   });

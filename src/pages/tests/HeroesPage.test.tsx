@@ -11,27 +11,26 @@ describe("Heroes Page", () => {
     render(<HeroesPage />);
 
     const title = screen.getByRole("heading", { name: "Heroes Page" });
-
     expect(title).toBeInTheDocument();
   });
 
   it("should render inputs", async () => {
     render(<HeroesPage />);
 
-    const firstName: any = await screen.queryByRole("textbox", {
+    const firstName = screen.queryByRole("textbox", {
       name: "First Name",
     });
     await waitFor(() => {
       fireEvent.change(firstName, { target: { value: "Gokou" } });
     });
-    expect(firstName.value).toBe("Gokou");
+    expect(firstName).toHaveValue("Gokou");
   });
 
   it("should render heroes", async function () {
     render(<HeroesPage />);
 
     await waitFor(() => {
-      expect(screen.queryAllByRole("button")).toHaveLength(11);
+      expect(screen.queryAllByRole("card")).toHaveLength(5);
       expect(screen.getByText("Total heroes: 5")).toBeInTheDocument();
     });
   });
