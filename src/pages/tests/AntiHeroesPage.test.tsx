@@ -17,7 +17,7 @@ describe("Anti Heroes Page", () => {
   it("should render inputs", async () => {
     render(<AntiHeroesPage />);
 
-    const firstName: any = screen.queryByRole("textbox", {
+    const firstName: any = screen.getByRole("textbox", {
       name: "First Name",
     });
     await waitFor(() => {
@@ -30,7 +30,7 @@ describe("Anti Heroes Page", () => {
     render(<AntiHeroesPage />);
 
     await waitFor(() => {
-      expect(screen.queryAllByRole("card")).toHaveLength(6);
+      expect(screen.getAllByRole("card")).toHaveLength(6);
       expect(screen.getByText("Total anti-heroes: 6")).toBeInTheDocument();
     });
   });

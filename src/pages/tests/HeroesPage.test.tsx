@@ -17,7 +17,7 @@ describe("Heroes Page", () => {
   it("should render inputs", async () => {
     render(<HeroesPage />);
 
-    const firstName = screen.queryByRole("textbox", {
+    const firstName = screen.getByRole("textbox", {
       name: "First Name",
     });
     await waitFor(() => {
@@ -30,7 +30,7 @@ describe("Heroes Page", () => {
     render(<HeroesPage />);
 
     await waitFor(() => {
-      expect(screen.queryAllByRole("card")).toHaveLength(5);
+      expect(screen.getAllByRole("card")).toHaveLength(5);
       expect(screen.getByText("Total heroes: 5")).toBeInTheDocument();
     });
   });
