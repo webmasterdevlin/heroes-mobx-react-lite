@@ -41,41 +41,44 @@ describe("Anti Heroes Page", () => {
 
     const firstNameTextInput = await screen.findByLabelText("First Name");
     expect(firstNameTextInput).toBeInTheDocument();
-    await waitFor(() => {
-      fireEvent.change(firstNameTextInput, { target: { value: "Devlin" } });
-      //      userEvent.type(firstNameTextInput, "Devlin");
-    });
-
+    await waitFor(() =>
+      fireEvent.change(firstNameTextInput, { target: { value: "Devlin" } })
+    );
     expect(firstNameTextInput).toHaveValue("Devlin");
 
-    // const lastNameTextInput = await screen.findByLabelText("Last Name");
-    // expect(lastNameTextInput).toBeInTheDocument();
-    // userEvent.type(lastNameTextInput, "Duldulao");
-    // expect(lastNameTextInput).toHaveValue("Duldulao");
-    //
-    // const houseTextInput = await screen.findByLabelText("House");
-    // expect(houseTextInput).toBeInTheDocument();
-    // userEvent.type(houseTextInput, "Marvel");
-    // expect(houseTextInput).toHaveValue("Marvel");
-    //
-    // const knownAsTextInput = await screen.findByLabelText("Known as");
-    // expect(knownAsTextInput).toBeInTheDocument();
-    // userEvent.type(knownAsTextInput, "React Man");
-    // expect(knownAsTextInput).toHaveValue("React Man");
+    const lastNameTextInput = await screen.findByLabelText("Last Name");
+    expect(lastNameTextInput).toBeInTheDocument();
+    await waitFor(() =>
+      fireEvent.change(lastNameTextInput, { target: { value: "Duldulao" } })
+    );
+    expect(lastNameTextInput).toHaveValue("Duldulao");
 
-    // const createButton = await screen.findByRole("button", {
-    //   name: "Create",
-    // });
-    // expect(createButton).toBeEnabled();
-    // userEvent.click(createButton);
+    const houseTextInput = await screen.findByLabelText("House");
+    expect(houseTextInput).toBeInTheDocument();
+    await waitFor(() =>
+      fireEvent.change(houseTextInput, { target: { value: "Marvel" } })
+    );
+    expect(houseTextInput).toHaveValue("Marvel");
 
-    // rerender(<AntiHeroesPage />);
-    //
-    // await waitFor(() => {
-    //   const cards = screen.getAllByRole("card");
-    //   expect(cards).toHaveLength(3);
-    //   const counter = screen.getByRole("total-anti-heroes");
-    //   expect(counter).toHaveTextContent("3");
-    // });
+    const knownAsTextInput = await screen.findByLabelText("Known as");
+    expect(knownAsTextInput).toBeInTheDocument();
+    await waitFor(() =>
+      fireEvent.change(knownAsTextInput, { target: { value: "React Man" } })
+    );
+    expect(knownAsTextInput).toHaveValue("React Man");
+
+    const createButton = screen.getByRole("button", {
+      name: "Create",
+    });
+    expect(createButton).toBeEnabled();
+    await waitFor(() => {
+      userEvent.click(createButton);
+    });
+
+    rerender(<AntiHeroesPage />);
+
+    const cards = await screen.findAllByRole("card");
+    expect(cards).toHaveLength(3);
+    expect(screen.getByText("Total anti-heroes: 3")).toBeInTheDocument();
   });
 });
