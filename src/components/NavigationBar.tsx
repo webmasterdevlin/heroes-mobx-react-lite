@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
+import { RootStoreContext } from "store/rootStore";
 import { AppBar, Box, Button, createStyles, Toolbar } from "@material-ui/core";
 import TotalOfCharacters from "./TotalOfCharacters";
 import { makeStyles } from "@material-ui/styles";
 
 const NavigationBar = () => {
-
+  const { antiHeroStore, heroStore, villainStore } = useContext(
+    RootStoreContext
+  );
   const history = useHistory();
   const classes = useStyles();
   return (
@@ -29,7 +32,7 @@ const NavigationBar = () => {
             Anti Heroes
           </Button>
           <TotalOfCharacters
-            collection={[]}
+            total={antiHeroStore.totalAntiHeroesAction}
             role={"total-anti-heroes"}
           />
         </Box>
@@ -42,7 +45,7 @@ const NavigationBar = () => {
             Heroes
           </Button>
           <TotalOfCharacters
-            collection={[]}
+            total={heroStore.totalHeroesAction}
             role={"total-heroes"}
           />
         </Box>
@@ -55,7 +58,7 @@ const NavigationBar = () => {
             Villains
           </Button>
           <TotalOfCharacters
-            collection={[]}
+            total={villainStore.totalVillainsAction}
             role={"total-villains"}
           />
         </Box>

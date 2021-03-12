@@ -2,7 +2,7 @@ export type HeroStateType = {
   heroes: HeroModel[];
   hero: HeroModel;
   error: string;
-  isLoading: boolean;
+  loading: boolean;
 };
 
 export type HeroModel = {
@@ -17,6 +17,7 @@ export type HeroActionType = {
   /*non-async*/
   setErrorAction: (error: any) => void;
   setHeroAction: (hero: HeroModel) => void;
+  softDeleteHeroAction: (hero: HeroModel) => void;
 
   /*computed or derived values*/
   totalHeroesAction: () => number;

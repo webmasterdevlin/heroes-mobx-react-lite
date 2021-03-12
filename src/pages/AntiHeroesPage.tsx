@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-
+import React, { useEffect, useContext, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { RootStoreContext } from "store/rootStore";
 import TitleBar from "components/TitleBar";
 import UpdateUiLabel from "components/UpdateUiLabel";
 import {
@@ -11,10 +12,10 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import FormSubmission from "components/FormSubmission";
+import { AntiHeroModel } from "../features/antiHeroes/antiHeroTypes";
 
-const AntiHeroesPage = () => {
-  const loading = false;
-  const antiHeroes = [];
+const AntiHeroesPage = observer(() => {
+  const { antiHeroStore } = useContext(RootStoreContext);
 
   const smallScreen = useMediaQuery("(max-width:600px)");
   const classes = useStyles();
@@ -22,16 +23,32 @@ const AntiHeroesPage = () => {
   /*local state*/
   const [counter, setCounter] = useState("0");
 
+  useEffect(() => {
+    fetchAntiHeroes();
+  }, []);
+
+  const fetchAntiHeroes = async () => {
+    await antiHeroStore.getAntiHeroesAction();
+  };
+
+  const handleSoftDelete = (antiHero: AntiHeroModel) => {
+    antiHeroStore.softDeleteAntiHeroAction(antiHero);
+  };
+
+  const handleDelete = async (antiHeroId: string) => {
+    await antiHeroStore.deleteAntiHeroAction(antiHeroId);
+  };
+
   return (
     <div>
       <TitleBar title={"Anti HeroesPage"} />
-      <FormSubmission  />
+      <FormSubmission postAction={antiHeroStore.postAntiHeroAction} />
       <UpdateUiLabel />
       <>
-        {loading ? (
+        {antiHeroStore.loading ? (
           <Typography variant={"h2"}>Loading.. Please wait..</Typography>
         ) : (
-          antiHeroes.map((ah) => (
+          antiHeroStore.antiHeroes.map((ah) => (
             <Box
               mb={2}
               role={"card"}
@@ -59,6 +76,7 @@ const AntiHeroesPage = () => {
                   className={classes.button}
                   variant={"contained"}
                   color={"secondary"}
+                  onClick={() => handleSoftDelete(ah)}
                 >
                   Remove
                 </Button>{" "}
@@ -66,6 +84,7 @@ const AntiHeroesPage = () => {
                   className={classes.button}
                   variant={"outlined"}
                   color={"secondary"}
+                  onClick={async () => await handleDelete(ah.id)}
                 >
                   DELETE in DB
                 </Button>
@@ -74,7 +93,7 @@ const AntiHeroesPage = () => {
           ))
         )}
       </>
-      {antiHeroes.length === 0 && !loading && (
+      {antiHeroStore.antiHeroes.length === 0 && !antiHeroStore.loading && (
         <Button
           className={classes.button}
           variant={"contained"}
@@ -85,7 +104,7 @@ const AntiHeroesPage = () => {
       )}
     </div>
   );
-};
+});
 
 export default AntiHeroesPage;
 

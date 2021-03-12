@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useContext, useState } from "react";
+import { observer } from "mobx-react-lite";
+import { RootStoreContext } from "store/rootStore";
 import TitleBar from "components/TitleBar";
 import UpdateUiLabel from "components/UpdateUiLabel";
-
 import {
   Box,
   Button,
@@ -11,10 +12,10 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import FormSubmission from "components/FormSubmission";
+import { HeroModel } from "../features/heroes/heroTypes";
 
-const HeroesPage = () => {
-  const loading = false;
-  const heroes = [];
+const HeroesPage = observer(() => {
+  const { heroStore } = useContext(RootStoreContext);
 
   const smallScreen = useMediaQuery("(max-width:600px)");
   const classes = useStyles();
@@ -22,32 +23,50 @@ const HeroesPage = () => {
   /*local state*/
   const [counter, setCounter] = useState("0");
 
+  useEffect(() => {
+    fetchHeroes();
+  }, []);
+
+  const fetchHeroes = async () => {
+    await heroStore.getHeroesAction();
+  };
+
+  const handleSoftDelete = (hero: HeroModel) => {
+    heroStore.softDeleteHeroAction(hero);
+  };
+
+  const handleDelete = async (heroId: string) => {
+    await heroStore.deleteHeroAction(heroId);
+  };
+
   return (
     <div>
-      <TitleBar title={"Super HeroesPage"} />
-      <FormSubmission />
+      <TitleBar title={"Anti HeroesPage"} />
+      <FormSubmission postAction={heroStore.postHeroAction} />
       <UpdateUiLabel />
       <>
-        {loading ? (
+        {heroStore.loading ? (
           <Typography variant={"h2"}>Loading.. Please wait..</Typography>
         ) : (
-          heroes.map((h) => (
+          heroStore.heroes.map((ah) => (
             <Box
-              key={h.id}
-              role={"card"}
               mb={2}
+              role={"card"}
+              key={ah.id}
               display={"flex"}
               flexDirection={smallScreen ? "column" : "row"}
               justifyContent={"space-between"}
             >
-              <Typography>
-                <span>{`${h.firstName} ${h.lastName} is ${h.knownAs}`}</span>
-                {counter === h.id && <span> - marked</span>}
-              </Typography>
+              <div>
+                <Typography>
+                  <span>{`${ah.firstName} ${ah.lastName} is ${ah.knownAs}`}</span>
+                  {counter === ah.id && <span> - marked</span>}
+                </Typography>
+              </div>
               <div>
                 <Button
                   className={classes.button}
-                  onClick={() => setCounter(h.id)}
+                  onClick={() => setCounter(ah.id)}
                   variant={"contained"}
                   color={"default"}
                 >
@@ -57,6 +76,7 @@ const HeroesPage = () => {
                   className={classes.button}
                   variant={"contained"}
                   color={"secondary"}
+                  onClick={() => handleSoftDelete(ah)}
                 >
                   Remove
                 </Button>{" "}
@@ -64,6 +84,7 @@ const HeroesPage = () => {
                   className={classes.button}
                   variant={"outlined"}
                   color={"secondary"}
+                  onClick={async () => await handleDelete(ah.id)}
                 >
                   DELETE in DB
                 </Button>
@@ -72,7 +93,7 @@ const HeroesPage = () => {
           ))
         )}
       </>
-      {heroes.length === 0 && !loading && (
+      {heroStore.heroes.length === 0 && !heroStore.loading && (
         <Button
           className={classes.button}
           variant={"contained"}
@@ -83,7 +104,7 @@ const HeroesPage = () => {
       )}
     </div>
   );
-};
+});
 
 export default HeroesPage;
 

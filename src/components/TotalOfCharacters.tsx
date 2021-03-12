@@ -1,14 +1,14 @@
 import React from "react";
-
+import { observer } from "mobx-react-lite";
 type Props = {
-  collection: any[];
+  total: () => number;
   role: string;
 };
 
-const TotalOfCharacters = ({ collection, role }: Props) => (
+const TotalOfCharacters = observer(({ total, role }: Props) => (
   <span role={role} style={{ color: "cyan", margin: "0 1rem" }}>
-    {collection?.length}
+    {total}
   </span>
-);
+));
 
 export default TotalOfCharacters;

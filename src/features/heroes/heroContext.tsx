@@ -14,7 +14,7 @@ const initialValues: HeroStateType = {
     house: "",
     knownAs: "",
   } as HeroModel,
-  isLoading: false,
+  loading: false,
   error: "",
 };
 
@@ -42,7 +42,7 @@ const HeroContext = () => {
       store.setErrorAction("");
 
       runInAction(() => {
-        store.isLoading = true;
+        store.loading = true;
       });
 
       try {
@@ -55,20 +55,24 @@ const HeroContext = () => {
       }
 
       runInAction(() => {
-        store.isLoading = false;
+        store.loading = false;
       });
     },
 
     // asynchronous actions (pessimistic UI update)
     async postHeroAction(newHero: HeroModel) {
       store.setErrorAction("");
-      store.isLoading = true;
+      store.loading = true;
       try {
         store.heroes.push((await postAxios(EndPoints.heroes, newHero)).data);
       } catch (e) {
         store.setErrorAction(e);
       }
-      store.isLoading = false;
+      store.loading = false;
+    },
+
+    softDeleteHeroAction(id: string) {
+      store.heroes = store.heroes.filter((h) => h.id !== id);
     },
 
     // asynchronous actions also. Optimistic UI update. No need for showing loader/spinner.

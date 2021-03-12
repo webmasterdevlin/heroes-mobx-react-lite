@@ -15,7 +15,7 @@ const initialValues: AntiHeroStateType = {
     house: "",
     knownAs: "",
   } as AntiHeroModel,
-  isLoading: false,
+  loading: false,
   error: "",
 };
 
@@ -43,7 +43,7 @@ const AntiHeroContext = () => {
       store.setErrorAction("");
 
       runInAction(() => {
-        store.isLoading = true;
+        store.loading = true;
       });
 
       try {
@@ -56,14 +56,32 @@ const AntiHeroContext = () => {
       }
 
       runInAction(() => {
-        store.isLoading = false;
+        store.loading = false;
       });
+    },
+
+    softDeleteAntiHeroAction(id: string) {
+      console.log("softDeleteAntiHeroAction:", id);
+      store.antiHeroes = store.antiHeroes.filter((ah) => ah.id !== id);
+    },
+
+    // asynchronous actions also. Optimistic UI update. No need for showing loader/spinner.
+    async deleteAntiHeroAction(id: string) {
+      store.setErrorAction("");
+      const previousAntiHeroes = store.antiHeroes;
+      store.antiHeroes = store.antiHeroes.filter((ah) => ah.id !== id);
+      try {
+        await deleteAxios(EndPoints.antiHeroes, id);
+      } catch (e) {
+        store.setErrorAction(e);
+        store.antiHeroes = previousAntiHeroes;
+      }
     },
 
     // asynchronous actions (pessimistic UI update)
     async postAntiHeroAction(newAntiHero: AntiHeroModel) {
       store.setErrorAction("");
-      store.isLoading = true;
+      store.loading = true;
       try {
         store.antiHeroes.push(
           (await postAxios(EndPoints.antiHeroes, newAntiHero)).data
@@ -71,20 +89,7 @@ const AntiHeroContext = () => {
       } catch (e) {
         store.setErrorAction(e);
       }
-      store.isLoading = false;
-    },
-
-    // asynchronous actions also. Optimistic UI update. No need for showing loader/spinner.
-    async deleteAntiHeroAction(id: string) {
-      store.setErrorAction("");
-      const previousAntiHeroes = store.antiHeroes;
-      store.antiHeroes = store.antiHeroes.filter((h) => h.id !== id);
-      try {
-        await deleteAxios(EndPoints.antiHeroes, id);
-      } catch (e) {
-        store.setErrorAction(e);
-        store.antiHeroes = previousAntiHeroes;
-      }
+      store.loading = false;
     },
   }));
 

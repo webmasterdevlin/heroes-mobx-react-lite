@@ -4,11 +4,10 @@ import * as yup from "yup";
 import SharedForm from "components/SharedForm";
 
 type Props = {
-
+  postAction: (values: any) => Promise<void>;
 };
 
-const FormSubmission = () => {
-
+const FormSubmission = ({ postAction }: Props) => {
   return (
     <Formik
       initialValues={{
@@ -24,8 +23,8 @@ const FormSubmission = () => {
         house: yup.string().label("House").required(),
         knownAs: yup.string().label("Known as").required(),
       })}
-      onSubmit={(values, actions) => {
-      
+      onSubmit={async (values, actions) => {
+        await postAction(values);
         actions.resetForm();
       }}
     >
