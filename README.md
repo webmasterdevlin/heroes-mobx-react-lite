@@ -23,4 +23,4 @@ https://kentcdodds.com/blog/common-mistakes-with-react-testing-library
 - use await screen.find* instead of await waitFor/wait
 - if necessary, use await waitFor instead of await wait
 - use userEvent instead of fireEvent
-- don't use userEvent inside the callback of waitFor
+- avoid userEvent or fireEvent insides callbacks of waitFor as much as possible
