@@ -30,8 +30,8 @@ describe("Anti Heroes Page", () => {
     render(<AntiHeroesPage />);
 
     await waitFor(() => {
-      expect(screen.getAllByRole("card")).toHaveLength(6);
-      expect(screen.getByText("Total anti-heroes: 6")).toBeInTheDocument();
+      expect(screen.getAllByRole("card")).toHaveLength(2);
+      expect(screen.getByText("Total anti-heroes: 2")).toBeInTheDocument();
     });
   });
 });

@@ -30,8 +30,8 @@ describe("Heroes Page", () => {
     render(<HeroesPage />);
 
     await waitFor(() => {
-      expect(screen.getAllByRole("card")).toHaveLength(5);
-      expect(screen.getByText("Total heroes: 5")).toBeInTheDocument();
+      expect(screen.getAllByRole("card")).toHaveLength(2);
+      expect(screen.getByText("Total heroes: 2")).toBeInTheDocument();
     });
   });
 });
