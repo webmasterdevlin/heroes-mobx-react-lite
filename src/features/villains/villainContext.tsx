@@ -3,34 +3,34 @@ import { EndPoints } from "axios/api-config";
 import { deleteAxios, getAxios, postAxios } from "axios/generic-api-calls";
 import { useLocalObservable } from "mobx-react-lite";
 
-import { HeroModel, HeroStateType } from "./heroTypes";
+import { VillainModel, VillainStateType } from "./villainTypes";
 import { runInAction } from "mobx";
 
-const initialValues: HeroStateType = {
-  heroes: [] as HeroModel[],
-  hero: {
+const initialValues: VillainStateType = {
+  villains: [] as VillainModel[],
+  villain: {
     id: "",
     firstName: "",
     lastName: "",
     house: "",
     knownAs: "",
-  } as HeroModel,
+  } as VillainModel,
   loading: false,
   error: "",
 };
 
-const HeroContext = () => {
+const VillainContext = () => {
   const store = useLocalObservable(() => ({
     /*observables*/
     ...initialValues,
 
     /*non-asynchronous actions*/
-    setHeroAction(hero: HeroModel) {
-      store.hero = hero;
+    setVillainAction(villain: VillainModel) {
+      store.villain = villain;
     },
 
-    softDeleteHeroAction(hero: HeroModel) {
-      store.heroes = store.heroes.filter((h) => h.id !== hero.id);
+    softDeleteVillainAction(villain: VillainModel) {
+      store.villains = store.villains.filter((v) => v.id !== villain.id);
     },
 
     setErrorAction({ message }: any) {
@@ -38,12 +38,12 @@ const HeroContext = () => {
     },
 
     /*computed values i.e. derived state*/
-    get totalHeroesCount() {
-      return store.heroes.length;
+    get totalVillainsCount() {
+      return store.villains.length;
     },
 
     /*asynchronous actions*/
-    async getHeroesAction() {
+    async getVillainsAction() {
       store.setErrorAction("");
 
       runInAction(() => {
@@ -51,9 +51,9 @@ const HeroContext = () => {
       });
 
       try {
-        const { data } = await getAxios<HeroModel>(EndPoints.heroes);
+        const { data } = await getAxios<VillainModel>(EndPoints.villains);
         runInAction(() => {
-          store.heroes = data;
+          store.villains = data;
         });
       } catch (e) {
         store.setErrorAction(e);
@@ -65,23 +65,25 @@ const HeroContext = () => {
     },
 
     // asynchronous actions also. Optimistic UI update. No need for showing loader/spinner.
-    async deleteHeroAction(id: string) {
+    async deleteVillainAction(id: string) {
       store.setErrorAction("");
-      const previousHeroes = store.heroes;
-      store.heroes = store.heroes.filter((h) => h.id !== id);
+      const previousVillains = store.villains;
+      store.villains = store.villains.filter((v) => v.id !== id);
       try {
-        await deleteAxios(EndPoints.heroes, id);
+        await deleteAxios(EndPoints.villains, id);
       } catch (e) {
         store.setErrorAction(e);
-        store.heroes = previousHeroes;
+        store.villains = previousVillains;
       }
     },
 
     // asynchronous actions (pessimistic UI update)
-    async postHeroAction(newHero: HeroModel) {
+    async postVillainAction(newVillain: VillainModel) {
       store.setErrorAction("");
       try {
-        store.heroes.push((await postAxios(EndPoints.heroes, newHero)).data);
+        store.villains.push(
+          (await postAxios(EndPoints.villains, newVillain)).data
+        );
       } catch (e) {
         store.setErrorAction(e);
       }
@@ -91,4 +93,4 @@ const HeroContext = () => {
   return store;
 };
 
-export default HeroContext;
+export default VillainContext;

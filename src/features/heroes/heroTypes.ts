@@ -20,7 +20,7 @@ export type HeroActionType = {
   softDeleteHeroAction: (hero: HeroModel) => void;
 
   /*computed or derived values*/
-  totalHeroesAction: () => number;
+  totalHeroesCount: () => number;
 
   /*async*/
   getHeroesAction: () => Promise<void>;

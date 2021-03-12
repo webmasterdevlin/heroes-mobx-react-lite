@@ -20,7 +20,7 @@ export type AntiHeroActionType = {
   softDeleteAntiHeroAction: (antiHero: AntiHeroModel) => void;
 
   /*computed or derived values*/
-  totalAntiHeroesAction: () => number;
+  totalAntiHeroesCount: () => number;
 
   /*asynchronous*/
   getAntiHeroesAction: () => Promise<void>;

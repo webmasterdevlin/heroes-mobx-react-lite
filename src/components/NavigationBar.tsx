@@ -4,8 +4,9 @@ import { RootStoreContext } from "store/rootStore";
 import { AppBar, Box, Button, createStyles, Toolbar } from "@material-ui/core";
 import TotalOfCharacters from "./TotalOfCharacters";
 import { makeStyles } from "@material-ui/styles";
+import { observer } from "mobx-react-lite";
 
-const NavigationBar = () => {
+const NavigationBar = observer(() => {
   const { antiHeroStore, heroStore, villainStore } = useContext(
     RootStoreContext
   );
@@ -32,7 +33,7 @@ const NavigationBar = () => {
             Anti Heroes
           </Button>
           <TotalOfCharacters
-            total={antiHeroStore.totalAntiHeroesAction}
+            total={antiHeroStore.totalAntiHeroesCount}
             role={"total-anti-heroes"}
           />
         </Box>
@@ -45,7 +46,7 @@ const NavigationBar = () => {
             Heroes
           </Button>
           <TotalOfCharacters
-            total={heroStore.totalHeroesAction}
+            total={heroStore.totalHeroesCount}
             role={"total-heroes"}
           />
         </Box>
@@ -58,14 +59,14 @@ const NavigationBar = () => {
             Villains
           </Button>
           <TotalOfCharacters
-            total={villainStore.totalVillainsAction}
+            total={villainStore.totalVillainsCount}
             role={"total-villains"}
           />
         </Box>
       </Toolbar>
     </AppBar>
   );
-};
+});
 
 export default NavigationBar;
 

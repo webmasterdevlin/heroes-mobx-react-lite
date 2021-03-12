@@ -32,6 +32,7 @@ const AntiHeroesPage = observer(() => {
   };
 
   const handleSoftDelete = (antiHero: AntiHeroModel) => {
+    console.log("handleSoftDelete:", antiHero);
     antiHeroStore.softDeleteAntiHeroAction(antiHero);
   };
 

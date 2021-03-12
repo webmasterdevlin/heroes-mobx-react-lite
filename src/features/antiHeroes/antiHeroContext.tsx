@@ -29,12 +29,16 @@ const AntiHeroContext = () => {
       store.antiHero = antiHero;
     },
 
+    softDeleteAntiHeroAction(antiHero: AntiHeroModel) {
+      store.antiHeroes = store.antiHeroes.filter((ah) => ah.id !== antiHero.id);
+    },
+
     setErrorAction({ message }: any) {
       store.error = message;
     },
 
     /*computed values i.e. derived state*/
-    get totalAntiHeroesAction() {
+    get totalAntiHeroesCount() {
       return store.antiHeroes.length;
     },
 
@@ -47,7 +51,7 @@ const AntiHeroContext = () => {
       });
 
       try {
-        const { data } = await getAxios(EndPoints.antiHeroes);
+        const { data } = await getAxios<AntiHeroModel>(EndPoints.antiHeroes);
         runInAction(() => {
           store.antiHeroes = data;
         });
@@ -58,11 +62,6 @@ const AntiHeroContext = () => {
       runInAction(() => {
         store.loading = false;
       });
-    },
-
-    softDeleteAntiHeroAction(id: string) {
-      console.log("softDeleteAntiHeroAction:", id);
-      store.antiHeroes = store.antiHeroes.filter((ah) => ah.id !== id);
     },
 
     // asynchronous actions also. Optimistic UI update. No need for showing loader/spinner.
@@ -81,7 +80,6 @@ const AntiHeroContext = () => {
     // asynchronous actions (pessimistic UI update)
     async postAntiHeroAction(newAntiHero: AntiHeroModel) {
       store.setErrorAction("");
-      store.loading = true;
       try {
         store.antiHeroes.push(
           (await postAxios(EndPoints.antiHeroes, newAntiHero)).data
@@ -89,7 +87,6 @@ const AntiHeroContext = () => {
       } catch (e) {
         store.setErrorAction(e);
       }
-      store.loading = false;
     },
   }));
 
