@@ -1,13 +1,9 @@
 import React from "react";
+import { EndPoints } from "axios/api-config";
+import { deleteAxios, getAxios, postAxios } from "axios/generic-api-calls";
 import { useLocalObservable } from "mobx-react-lite";
 
 import { AntiHeroModel, AntiHeroStateType } from "./antiHeroTypes";
-import {
-  getAntiHeroesAxios,
-  deleteAntiHeroAxios,
-  postAntiHeroAxios,
-  putAntiHeroAxios,
-} from "./antiHeroService";
 import { runInAction } from "mobx";
 
 const initialValues: AntiHeroStateType = {
@@ -51,7 +47,7 @@ const AntiHeroContext = () => {
       });
 
       try {
-        const { data } = await getAntiHeroesAxios();
+        const { data } = await getAxios(EndPoints.antiHeroes);
         runInAction(() => {
           store.antiHeroes = data;
         });
@@ -69,7 +65,9 @@ const AntiHeroContext = () => {
       store.setErrorAction("");
       store.isLoading = true;
       try {
-        store.antiHeroes.push((await postAntiHeroAxios(newAntiHero)).data);
+        store.antiHeroes.push(
+          (await postAxios(EndPoints.antiHeroes, newAntiHero)).data
+        );
       } catch (e) {
         store.setErrorAction(e);
       }
@@ -82,27 +80,10 @@ const AntiHeroContext = () => {
       const previousAntiHeroes = store.antiHeroes;
       store.antiHeroes = store.antiHeroes.filter((h) => h.id !== id);
       try {
-        await deleteAntiHeroAxios(id);
+        await deleteAxios(EndPoints.antiHeroes, id);
       } catch (e) {
         store.setErrorAction(e);
         store.antiHeroes = previousAntiHeroes;
-      }
-    },
-
-    async putAntiHeroAction(updatedAntiHero: AntiHeroModel) {
-      store.setErrorAction("");
-      const index = store.antiHeroes.findIndex(
-        (v) => v.id === updatedAntiHero.id
-      );
-      const unedited = store.antiHeroes[index];
-      store.antiHeroes[index] = updatedAntiHero;
-      store.setAntiHeroAction(updatedAntiHero);
-      try {
-        await putAntiHeroAxios(updatedAntiHero);
-      } catch (e) {
-        store.setErrorAction(e);
-        store.antiHeroes[index] = unedited;
-        store.setAntiHeroAction(unedited);
       }
     },
   }));

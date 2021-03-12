@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TitleBar from "components/TitleBar";
 import UpdateUiLabel from "components/UpdateUiLabel";
 
@@ -12,28 +12,28 @@ import {
 import { makeStyles } from "@material-ui/styles";
 import FormSubmission from "components/FormSubmission";
 
-const HeroesPage = () => {
+const VillainsPage = () => {
   const loading = false;
-  const heroes = [];
+  const villains = [];
 
-  const smallScreen = useMediaQuery("(max-width:600px)");
   const classes = useStyles();
+  const smallScreen = useMediaQuery("(max-width:600px)");
 
   /*local state*/
   const [counter, setCounter] = useState("0");
 
   return (
     <div>
-      <TitleBar title={"Super HeroesPage"} />
+      <TitleBar title={"Super VillainsPage"} />
       <FormSubmission />
       <UpdateUiLabel />
       <>
         {loading ? (
           <Typography variant={"h2"}>Loading.. Please wait..</Typography>
         ) : (
-          heroes.map((h) => (
+          villains.map((v) => (
             <Box
-              key={h.id}
+              key={v.id}
               role={"card"}
               mb={2}
               display={"flex"}
@@ -41,13 +41,12 @@ const HeroesPage = () => {
               justifyContent={"space-between"}
             >
               <Typography>
-                <span>{`${h.firstName} ${h.lastName} is ${h.knownAs}`}</span>
-                {counter === h.id && <span> - marked</span>}
+                <span>{`${v.firstName} ${v.lastName} is ${v.knownAs}`}</span>
+                {counter === v.id && <span> - marked</span>}
               </Typography>
               <div>
                 <Button
                   className={classes.button}
-                  onClick={() => setCounter(h.id)}
                   variant={"contained"}
                   color={"default"}
                 >
@@ -72,11 +71,12 @@ const HeroesPage = () => {
           ))
         )}
       </>
-      {heroes.length === 0 && !loading && (
+      {villains.length === 0 && !loading && (
         <Button
           className={classes.button}
           variant={"contained"}
           color={"primary"}
+    
         >
           Re-fetch
         </Button>
@@ -85,7 +85,7 @@ const HeroesPage = () => {
   );
 };
 
-export default HeroesPage;
+export default VillainsPage;
 
 const useStyles = makeStyles(() =>
   createStyles({

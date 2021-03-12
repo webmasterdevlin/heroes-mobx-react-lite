@@ -1,14 +1,8 @@
 import React from "react";
+import { EndPoints } from "axios/api-config";
+import { deleteAxios, getAxios, postAxios } from "axios/generic-api-calls";
 import { useLocalObservable } from "mobx-react-lite";
-
 import { HeroModel, HeroStateType } from "./heroTypes";
-
-import {
-  getHeroesAxios,
-  deleteHeroAxios,
-  postHeroAxios,
-  putHeroAxios,
-} from "./heroService";
 import { runInAction } from "mobx";
 
 const initialValues: HeroStateType = {
@@ -52,7 +46,7 @@ const HeroContext = () => {
       });
 
       try {
-        const { data } = await getHeroesAxios();
+        const { data } = await getAxios(EndPoints.heroes);
         runInAction(() => {
           store.heroes = data;
         });
@@ -70,7 +64,7 @@ const HeroContext = () => {
       store.setErrorAction("");
       store.isLoading = true;
       try {
-        store.heroes.push((await postHeroAxios(newHero)).data);
+        store.heroes.push((await postAxios(EndPoints.heroes, newHero)).data);
       } catch (e) {
         store.setErrorAction(e);
       }
@@ -83,25 +77,10 @@ const HeroContext = () => {
       const previousHeroes = store.heroes;
       store.heroes = store.heroes.filter((h) => h.id !== id);
       try {
-        await deleteHeroAxios(id);
+        await deleteAxios(EndPoints.heroes, id);
       } catch (e) {
         store.setErrorAction(e);
         store.heroes = previousHeroes;
-      }
-    },
-
-    async putHeroAction(updatedHero: HeroModel) {
-      store.setErrorAction("");
-      const index = store.heroes.findIndex((h) => h.id === updatedHero.id);
-      const unedited = store.heroes[index];
-      store.heroes[index] = updatedHero;
-      store.setHeroAction(updatedHero);
-      try {
-        await putHeroAxios(updatedHero);
-      } catch (e) {
-        store.setErrorAction(e);
-        store.heroes[index] = unedited;
-        store.setHeroAction(unedited);
       }
     },
   }));

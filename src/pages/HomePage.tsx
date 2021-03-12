@@ -1,10 +1,23 @@
 import React from "react";
+import Container from "@material-ui/core/Container";
+import Box from "@material-ui/core/Box";
+import { Typography } from "@material-ui/core";
 
 const HomePage = () => {
   return (
-    <div className="container w-100 d-flex flex-row justify-content-center align-items-lg-center">
-      <h1>Welcome to Mobx 6 Course 🧑‍🏫 💻</h1>
-    </div>
+    <Container>
+      <Box
+        width={"100%"}
+        display={"flex"}
+        flex={"row"}
+        justifyContent={"center"}
+        alignItems={"center"}
+      >
+        <Typography variant={"h2"}>
+          Welcome to Mobx React Lite 🧑‍🏫 💻
+        </Typography>
+      </Box>
+    </Container>
   );
 };
 
