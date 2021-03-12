@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import FormSubmission from "components/FormSubmission";
-import { AntiHeroModel } from "../features/antiHeroes/antiHeroTypes";
 
 const AntiHeroesPage = observer(() => {
   const { antiHeroStore } = useContext(RootStoreContext);
@@ -24,21 +23,8 @@ const AntiHeroesPage = observer(() => {
   const [counter, setCounter] = useState("0");
 
   useEffect(() => {
-    fetchAntiHeroes();
+    antiHeroStore.getAntiHeroesAction();
   }, []);
-
-  const fetchAntiHeroes = async () => {
-    await antiHeroStore.getAntiHeroesAction();
-  };
-
-  const handleSoftDelete = (antiHero: AntiHeroModel) => {
-    console.log("handleSoftDelete:", antiHero);
-    antiHeroStore.softDeleteAntiHeroAction(antiHero);
-  };
-
-  const handleDelete = async (antiHeroId: string) => {
-    await antiHeroStore.deleteAntiHeroAction(antiHeroId);
-  };
 
   return (
     <div>
@@ -77,7 +63,7 @@ const AntiHeroesPage = observer(() => {
                   className={classes.button}
                   variant={"contained"}
                   color={"secondary"}
-                  onClick={() => handleSoftDelete(ah)}
+                  onClick={() => antiHeroStore.softDeleteAntiHeroAction(ah)}
                 >
                   Remove
                 </Button>{" "}
@@ -85,7 +71,9 @@ const AntiHeroesPage = observer(() => {
                   className={classes.button}
                   variant={"outlined"}
                   color={"secondary"}
-                  onClick={async () => await handleDelete(ah.id)}
+                  onClick={async () =>
+                    await antiHeroStore.deleteAntiHeroAction(ah.id)
+                  }
                 >
                   DELETE in DB
                 </Button>
@@ -99,6 +87,7 @@ const AntiHeroesPage = observer(() => {
           className={classes.button}
           variant={"contained"}
           color={"primary"}
+          onClick={antiHeroStore.getAntiHeroesAction}
         >
           Re-fetch
         </Button>

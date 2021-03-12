@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import FormSubmission from "components/FormSubmission";
-import { HeroModel } from "../features/heroes/heroTypes";
 
 const HeroesPage = observer(() => {
   const { heroStore } = useContext(RootStoreContext);
@@ -24,20 +23,8 @@ const HeroesPage = observer(() => {
   const [counter, setCounter] = useState("0");
 
   useEffect(() => {
-    fetchHeroes();
+    heroStore.getHeroesAction();
   }, []);
-
-  const fetchHeroes = async () => {
-    await heroStore.getHeroesAction();
-  };
-
-  const handleSoftDelete = (hero: HeroModel) => {
-    heroStore.softDeleteHeroAction(hero);
-  };
-
-  const handleDelete = async (heroId: string) => {
-    await heroStore.deleteHeroAction(heroId);
-  };
 
   return (
     <div>
@@ -76,7 +63,7 @@ const HeroesPage = observer(() => {
                   className={classes.button}
                   variant={"contained"}
                   color={"secondary"}
-                  onClick={() => handleSoftDelete(ah)}
+                  onClick={() => heroStore.softDeleteHeroAction(ah)}
                 >
                   Remove
                 </Button>{" "}
@@ -84,7 +71,7 @@ const HeroesPage = observer(() => {
                   className={classes.button}
                   variant={"outlined"}
                   color={"secondary"}
-                  onClick={async () => await handleDelete(ah.id)}
+                  onClick={async () => await heroStore.deleteHeroAction(ah.id)}
                 >
                   DELETE in DB
                 </Button>
@@ -98,6 +85,7 @@ const HeroesPage = observer(() => {
           className={classes.button}
           variant={"contained"}
           color={"primary"}
+          onClick={heroStore.getHeroesAction}
         >
           Re-fetch
         </Button>

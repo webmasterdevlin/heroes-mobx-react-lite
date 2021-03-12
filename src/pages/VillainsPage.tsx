@@ -12,7 +12,6 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import FormSubmission from "components/FormSubmission";
-import { VillainModel } from "../features/villains/villainTypes";
 
 const VillainsPage = observer(() => {
   const { villainStore } = useContext(RootStoreContext);
@@ -24,20 +23,8 @@ const VillainsPage = observer(() => {
   const [counter, setCounter] = useState("0");
 
   useEffect(() => {
-    fetchVillains();
+    villainStore.getVillainsAction();
   }, []);
-
-  const fetchVillains = async () => {
-    await villainStore.getVillainsAction();
-  };
-
-  const handleSoftDelete = (villain: VillainModel) => {
-    villainStore.softDeleteVillainAction(villain);
-  };
-
-  const handleDelete = async (villainId: string) => {
-    await villainStore.deleteVillainAction(villainId);
-  };
 
   return (
     <div>
@@ -76,7 +63,7 @@ const VillainsPage = observer(() => {
                   className={classes.button}
                   variant={"contained"}
                   color={"secondary"}
-                  onClick={() => handleSoftDelete(ah)}
+                  onClick={() => villainStore.softDeleteVillainAction(ah)}
                 >
                   Remove
                 </Button>{" "}
@@ -84,7 +71,9 @@ const VillainsPage = observer(() => {
                   className={classes.button}
                   variant={"outlined"}
                   color={"secondary"}
-                  onClick={async () => await handleDelete(ah.id)}
+                  onClick={async () =>
+                    await villainStore.deleteVillainAction(ah.id)
+                  }
                 >
                   DELETE in DB
                 </Button>
@@ -98,6 +87,7 @@ const VillainsPage = observer(() => {
           className={classes.button}
           variant={"contained"}
           color={"primary"}
+          onClick={villainStore.getVillainsAction}
         >
           Re-fetch
         </Button>
