@@ -23,7 +23,6 @@ export type VillainActionType = {
   getVillainsAction: () => Promise<void>;
   deleteVillainAction: (id: string) => Promise<void>;
   postVillainAction: (villain: VillainModel) => Promise<void>;
-  putVillainAction: (villain: VillainModel) => Promise<void>;
 };
 
 export type VillainStoreSchema = {} & VillainStateType & VillainActionType;

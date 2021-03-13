@@ -22,7 +22,6 @@ export type AntiHeroActionType = {
   /*asynchronous*/
   getAntiHeroesAction: () => Promise<void>;
   postAntiHeroAction: (antiHero: AntiHeroModel) => Promise<void>;
-  putAntiHeroAction: (antiHero: AntiHeroModel) => Promise<void>;
   deleteAntiHeroAction: (id: string) => Promise<void>;
 };
 

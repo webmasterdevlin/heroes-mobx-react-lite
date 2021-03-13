@@ -23,7 +23,6 @@ export type HeroActionType = {
   getHeroesAction: () => Promise<void>;
   deleteHeroAction: (id: string) => Promise<void>;
   postHeroAction: (hero: HeroModel) => Promise<void>;
-  putHeroAction: (hero: HeroModel) => Promise<void>;
 };
 
 export type HeroStoreSchema = {} & HeroStateType & HeroActionType;
