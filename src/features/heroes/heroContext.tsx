@@ -19,6 +19,11 @@ const initialValues: HeroStateType = {
   error: "",
 };
 
+/*
+ * what is runInAction()?
+ * https://stackoverflow.com/questions/57271153/mobx-runinaction-usage-why-do-we-need-it
+ * */
+
 const HeroContext = () => {
   const store = useLocalObservable(() => ({
     /*observables*/
@@ -81,7 +86,10 @@ const HeroContext = () => {
     async postHeroAction(newHero: HeroModel) {
       store.setErrorAction("");
       try {
-        store.heroes.push((await postAxios(EndPoints.heroes, newHero)).data);
+        const { data } = await postAxios(EndPoints.heroes, newHero);
+        runInAction(() => {
+          store.heroes.push(data);
+        });
       } catch (e) {
         store.setErrorAction(e);
       }

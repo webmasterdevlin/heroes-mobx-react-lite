@@ -19,6 +19,11 @@ const initialValues: AntiHeroStateType = {
   error: "",
 };
 
+/*
+ * what is runInAction()?
+ * https://stackoverflow.com/questions/57271153/mobx-runinaction-usage-why-do-we-need-it
+ * */
+
 const AntiHeroContext = () => {
   const store = useLocalObservable(() => ({
     /*observables*/
@@ -81,9 +86,10 @@ const AntiHeroContext = () => {
     async postAntiHeroAction(newAntiHero: AntiHeroModel) {
       store.setErrorAction("");
       try {
-        store.antiHeroes.push(
-          (await postAxios(EndPoints.antiHeroes, newAntiHero)).data
-        );
+        const { data } = await postAxios(EndPoints.antiHeroes, newAntiHero);
+        runInAction(() => {
+          store.antiHeroes.push(data);
+        });
       } catch (e) {
         store.setErrorAction(e);
       }

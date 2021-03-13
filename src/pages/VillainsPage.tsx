@@ -28,7 +28,7 @@ const VillainsPage = observer(() => {
 
   return (
     <div>
-      <TitleBar title={"Anti HeroesPage"} />
+      <TitleBar title={"Super Villains Page"} />
       <FormSubmission postAction={villainStore.postVillainAction} />
       <UpdateUiLabel />
       <>

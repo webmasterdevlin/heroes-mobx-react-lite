@@ -19,6 +19,11 @@ const initialValues: VillainStateType = {
   error: "",
 };
 
+/*
+ * what is runInAction()?
+ * https://stackoverflow.com/questions/57271153/mobx-runinaction-usage-why-do-we-need-it
+ * */
+
 const VillainContext = () => {
   const store = useLocalObservable(() => ({
     /*observables*/
@@ -81,9 +86,10 @@ const VillainContext = () => {
     async postVillainAction(newVillain: VillainModel) {
       store.setErrorAction("");
       try {
-        store.villains.push(
-          (await postAxios(EndPoints.villains, newVillain)).data
-        );
+        const { data } = await postAxios(EndPoints.villains, newVillain);
+        runInAction(() => {
+          store.villains.push(data);
+        });
       } catch (e) {
         store.setErrorAction(e);
       }
