@@ -1,7 +1,6 @@
 export type AntiHeroStateType = {
   antiHeroes: AntiHeroModel[];
   antiHero: AntiHeroModel;
-  error: string;
   loading: boolean;
 };
 
@@ -15,8 +14,6 @@ export type AntiHeroModel = {
 
 export type AntiHeroActionType = {
   /*non-asynchronous*/
-  setAntiHeroAction: (antiHero: AntiHeroModel) => void;
-  setErrorAction: (error: any) => void;
   softDeleteAntiHeroAction: (antiHero: AntiHeroModel) => void;
 
   /*computed or derived values*/

@@ -16,7 +16,6 @@ const initialValues: AntiHeroStateType = {
     knownAs: "",
   } as AntiHeroModel,
   loading: false,
-  error: "",
 };
 
 /*
@@ -30,27 +29,12 @@ const AntiHeroContext = () => {
     ...initialValues,
 
     /*non-asynchronous actions*/
-    setAntiHeroAction(antiHero: AntiHeroModel) {
-      store.antiHero = antiHero;
-    },
-
     softDeleteAntiHeroAction(antiHero: AntiHeroModel) {
       store.antiHeroes = store.antiHeroes.filter((ah) => ah.id !== antiHero.id);
     },
 
-    setErrorAction({ message }: any) {
-      store.error = message;
-    },
-
-    /*computed values i.e. derived state*/
-    get totalAntiHeroesCount() {
-      return store.antiHeroes.length;
-    },
-
     /*asynchronous actions*/
     async getAntiHeroesAction() {
-      store.setErrorAction("");
-
       runInAction(() => {
         store.loading = true;
       });
@@ -61,7 +45,7 @@ const AntiHeroContext = () => {
           store.antiHeroes = data;
         });
       } catch (e) {
-        store.setErrorAction(e);
+        alert("Something happened. Please try again later.");
       }
 
       runInAction(() => {
@@ -71,28 +55,31 @@ const AntiHeroContext = () => {
 
     // asynchronous actions also. Optimistic UI update. No need for showing loader/spinner.
     async deleteAntiHeroAction(id: string) {
-      store.setErrorAction("");
       const previousAntiHeroes = store.antiHeroes;
       store.antiHeroes = store.antiHeroes.filter((ah) => ah.id !== id);
       try {
         await deleteAxios(EndPoints.antiHeroes, id);
       } catch (e) {
-        store.setErrorAction(e);
+        alert("Something happened. Please try again later.");
         store.antiHeroes = previousAntiHeroes;
       }
     },
 
     // asynchronous actions (pessimistic UI update)
     async postAntiHeroAction(newAntiHero: AntiHeroModel) {
-      store.setErrorAction("");
       try {
         const { data } = await postAxios(EndPoints.antiHeroes, newAntiHero);
         runInAction(() => {
           store.antiHeroes.push(data);
         });
       } catch (e) {
-        store.setErrorAction(e);
+        alert("Something happened. Please try again later.");
       }
+    },
+
+    /*computed values i.e. derived state*/
+    get totalAntiHeroesCount() {
+      return store.antiHeroes.length;
     },
   }));
 

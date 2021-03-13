@@ -1,7 +1,6 @@
 export type VillainStateType = {
   villains: VillainModel[];
   villain: VillainModel;
-  error: string;
   loading: boolean;
 };
 
@@ -12,11 +11,9 @@ export type VillainModel = {
   house: string;
   knownAs: string;
 };
-// FIX: all any
+
 export type VillainActionType = {
   /*non-async*/
-  setErrorAction: (error: any) => void;
-  setVillainAction: (villain: VillainModel) => void;
   softDeleteVillainAction: (villain: VillainModel) => void;
 
   /*computed or derived values*/

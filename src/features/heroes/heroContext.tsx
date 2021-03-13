@@ -16,7 +16,6 @@ const initialValues: HeroStateType = {
     knownAs: "",
   } as HeroModel,
   loading: false,
-  error: "",
 };
 
 /*
@@ -30,16 +29,8 @@ const HeroContext = () => {
     ...initialValues,
 
     /*non-asynchronous actions*/
-    setHeroAction(hero: HeroModel) {
-      store.hero = hero;
-    },
-
     softDeleteHeroAction(hero: HeroModel) {
       store.heroes = store.heroes.filter((h) => h.id !== hero.id);
-    },
-
-    setErrorAction({ message }: any) {
-      store.error = message;
     },
 
     /*computed values i.e. derived state*/
@@ -49,8 +40,6 @@ const HeroContext = () => {
 
     /*asynchronous actions*/
     async getHeroesAction() {
-      store.setErrorAction("");
-
       runInAction(() => {
         store.loading = true;
       });
@@ -61,7 +50,7 @@ const HeroContext = () => {
           store.heroes = data;
         });
       } catch (e) {
-        store.setErrorAction(e);
+        alert("Something happened. Please try again later.");
       }
 
       runInAction(() => {
@@ -71,27 +60,25 @@ const HeroContext = () => {
 
     // asynchronous actions also. Optimistic UI update. No need for showing loader/spinner.
     async deleteHeroAction(id: string) {
-      store.setErrorAction("");
       const previousHeroes = store.heroes;
       store.heroes = store.heroes.filter((h) => h.id !== id);
       try {
         await deleteAxios(EndPoints.heroes, id);
       } catch (e) {
-        store.setErrorAction(e);
+        alert("Something happened. Please try again later.");
         store.heroes = previousHeroes;
       }
     },
 
     // asynchronous actions (pessimistic UI update)
     async postHeroAction(newHero: HeroModel) {
-      store.setErrorAction("");
       try {
         const { data } = await postAxios(EndPoints.heroes, newHero);
         runInAction(() => {
           store.heroes.push(data);
         });
       } catch (e) {
-        store.setErrorAction(e);
+        alert("Something happened. Please try again later.");
       }
     },
   }));

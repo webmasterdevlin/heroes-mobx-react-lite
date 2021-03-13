@@ -16,7 +16,6 @@ const initialValues: VillainStateType = {
     knownAs: "",
   } as VillainModel,
   loading: false,
-  error: "",
 };
 
 /*
@@ -30,16 +29,8 @@ const VillainContext = () => {
     ...initialValues,
 
     /*non-asynchronous actions*/
-    setVillainAction(villain: VillainModel) {
-      store.villain = villain;
-    },
-
     softDeleteVillainAction(villain: VillainModel) {
       store.villains = store.villains.filter((v) => v.id !== villain.id);
-    },
-
-    setErrorAction({ message }: any) {
-      store.error = message;
     },
 
     /*computed values i.e. derived state*/
@@ -49,8 +40,6 @@ const VillainContext = () => {
 
     /*asynchronous actions*/
     async getVillainsAction() {
-      store.setErrorAction("");
-
       runInAction(() => {
         store.loading = true;
       });
@@ -61,7 +50,7 @@ const VillainContext = () => {
           store.villains = data;
         });
       } catch (e) {
-        store.setErrorAction(e);
+        alert("Something happened. Please try again later.");
       }
 
       runInAction(() => {
@@ -71,27 +60,25 @@ const VillainContext = () => {
 
     // asynchronous actions also. Optimistic UI update. No need for showing loader/spinner.
     async deleteVillainAction(id: string) {
-      store.setErrorAction("");
       const previousVillains = store.villains;
       store.villains = store.villains.filter((v) => v.id !== id);
       try {
         await deleteAxios(EndPoints.villains, id);
       } catch (e) {
-        store.setErrorAction(e);
+        alert("Something happened. Please try again later.");
         store.villains = previousVillains;
       }
     },
 
     // asynchronous actions (pessimistic UI update)
     async postVillainAction(newVillain: VillainModel) {
-      store.setErrorAction("");
       try {
         const { data } = await postAxios(EndPoints.villains, newVillain);
         runInAction(() => {
           store.villains.push(data);
         });
       } catch (e) {
-        store.setErrorAction(e);
+        alert("Something happened. Please try again later.");
       }
     },
   }));
