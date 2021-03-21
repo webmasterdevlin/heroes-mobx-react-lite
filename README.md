@@ -23,3 +23,13 @@ https://kentcdodds.com/blog/common-mistakes-with-react-testing-library
 - if necessary, use await waitFor instead of await wait
 - use userEvent instead of fireEvent
 - avoid userEvent or fireEvent insides callbacks of waitFor as much as possible
+
+
+### Cypress' best practices in writing tests
+
+https://docs.cypress.io/guides/references/best-practices.html
+
+### Application's styles
+
+- The application is using test ID instead of role when querying dom elements
+- Test IDs are simple and isolated
