@@ -33,29 +33,33 @@ const HeroesPage = observer(() => {
       <UpdateUiLabel />
       <>
         {heroStore.loading ? (
-          <Typography variant={"h2"}>Loading.. Please wait..</Typography>
+          <Typography data-testid={"loading"} variant={"h2"}>
+            Loading.. Please wait..
+          </Typography>
         ) : (
-          heroStore.heroes.map((ah) => (
+          heroStore.heroes.map((h) => (
             <Box
               mb={2}
               role={"card"}
-              key={ah.id}
+              key={h.id}
               display={"flex"}
               flexDirection={smallScreen ? "column" : "row"}
               justifyContent={"space-between"}
+              data-testid={"card"}
             >
               <div>
                 <Typography>
-                  <span>{`${ah.firstName} ${ah.lastName} is ${ah.knownAs}`}</span>
-                  {counter === ah.id && <span> - marked</span>}
+                  <span>{`${h.firstName} ${h.lastName} is ${h.knownAs}`}</span>
+                  {counter === h.id && <span> - marked</span>}
                 </Typography>
               </div>
               <div>
                 <Button
                   className={classes.button}
-                  onClick={() => setCounter(ah.id)}
+                  onClick={() => setCounter(h.id)}
                   variant={"contained"}
                   color={"default"}
+                  data-testid={"mark-button"}
                 >
                   Mark
                 </Button>{" "}
@@ -63,7 +67,8 @@ const HeroesPage = observer(() => {
                   className={classes.button}
                   variant={"contained"}
                   color={"secondary"}
-                  onClick={() => heroStore.softDeleteHeroAction(ah)}
+                  onClick={() => heroStore.softDeleteHeroAction(h)}
+                  data-testid={"remove-button"}
                 >
                   Remove
                 </Button>{" "}
@@ -71,7 +76,8 @@ const HeroesPage = observer(() => {
                   className={classes.button}
                   variant={"outlined"}
                   color={"secondary"}
-                  onClick={async () => await heroStore.deleteHeroAction(ah.id)}
+                  onClick={() => heroStore.deleteHeroAction(h.id)}
+                  data-testid={"delete-button"}
                 >
                   DELETE in DB
                 </Button>

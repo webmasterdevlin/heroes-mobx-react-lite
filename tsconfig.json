@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "noImplicitAny": false,
     "target": "es5",
     "lib": [
       "dom",
@@ -19,11 +18,10 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "baseUrl": "./src",
     "noFallthroughCasesInSwitch": true,
+    "baseUrl": "./src"
   },
   "include": [
-    "src",
-    "internals/startingTemplate/**/*"
+    "src"
   ]
 }

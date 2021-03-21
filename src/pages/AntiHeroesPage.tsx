@@ -33,16 +33,18 @@ const AntiHeroesPage = observer(() => {
       <UpdateUiLabel />
       <>
         {antiHeroStore.loading ? (
-          <Typography variant={"h2"}>Loading.. Please wait..</Typography>
+          <Typography data-testid="loading" variant={"h2"}>
+            Loading.. Please wait..
+          </Typography>
         ) : (
           antiHeroStore.antiHeroes.map((ah) => (
             <Box
               mb={2}
-              role={"card"}
               key={ah.id}
               display={"flex"}
               flexDirection={smallScreen ? "column" : "row"}
               justifyContent={"space-between"}
+              data-testid={"card"}
             >
               <div>
                 <Typography>
@@ -56,6 +58,7 @@ const AntiHeroesPage = observer(() => {
                   onClick={() => setCounter(ah.id)}
                   variant={"contained"}
                   color={"default"}
+                  data-testid={"mark-button"}
                 >
                   Mark
                 </Button>{" "}
@@ -64,6 +67,7 @@ const AntiHeroesPage = observer(() => {
                   variant={"contained"}
                   color={"secondary"}
                   onClick={() => antiHeroStore.softDeleteAntiHeroAction(ah)}
+                  data-testid={"remove-button"}
                 >
                   Remove
                 </Button>{" "}
@@ -71,9 +75,8 @@ const AntiHeroesPage = observer(() => {
                   className={classes.button}
                   variant={"outlined"}
                   color={"secondary"}
-                  onClick={async () =>
-                    await antiHeroStore.deleteAntiHeroAction(ah.id)
-                  }
+                  onClick={() => antiHeroStore.deleteAntiHeroAction(ah.id)}
+                  data-testid={"delete-button"}
                 >
                   DELETE in DB
                 </Button>

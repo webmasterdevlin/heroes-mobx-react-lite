@@ -33,29 +33,33 @@ const VillainsPage = observer(() => {
       <UpdateUiLabel />
       <>
         {villainStore.loading ? (
-          <Typography variant={"h2"}>Loading.. Please wait..</Typography>
+          <Typography data-testid={"loading"} variant={"h2"}>
+            Loading.. Please wait..
+          </Typography>
         ) : (
-          villainStore.villains.map((ah) => (
+          villainStore.villains.map((v) => (
             <Box
               mb={2}
               role={"card"}
-              key={ah.id}
+              key={v.id}
               display={"flex"}
               flexDirection={smallScreen ? "column" : "row"}
               justifyContent={"space-between"}
+              data-testid={"card"}
             >
               <div>
                 <Typography>
-                  <span>{`${ah.firstName} ${ah.lastName} is ${ah.knownAs}`}</span>
-                  {counter === ah.id && <span> - marked</span>}
+                  <span>{`${v.firstName} ${v.lastName} is ${v.knownAs}`}</span>
+                  {counter === v.id && <span> - marked</span>}
                 </Typography>
               </div>
               <div>
                 <Button
                   className={classes.button}
-                  onClick={() => setCounter(ah.id)}
+                  onClick={() => setCounter(v.id)}
                   variant={"contained"}
                   color={"default"}
+                  data-testid={"mark-button"}
                 >
                   Mark
                 </Button>{" "}
@@ -63,7 +67,8 @@ const VillainsPage = observer(() => {
                   className={classes.button}
                   variant={"contained"}
                   color={"secondary"}
-                  onClick={() => villainStore.softDeleteVillainAction(ah)}
+                  onClick={() => villainStore.softDeleteVillainAction(v)}
+                  data-testid={"remove-button"}
                 >
                   Remove
                 </Button>{" "}
@@ -71,9 +76,8 @@ const VillainsPage = observer(() => {
                   className={classes.button}
                   variant={"outlined"}
                   color={"secondary"}
-                  onClick={async () =>
-                    await villainStore.deleteVillainAction(ah.id)
-                  }
+                  onClick={() => villainStore.deleteVillainAction(v.id)}
+                  data-testid={"delete-button"}
                 >
                   DELETE in DB
                 </Button>
