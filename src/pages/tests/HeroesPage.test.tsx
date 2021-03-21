@@ -83,9 +83,7 @@ describe("Heroes Page", () => {
   it("should remove a hero from the store", async () => {
     render(<HeroesPage />);
 
-    const buttons = await screen.findAllByRole("button", {
-      name: "Remove",
-    });
+    const buttons = await screen.findAllByTestId("remove-button");
     userEvent.click(buttons[0]);
     expect(screen.getByTestId("card")).toBeInTheDocument();
     expect(screen.getByTestId("total-heroes")).toHaveTextContent("1");
@@ -94,9 +92,7 @@ describe("Heroes Page", () => {
   it("should delete a hero from the database", async () => {
     render(<HeroesPage />);
 
-    const buttons = await screen.findAllByRole("button", {
-      name: "DELETE in DB",
-    });
+    const buttons = await screen.findAllByTestId("delete-button");
     userEvent.click(buttons[0]);
     expect(screen.getByTestId("card")).toBeInTheDocument();
     expect(screen.getByTestId("total-heroes")).toHaveTextContent("1");
