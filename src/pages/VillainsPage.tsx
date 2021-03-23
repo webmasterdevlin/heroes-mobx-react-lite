@@ -88,6 +88,7 @@ const VillainsPage = observer(() => {
       </>
       {villainStore.villains.length === 0 && !villainStore.loading && (
         <Button
+          data-testid={"refetch-button"}
           className={classes.button}
           variant={"contained"}
           color={"primary"}

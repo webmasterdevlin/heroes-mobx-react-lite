@@ -87,6 +87,7 @@ const AntiHeroesPage = observer(() => {
       </>
       {antiHeroStore.antiHeroes.length === 0 && !antiHeroStore.loading && (
         <Button
+          data-testid={"refetch-button"}
           className={classes.button}
           variant={"contained"}
           color={"primary"}

@@ -68,4 +68,22 @@ describe("Anti-Heroes Page", () => {
       cy.findByTestId("total-anti-heroes").contains(ANTI_HEROES.length + 1);
     });
   });
+
+  context("Refetch", () => {
+    it("should refetch all anti heroes after soft deleting all anti heroes", () => {
+      cy.get("[data-testid=remove-button]").each(($el) => cy.wrap($el).click());
+      cy.get("[data-testid=card]").should("not.exist");
+      cy.get("[data-testid=refetch-button]").click();
+      cy.get("[data-testid=card]").should("have.length", ANTI_HEROES.length);
+      cy.get("[data-testid=total-anti-heroes]").contains(ANTI_HEROES.length);
+    });
+
+    it("should refetch all anti heroes after deleting all anti heroes", () => {
+      cy.get("[data-testid=delete-button]").each(($el) => cy.wrap($el).click());
+      cy.get("[data-testid=card]").should("not.exist");
+      cy.get("[data-testid=refetch-button]").click();
+      cy.get("[data-testid=card]").should("have.length", ANTI_HEROES.length);
+      cy.get("[data-testid=total-anti-heroes]").contains(ANTI_HEROES.length);
+    });
+  });
 });
