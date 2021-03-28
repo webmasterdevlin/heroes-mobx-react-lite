@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/816a1742-3bb8-4cb9-bfcf-ff841dd5d272/deploy-status)](https://app.netlify.com/sites/pedantic-liskov-c35b57/deploys)
+
 # Mobx 6 Course
 
 ```sh
