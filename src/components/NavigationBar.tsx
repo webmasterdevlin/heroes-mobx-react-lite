@@ -42,6 +42,7 @@ const NavigationBar = observer(() => {
           <Button
             className={classes.button}
             onClick={() => history.push("/heroes")}
+            color="inherit"
             data-testid="nav-heroes"
           >
             Heroes
